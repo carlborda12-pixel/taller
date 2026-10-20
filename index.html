@@ -521,6 +521,13 @@ details.box summary{cursor:pointer;display:flex;gap:8px;align-items:baseline;fle
   .fmode .main{padding-block:8px}
   .fmode #view>.fstack,.fmode .wrap{gap:8px}
 }
+.paychips{display:flex;flex-wrap:wrap;gap:5px}
+.pchip{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;min-height:30px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--fg);font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;line-height:1}
+.pchip small{font-size:10.5px;font-weight:500;color:var(--warn)}
+.pchip:hover{border-color:var(--faint)}
+.pchip[aria-checked="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.pchip[aria-checked="true"] small{color:var(--accent-ink)}
+.syncpill:empty{display:none}
 .slot{height:49px;flex:none;border-bottom:1px dashed var(--line-2);display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:13.5px}
 .fmode .plist{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
 .fact2{grid-template-columns:minmax(0,1fr) clamp(300px,42%,460px)}
@@ -620,6 +627,7 @@ details.box summary{cursor:pointer;display:flex;gap:8px;align-items:baseline;fle
       <header class="top">
         <div><p class="eyebrow" id="eyebrow"></p><h1 id="title"></h1></div>
         <div class="tools">
+          <span class="syncpill"></span>
           <span id="cajaPill"></span>
           <button class="btn sm helpbtn" data-act="help"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.6a2.3 2.3 0 0 1 4.4.9c0 1.5-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg>Ayuda</button>
         </div>
@@ -769,8 +777,8 @@ function seed(){
   return s;
 }
 function load(){try{const raw=localStorage.getItem(LS);if(raw){const d=JSON.parse(raw);if(d&&d.v===2){S=d;migrate(S);return;}}}catch(e){}S=migrate(seed());}
-function save(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
-function nid(p){S.seq[p]=(S.seq[p]||0)+1;return p+S.seq[p];}
+function save(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}if(typeof SYNC!=='undefined'&&SYNC.on)schedulePush();}
+function nid(p){S.seq[p]=(S.seq[p]||0)+1;return p+S.seq[p]+(typeof DEV==='string'?DEV:'');}
 const R=id=>S.repuestos.find(r=>r.id===id);
 const C=id=>S.clientes.find(c=>c.id===id);
 const M=id=>S.modelos.find(m=>m.id===id);
@@ -821,7 +829,7 @@ function render(){
   $('#eyebrow').textContent=EYEBROW[ui.view];
   document.body.classList.toggle('fmode',ui.view==='facturacion'&&ui.fTab==='nuevo');
   $('#userLbl').textContent=ROLES[ui.rol];
-  renderNav();renderPill();saveUi();hideTip();
+  renderNav();renderPill();saveUi();hideTip();if(typeof renderSync==='function')renderSync();
 }
 const EYEBROW={facturacion:'Tickets, facturas y presupuestos',mostrador:'Venta en el mostrador',stock:'Repuestos del taller',ot:'Piezas que dejan para reparar',clientes:'Datos y cuentas de clientes',envios:'Pedidos para mandar',caja:'La plata del día'};
 function renderNav(){
@@ -1325,7 +1333,7 @@ function caeSim(f){const t=Math.floor(new Date(f).getTime()/1000);return '7'+Str
 function mkComp(st,tipo,fecha,cli,items,pagos,extra){
   const x=extra||{};const k=calcComp(items);st.num[tipo]=(st.num[tipo]||0)+1;
   const letra=letraDe(tipo),fiscal=letra!=='X',disc=letra==='A'||letra==='B';
-  const c={id:'f'+(st.comps.length+1)+'-'+st.num[tipo],tipo,letra,pv:st.fiscal.pv,nro:st.num[tipo],fecha,cliente:cli.id,rec:recDe(cli,x.over),lines:k.lines,
+  const c={id:'f'+(st.comps.length+1)+'-'+st.num[tipo]+(typeof DEV==='string'?DEV:''),tipo,letra,pv:st.fiscal.pv,nro:st.num[tipo],fecha,cliente:cli.id,rec:recDe(cli,x.over),lines:k.lines,
     n21:disc?k.n21:0,i21:disc?k.i21:0,n105:disc?k.n105:0,i105:disc?k.i105:0,total:k.total,
     pagos:typeof pagos==='string'?[{medio:pagos,monto:k.total}]:pagos,condVenta:x.condVenta||'contado',obs:x.obs||'',
     cae:fiscal?caeSim(fecha):'',caeVto:fiscal?new Date(new Date(fecha).getTime()+10*864e5).toISOString():'',origen:x.origen||null,asoc:x.asoc||null,anuladoPor:null};
@@ -1429,7 +1437,7 @@ function fiscalModal(){
 function vFact(){
   const p=pendientes();const F=S.fiscal;
   const np=S.presus.filter(x=>presuEstado(x)==='Vigente').length;const tabs=[['nuevo','Vender'],['presu',`Presupuestos${np?' · '+np:''}`],['emit','Ventas hechas']].concat(dueno()?[['libro','Libro IVA']]:[]);
-  const head=`<div class="ftop"><div class="pills" role="group" aria-label="Secciones de facturación">${tabs.map(([k,l])=>`<button data-act="fTab" data-v="${k}" aria-pressed="${ui.fTab===k}">${l}</button>`).join('')}</div><span class="spacer"></span><span class="fm-only">${S.caja.abierta?'':'<button class="chip bad" data-act="go" data-v="caja"><span class="dot"></span>Caja cerrada</button>'}</span><button class="btn sm ghost helpbtn" data-act="prnCfg" title="Impresora" aria-label="Impresora"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 7.5V3h9v4.5M5.5 14H3.5v-6.5h13V14h-2"/><path d="M5.5 11.5h9V17h-9z"/></svg><span class="bt">Impresora</span></button>${dueno()?`<button class="btn sm ghost helpbtn" data-act="fiscalEdit" title="${esc(F.fantasia)} · ${F.cond==='RI'?'Resp. Inscripto':'Monotributo'} · P.V. ${pad5(F.pv)}" aria-label="Datos fiscales"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 17h14M4.5 17V8.5L10 4l5.5 4.5V17M8 17v-4h4v4"/></svg><span class="bt">Datos fiscales</span></button>`:''}<button class="btn sm fm-only helpbtn" data-act="help" title="Ayuda" aria-label="Ayuda"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.6a2.3 2.3 0 0 1 4.4.9c0 1.5-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg><span class="bt">Ayuda</span></button></div>`;
+  const head=`<div class="ftop"><div class="pills" role="group" aria-label="Secciones de facturación">${tabs.map(([k,l])=>`<button data-act="fTab" data-v="${k}" aria-pressed="${ui.fTab===k}">${l}</button>`).join('')}</div><span class="spacer"></span><span class="fm-only syncpill"></span><span class="fm-only">${S.caja.abierta?'':'<button class="chip bad" data-act="go" data-v="caja"><span class="dot"></span>Caja cerrada</button>'}</span><button class="btn sm ghost helpbtn" data-act="prnCfg" title="Impresora" aria-label="Impresora"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 7.5V3h9v4.5M5.5 14H3.5v-6.5h13V14h-2"/><path d="M5.5 11.5h9V17h-9z"/></svg><span class="bt">Impresora</span></button>${dueno()?`<button class="btn sm ghost helpbtn" data-act="fiscalEdit" title="${esc(F.fantasia)} · ${F.cond==='RI'?'Resp. Inscripto':'Monotributo'} · P.V. ${pad5(F.pv)}" aria-label="Datos fiscales"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 17h14M4.5 17V8.5L10 4l5.5 4.5V17M8 17v-4h4v4"/></svg><span class="bt">Datos fiscales</span></button>`:''}<button class="btn sm fm-only helpbtn" data-act="help" title="Ayuda" aria-label="Ayuda"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.6a2.3 2.3 0 0 1 4.4.9c0 1.5-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg><span class="bt">Ayuda</span></button></div>`;
   const body=ui.fTab==='presu'?fPresu():ui.fTab==='pend'?fPend(p):ui.fTab==='emit'?fEmit(p):ui.fTab==='libro'&&dueno()?fLibro():fNuevo();
   return `<div class="fstack">${head}${body}</div>`;
 }
@@ -1505,7 +1513,7 @@ function emitirDraft(){
     if(d.condVenta==='cc')cli.deuda+=k.total;else pagos.forEach(p=>S.movs.push({id:nid('mv'),sid:S.caja.sid,fecha:c.fecha,tipo:'ingreso',concepto:lbl,medio:p.medio,monto:p.monto,ref:c.id}));
     d.items.filter(i=>i.r).forEach(i=>{R(i.r).stock-=num(i.q);});
     S.seq.v++;S.seq.tk++;
-    S.ventas.push({id:'v'+S.seq.v,num:S.seq.tk,fecha:c.fecha,cliente:cli.id,items:d.items.filter(i=>i.r).map(i=>({r:i.r,n:i.d,q:num(i.q),p:num(i.pu)})),sub:k.total,envio:0,recargo:0,total:k.total,medio:(pagos[0]||{}).medio||'efectivo',envioId:null,factId:c.id,viaFact:true});
+    S.ventas.push({id:'v'+S.seq.v+(typeof DEV==='string'?DEV:''),num:S.seq.tk,fecha:c.fecha,cliente:cli.id,items:d.items.filter(i=>i.r).map(i=>({r:i.r,n:i.d,q:num(i.q),p:num(i.pu)})),sub:k.total,envio:0,recargo:0,total:k.total,medio:(pagos[0]||{}).medio||'efectivo',envioId:null,factId:c.id,viaFact:true});
   }
   save();const ids=d.items.filter(i=>i.r).map(i=>i.r);ui.draft=newDraft();render();compModal(c.id,vuelto);
   toast(`Listo: ${T_LBL[tipo]} ${compNro(c)}.`);if(!d.origen)avisoStock(ids);
@@ -1595,7 +1603,7 @@ function hideTip(){const p=$('#tipPop');if(p)p.hidden=true;}
 function introHTML(){const t=INTRO[ui.view];if(!t||ui.introOff[ui.view])return '';
   return `<div class="intro"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M10 9v5M10 6.2v.1"/></svg><p>${t}</p><div class="row" style="flex-wrap:nowrap"><button class="btn sm ghost" data-act="help">Ver cómo se usa</button><button class="xbtn" data-act="introX" aria-label="Ocultar esta ayuda" title="Ocultar">×</button></div></div>`;}
 function helpModal(){const h=HELP[ui.view];
-  openModal({title:h.t,wide:true,st:{},body:()=>`<ol class="hsteps">${h.steps.map(s=>`<li>${s}</li>`).join('')}</ol>${h.extra?`<p class="note acc">${h.extra}</p>`:''}${h.terms.length?`<div class="box"><h4>Palabras que vas a ver</h4><dl class="gloss">${h.terms.map(k=>`<div><dt>${GLOSS[k][0]}</dt><dd>${GLOSS[k][1]}</dd></div>`).join('')}</dl></div>`:''}<div class="box"><h4>Probar el sistema</h4><p class="small muted">Es un prototipo con datos de ejemplo. Podés probarlo como otro usuario o volver a los datos de ejemplo cuando quieras.</p><div class="row"><button class="btn sm" data-act="userModal">Cambiar usuario</button><button class="btn sm ghost" data-act="welcome">Ver la bienvenida</button><button class="btn sm ghost" data-act="reset">Volver a los datos de ejemplo</button></div></div>`,
+  openModal({title:h.t,wide:true,st:{},body:()=>`<ol class="hsteps">${h.steps.map(s=>`<li>${s}</li>`).join('')}</ol>${h.extra?`<p class="note acc">${h.extra}</p>`:''}${h.terms.length?`<div class="box"><h4>Palabras que vas a ver</h4><dl class="gloss">${h.terms.map(k=>`<div><dt>${GLOSS[k][0]}</dt><dd>${GLOSS[k][1]}</dd></div>`).join('')}</dl></div>`:''}${SYNC.on?`<div class="box"><h4>Base de datos del taller</h4><p class="small">Conectado: los cambios se ven en todos los dispositivos en pocos segundos.</p><div><button class="btn sm ghost" data-act="syncOut">Salir en este dispositivo</button></div></div>`:''}<div class="box"><h4>Probar el sistema</h4><p class="small muted">Es un prototipo con datos de ejemplo. Podés probarlo como otro usuario o volver a los datos de ejemplo cuando quieras.</p><div class="row"><button class="btn sm" data-act="userModal">Cambiar usuario</button><button class="btn sm ghost" data-act="welcome">Ver la bienvenida</button><button class="btn sm ghost" data-act="reset">Volver a los datos de ejemplo</button></div></div>`,
     foot:()=>`<button class="btn primary" data-act="mclose">Entendido</button>`});}
 function userModal(){openModal({title:'¿Quién usa el sistema?',st:{},body:()=>`<p class="small muted">Cada usuario ve solo lo que necesita. En el sistema final cada uno entra con su usuario y contraseña.</p><div class="ulist">${[['dueno','Dueño','Ve todo: costos, precios, caja y reportes.'],['mostrador','Mostrador','Vende, factura, cobra y carga clientes.'],['tecnico','Técnico','Ve los arreglos y el stock. No cobra.']].map(([k,n,d])=>`<button class="ubtn" data-act="setRol" data-v="${k}" aria-pressed="${ui.rol===k}"><b>${n}</b><span>${d}</span></button>`).join('')}</div>`});}
 function welcomeModal(){openModal({title:'Bienvenido',st:{},body:()=>`<p>Este sistema reemplaza el cuaderno y la calculadora del mostrador. Un día de trabajo tiene tres pasos:</p><ol class="hsteps"><li><span><b>Abrí la caja.</b> Al llegar, contá la plata del cajón y anotala en "Caja".</span></li><li><span><b>Vendé.</b> En "Vender" tocás los productos, elegís cómo paga y sale el ticket. Si piden factura, marcás "Pide factura".</span></li><li><span><b>Cerrá la caja.</b> Al irte, contá el efectivo. El sistema te dice si falta o sobra.</span></li></ol><p class="note acc">Si te perdés, tocá <b>Ayuda</b> arriba a la derecha. Los botones <span class="tip" aria-hidden="true">?</span> explican qué significa cada palabra.</p>`,
@@ -1861,7 +1869,8 @@ function fNuevo(){
         <button class="btn sm" data-act="fConcept" data-v="Mano de obra">+ Mano de obra</button><button class="btn sm" data-act="fEnvio">+ Envío</button><button class="btn sm" data-act="fConcept" data-v="">+ Otro</button></div>
       ${home?'':`<div class="chips" role="tablist" aria-label="Categorías"><button class="chip back" data-act="fClr">← Categorías</button><button class="chip ${d.cat==='*'&&!d.q.trim()?'acc':''}" role="tab" aria-selected="${d.cat==='*'}" data-act="fCat" data-v="*">Todo</button>${cats.map(c=>`<button class="chip ${d.cat===c&&!d.q.trim()?'acc':''}" role="tab" aria-selected="${d.cat===c}" data-act="fCat" data-v="${esc(c)}">${esc(c)}</button>`).join('')}</div>`}</div>`;
     let body;
-    if(home)body=`<div class="cgrid">${cats.map(c=>{const n=S.repuestos.filter(r=>r.cat===c).length;const lleva=d.items.filter(it=>it.r&&R(it.r)&&R(it.r).cat===c).reduce((x,it)=>x+num(it.q),0);return `<button class="ctile" data-act="fCat" data-v="${esc(c)}"><svg viewBox="0 0 24 24" aria-hidden="true">${CAT_IC[c]||CAT_IC._}</svg><b>${esc(c)}</b><span>${n} ${n===1?'producto':'productos'}</span>${lleva?`<i>lleva ${fQ(lleva)}</i>`:''}</button>`;}).join('')}<button class="ctile all" data-act="fCat" data-v="*"><svg viewBox="0 0 24 24" aria-hidden="true">${CAT_IC.all}</svg><b>Ver todo</b><span>${S.repuestos.length} productos</span></button></div>`;
+    if(home&&!S.repuestos.length)body='<div class="empty"><strong>Todavía no hay productos cargados.</strong>Cargalos en Stock con "Importar Excel" o "Nuevo repuesto".<div style="margin-top:12px"><button class="btn sm primary" data-act="go" data-v="stock">Ir a Stock</button></div></div>';
+    else if(home)body=`<div class="cgrid">${cats.map(c=>{const n=S.repuestos.filter(r=>r.cat===c).length;const lleva=d.items.filter(it=>it.r&&R(it.r)&&R(it.r).cat===c).reduce((x,it)=>x+num(it.q),0);return `<button class="ctile" data-act="fCat" data-v="${esc(c)}"><svg viewBox="0 0 24 24" aria-hidden="true">${CAT_IC[c]||CAT_IC._}</svg><b>${esc(c)}</b><span>${n} ${n===1?'producto':'productos'}</span>${lleva?`<i>lleva ${fQ(lleva)}</i>`:''}</button>`;}).join('')}<button class="ctile all" data-act="fCat" data-v="*"><svg viewBox="0 0 24 24" aria-hidden="true">${CAT_IC.all}</svg><b>Ver todo</b><span>${S.repuestos.length} productos</span></button></div>`;
     else{const list=fList();
       const rows=list.length?list.map(r=>{const q=fInF(r.id);const sin=r.stock-q<=0;return `<button class="prod ${q?'in':''}" data-act="fAdd" data-id="${r.id}" ${sin?'disabled':''}><span class="pn"><span class="n">${esc(r.nombre)}</span><span class="meta"><span class="code">${esc(r.cod)}</span>${condChip(r)}<span>${esc(compatTxt(r,2))}</span>${stockChip(r)}</span></span><span class="pp"><span class="price">${money(precio(r,cli.lista))}</span><span class="add">${r.stock<=0?'Sin stock':sin?'No hay más':q?`Lleva ${q} · +1`:'+ Agregar'}</span></span></button>`;}).join('')
         :`<div class="empty"><strong>${d.q?`No encontramos "${esc(d.q)}".`:'No hay productos en esta categoría.'}</strong>Probá con otra palabra. Si es un código nuevo, cargalo en Stock.</div>`;
@@ -2050,6 +2059,92 @@ Object.assign(ACT,{
   pedRecibir:d=>{const p=S.pedidos.find(x=>x.id===d.id);p.items.forEach(i=>{const r=R(i.r);if(r)r.stock+=i.q;S.compras.push({id:nid('cp'),fecha:now(),origen:'proveedor',quien:p.prov,r:i.r,n:i.n,q:i.q,costo:i.costo,total:i.q*i.costo,pagado:false});});p.estado='recibido';p.recibido=now();save();render();toast(`Mercadería de ${p.prov} sumada al stock.`);}
 });
 
+/* ================= v3: sincronización entre dispositivos (Vercel + Upstash Redis) ================= */
+var DEV=(()=>{try{let d=localStorage.getItem('rcos-dev');if(!d){d=Math.random().toString(36).slice(2,5);localStorage.setItem('rcos-dev',d);}return '-'+d;}catch(e){return '-'+Math.random().toString(36).slice(2,5);}})();
+var SYNC={on:false,v:0,base:null,pin:'',state:'local',pending:false,busy:false,timer:null,polling:false};
+function localSave(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
+function schedulePush(){SYNC.pending=true;renderSync('saving');clearTimeout(SYNC.timer);SYNC.timer=setTimeout(push,500);}
+function pinGet(){try{return localStorage.getItem('rcos-pin')||''}catch(e){return ''}}
+function pinSet(v){try{v?localStorage.setItem('rcos-pin',v):localStorage.removeItem('rcos-pin')}catch(e){}}
+function api(method,url,body){return fetch(url,{method,headers:{'Content-Type':'application/json','x-app-pin':SYNC.pin},body:body?JSON.stringify(body):undefined,cache:'no-store'});}
+function renderSync(st){if(st)SYNC.state=st;const m={ok:['good','Sincronizado'],saving:['','Guardando…'],offline:['warn','Sin conexión · se guarda al volver'],error:['bad','No se pudo guardar · reintentando']};const x=SYNC.on?m[SYNC.state]:null;
+  document.querySelectorAll('.syncpill').forEach(e=>{e.innerHTML=x?`<span class="chip ${x[0]}" title="Los cambios se ven en todos los dispositivos"><span class="dot"></span>${x[1]}</span>`:'';});}
+function emptyData(){const s=migrate(seed());['repuestos','ventas','comps','ots','envios','compras','movs','cierres','presus','pedidos','log'].forEach(k=>s[k]=[]);s.clientes=s.clientes.filter(c=>c.id==='c1');
+  s.caja={abierta:false,sid:'s0',desde:now(),apertura:0,usuario:''};Object.keys(s.num).forEach(k=>s.num[k]=0);Object.keys(s.seq).forEach(k=>s.seq[k]=0);s.seq.c=1;return s;}
+const COLS=['repuestos','clientes','ventas','comps','ots','envios','compras','movs','cierres','presus','pedidos','log','modelos','listas'];
+const rkey=x=>x&&(x.id||x.sid||(x.fecha+'|'+(x.filtro||x.concepto||'')));
+function mergeRec(b,l,r,k){if(!b||!r)return l;const m=Object.assign({},r);
+  Object.keys(l).forEach(f=>{if(JSON.stringify(l[f])!==JSON.stringify(b[f])){if((k==='repuestos'&&f==='stock')||(k==='clientes'&&f==='deuda'))m[f]=round2((num(r[f]))+(num(l[f])-num(b[f])));else m[f]=l[f];}});return m;}
+function mergeState(base,local,remote){
+  const out=JSON.parse(JSON.stringify(remote));
+  COLS.forEach(k=>{const B=new Map((base[k]||[]).map(x=>[rkey(x),x]));out[k]=out[k]||[];
+    (local[k]||[]).forEach(x=>{const id=rkey(x);const b=B.get(id);if(b&&JSON.stringify(b)===JSON.stringify(x))return;
+      const ix=out[k].findIndex(y=>rkey(y)===id);if(ix<0){out[k].push(x);return;}out[k][ix]=mergeRec(b,x,out[k][ix],k);});});
+  ['seq','num'].forEach(o=>{out[o]=Object.assign({},remote[o]||{});Object.keys(local[o]||{}).forEach(f=>{out[o][f]=Math.max(num(out[o][f]),num(local[o][f]));});});
+  ['caja','fiscal'].forEach(o=>{if(JSON.stringify(local[o])!==JSON.stringify(base[o]))out[o]=local[o];});
+  const rIds=k=>new Set((remote[k]||[]).map(rkey));
+  const rc=rIds('comps');(out.comps||[]).forEach(c=>{if(rc.has(rkey(c)))return;if(out.comps.some(o=>o!==c&&o.tipo===c.tipo&&o.nro===c.nro)){const mx=Math.max(num(out.num[c.tipo]),...out.comps.filter(o=>o.tipo===c.tipo).map(o=>o.nro));c.nro=mx+1;out.num[c.tipo]=c.nro;}});
+  ['ots','presus','pedidos','envios'].forEach(k=>{const ri=rIds(k);(out[k]||[]).forEach(x=>{if(ri.has(rkey(x)))return;if(out[k].some(o=>o!==x&&o.num===x.num)){x.num=Math.max(...out[k].map(o=>num(o.num)))+1;}});});
+  return out;
+}
+function softRender(){const a=document.activeElement;const inModal=a&&$('#modal').contains(a);render();if(Mo&&!inModal)renderModal();}
+function applyRemote(j){S=migrate(j.data);SYNC.v=j.version;SYNC.base=JSON.stringify(j.data);localSave();softRender();renderSync('ok');}
+async function push(){
+  if(!SYNC.on||SYNC.busy)return;SYNC.busy=true;SYNC.pending=false;renderSync('saving');
+  const snap=JSON.stringify(S);
+  try{const r=await api('PUT','/api/state',{base:SYNC.v,data:JSON.parse(snap)});
+    if(r.status===200){const j=await r.json();SYNC.v=j.version;SYNC.base=snap;renderSync(SYNC.pending?'saving':'ok');}
+    else if(r.status===409){const j=await r.json();const cur=JSON.parse(JSON.stringify(S));S=migrate(mergeState(JSON.parse(SYNC.base),cur,j.data));SYNC.v=j.version;SYNC.base=JSON.stringify(j.data);localSave();softRender();SYNC.pending=true;}
+    else if(r.status===401){SYNC.busy=false;pinModal('Tu clave ya no es válida. Ingresala de nuevo.');return;}
+    else{SYNC.pending=true;renderSync('error');}
+  }catch(e){SYNC.pending=true;renderSync('offline');}
+  SYNC.busy=false;
+  if(SYNC.pending){clearTimeout(SYNC.timer);SYNC.timer=setTimeout(push,SYNC.state==='offline'||SYNC.state==='error'?5000:300);}
+}
+async function poll(){
+  if(!SYNC.on||SYNC.busy||SYNC.pending||document.visibilityState!=='visible')return;
+  try{const r=await api('GET','/api/state?since='+SYNC.v);
+    if(r.status===204){if(SYNC.state!=='ok')renderSync('ok');return;}
+    if(r.status===401){pinModal('Tu clave ya no es válida. Ingresala de nuevo.');return;}
+    if(!r.ok)return;const j=await r.json();if(SYNC.pending||SYNC.busy)return;
+    if(j.data&&j.version!==SYNC.v)applyRemote(j);
+  }catch(e){renderSync('offline');}
+}
+async function syncStart(){
+  if(!/^https?:$/.test(location.protocol))return;
+  SYNC.pin=pinGet();let r;
+  try{r=await api('GET','/api/state');}catch(e){return;}
+  if(!(r.headers.get('content-type')||'').includes('application/json'))return;
+  if(r.status===401){pinModal(SYNC.pin?'La clave guardada no es correcta.':'');return;}
+  if(r.status===429){pinModal('Demasiados intentos. Esperá 15 minutos.');return;}
+  let j={};try{j=await r.json();}catch(e){return;}
+  if(!r.ok){toast(j.error||'El servidor no respondió bien.','bad');return;}
+  SYNC.on=true;SYNC.v=j.version||0;
+  if(!SYNC.polling){SYNC.polling=true;setInterval(poll,8000);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')poll();});window.addEventListener('online',()=>{if(SYNC.pending)push();else poll();});
+    window.addEventListener('beforeunload',e=>{if(SYNC.pending||SYNC.busy){e.preventDefault();e.returnValue='';}});}
+  if(!j.data){startModal();return;}
+  applyRemote(j);
+}
+function pinModal(msg){openModal({title:'Clave del taller',st:{pin:''},body:s=>`<p>El sistema está conectado a la base de datos del taller. Ingresá la clave para entrar desde este dispositivo.</p>${msg?`<div class="note bad">${esc(msg)}</div>`:''}<label class="field"><span>Clave</span><input id="pin-in" class="in" type="password" autocomplete="current-password" value="${esc(s.pin)}" data-m="pin" autofocus></label><p class="small muted">Se guarda en este dispositivo para no pedirla cada vez. La clave la configura el dueño en Vercel.</p>`,
+  foot:()=>`<button class="btn primary" data-act="pinOk">Entrar</button>`});}
+function startModal(){openModal({title:'Base de datos lista',st:{},body:()=>`<p>La base de datos del taller está vacía. ¿Con qué arrancamos? Lo que elijas se va a ver en todos los dispositivos.</p>
+  <div class="ulist"><button class="ubtn" data-act="startWith" data-v="local"><b>Subir lo de esta computadora</b><span>Usa lo que ya cargaste o probaste en este navegador.</span></button>
+  <button class="ubtn" data-act="startWith" data-v="vacio"><b>Empezar vacío</b><span>Sin productos ni ventas de ejemplo. Ideal para cargar tu stock con "Importar Excel".</span></button>
+  <button class="ubtn" data-act="startWith" data-v="demo"><b>Datos de ejemplo</b><span>Para probar el sistema con productos, clientes y ventas inventadas.</span></button></div>`});}
+
+/* Medios de pago compactos */
+function payTilesC(sel,cli,act){const L={efectivo:'Efectivo',transferencia:'Transferencia',mp:'Mercado Pago',debito:'Débito',credito1:'Crédito',credito3:'3 cuotas',cc:'Cuenta'};
+  return `<div class="paychips" role="radiogroup" aria-label="Medio de pago">${MEDIOS.filter(m=>m.id!=='cc'||(cli&&cli.cc)).map(m=>`<button type="button" class="pchip" role="radio" aria-checked="${m.id===sel}" data-act="${act}" data-v="${m.id}" title="${esc(m.n)}${m.r?` (+${Math.round(m.r*100)}% de recargo)`:''}">${L[m.id]}${m.r?`<small>+${Math.round(m.r*100)}%</small>`:''}</button>`).join('')}</div>`;}
+
+Object.assign(ACT,{
+  pinOk:()=>{const v=String(Mo.st.pin||'').trim();if(!v)fail('Escribí la clave.');SYNC.pin=v;pinSet(v);closeModal();syncStart();},
+  startWith:d=>{S=d.v==='vacio'?emptyData():d.v==='demo'?migrate(seed()):S;ui.draft=newDraft();ui.cart=[];SYNC.base=JSON.stringify({});closeModal();localSave();render();SYNC.v=SYNC.v||0;
+    (async()=>{try{const r=await api('PUT','/api/state',{base:SYNC.v,data:S});if(r.ok){const j=await r.json();SYNC.v=j.version;SYNC.base=JSON.stringify(S);renderSync('ok');toast('Listo: los datos ya están en la base del taller.');}else{const j=await r.json().catch(()=>({}));if(r.status===409&&j.data){applyRemote(j);toast('Otro dispositivo ya cargó datos. Se usan esos.','warn');}else toast('No se pudo subir. Probá de nuevo.','bad');}}catch(e){toast('Sin conexión. Probá de nuevo.','bad');}})();},
+  reset:()=>openModal({title:'Volver a empezar',st:{conf:'',modo:'demo'},body:s=>`${SYNC.on?'<div class="note bad">Esto cambia los datos en <b>todos los dispositivos</b> del taller.</div>':''}<p>Se borran las ventas, órdenes, productos y cambios cargados.</p><div class="pills" role="group" aria-label="Cómo empezar"><button data-act="mset" data-k="modo" data-v="demo" aria-pressed="${s.modo==='demo'}">Con datos de ejemplo</button><button data-act="mset" data-k="modo" data-v="vacio" aria-pressed="${s.modo==='vacio'}">Vacío</button></div><label class="field"><span>Para confirmar, escribí BORRAR</span><input id="rs-c" class="in" value="${esc(s.conf)}" data-m="conf" autocomplete="off"></label>`,foot:s=>`<button class="btn ghost" data-act="mclose">Cancelar</button><button class="btn danger" data-act="resetOk" ${String(s.conf).trim().toUpperCase()==='BORRAR'?'':'disabled'}>Borrar y empezar</button>`}),
+  resetOk:()=>{const modo=Mo&&Mo.st.modo;S=modo==='vacio'?emptyData():migrate(seed());save();ui.cart=[];ui.draft=newDraft();ui.clienteId='c1';ui.pagaCon='';closeModal();render();toast('Listo, se empezó de nuevo.');},
+  syncOut:()=>{pinSet('');location.reload();}
+});
+
 /* ---------- Eventos ---------- */
 document.addEventListener('click',e=>{
   if(!e.target.closest('[data-act="tip"]')&&!e.target.closest('#tipPop'))hideTip();
@@ -2084,7 +2179,7 @@ document.addEventListener('input',onField);
 document.addEventListener('change',onField);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){hideTip();if(Mo)closeModal();}if(e.key==='Enter'&&e.target.id==='fsrch'){e.preventDefault();const q=ui.draft.q.trim();const ex=q&&S.repuestos.find(x=>x.barras===q||norm(x.cod)===norm(q));if(ex){ui.draft.q='';scanAdd(q);return;}const r=fList().find(x=>x.stock-fInF(x.id)>0);if(r){try{ACT.fAdd({id:r.id});}catch(err){toast(err.message,'bad');}}}if(e.key==='Enter'&&e.target.id==='fcliq'){e.preventDefault();const b=document.querySelector('#factBox .fres button');b&&b.click();}});
 
-load();render();maybeWelcome();
+load();render();maybeWelcome();syncStart();
 </script>
 
 </body>
