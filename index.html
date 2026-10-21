@@ -4,12 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#000000">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Repuestos">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="application-name" content="Repuestos Core OS">
+<meta name="description" content="Ventas, stock, arreglos, clientes, envíos y caja del taller de repuestos.">
 <title>Repuestos Core OS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 body{margin:0}[hidden]{display:none!important}img{max-width:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 /* Layout: identidad VESA en un solo tema oscuro de alto contraste — barra lateral negra, superficies grafito y naranja como único acento; en móvil la barra pasa arriba */
 :root{
   --bg:#0C0C0D; --surface:#17171A; --surface-2:#202024; --line:#3A3A40; --line-2:#2A2A2F;
@@ -528,6 +538,58 @@ details.box summary{cursor:pointer;display:flex;gap:8px;align-items:baseline;fle
 .pchip[aria-checked="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
 .pchip[aria-checked="true"] small{color:var(--accent-ink)}
 .syncpill:empty{display:none}
+
+/* v4: panel de venta compacto */
+.fs-top{padding:8px 12px!important;gap:6px!important}
+.fs-top .fs-row{flex-wrap:nowrap}
+.fs-top .fs-row>.cpick{flex:1;min-width:0}
+.fs-top .fsearch .in{min-height:38px}
+.check.fx{white-space:nowrap;flex:none}
+.tchip.mini{padding:2px 7px 2px 2px;font-size:12px;gap:5px;flex:none}
+.tchip.mini b{width:22px;height:22px;font-size:15px}
+.cpick.one{padding:5px 8px;gap:8px;min-height:38px}
+.cp-n{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fs-items{padding:6px 12px!important}
+.ln{display:flex;align-items:center;gap:6px;min-height:38px;padding:3px 0;border-bottom:1px solid var(--line-2)}
+.lnw{border-bottom:1px solid var(--line-2)}
+.lnw .ln{border-bottom:0}
+.lnw.open{background:var(--surface-2);margin:0 -12px;padding:0 12px}
+.ln-n{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;background:none;border:0;padding:0;color:var(--fg);font:inherit;font-size:14px;font-weight:500;cursor:pointer}
+button.ln-n:hover{color:var(--accent)}
+.ln-dto{color:var(--good);font-weight:600}
+.ln-i{min-width:86px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:14px}
+.ln .qty.sm button{width:28px;height:28px;font-size:16px}
+.ln .qty.sm span{min-width:22px;font-size:14px}
+.ln .in{min-height:32px;padding:4px 8px;font-size:14px}
+.ln-d{flex:1 1 100px;min-width:70px}
+.ln.free{flex-wrap:wrap;row-gap:4px}
+@media (max-width:1100px){.ln-i{min-width:74px;font-size:13px}.ln-n{font-size:13.5px}.ln .qty.sm button{width:26px}.ln-p{width:76px}}
+.ln-p{width:86px;flex:none}
+.ln .xbtn{font-size:17px;padding:0 2px}
+.slot2{height:38px;flex:none;border-bottom:1px dashed var(--line-2);display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:13px}
+.fs-bot{padding:8px 12px 10px!important;gap:6px!important}
+.payrow{display:flex;gap:5px;align-items:center;overflow-x:auto;scrollbar-width:thin;padding-bottom:1px}
+.payrow .paychips{flex-wrap:nowrap}
+.pchip{padding:4px 9px;min-height:28px;font-size:12px;flex:none}
+.pchip.ghost{border-style:dashed;color:var(--muted);font-weight:500}
+.cashc .in{min-height:32px!important;font-size:16px!important;width:110px}
+.bill{padding:4px 7px;font-size:12px}
+.vc{font-size:17px}
+.fbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--line)}
+.ftot2{display:flex;flex-direction:column;line-height:1.05;flex:1 1 auto;min-width:0}
+.ftot2 .ftl{font-size:13px}
+.ftot2 .ftv{font-size:28px}
+.fbtns{display:flex;flex-direction:column;align-items:stretch;gap:3px;flex:1 1 190px;max-width:240px}
+.fbtns .btn.xl{min-height:46px;padding:8px 12px;font-size:17px;white-space:normal;line-height:1.1}
+.fbtns .linkbtn{align-self:center}
+@media (max-width:720px){.fbtns{max-width:none}}
+.installslot:empty{display:none}
+.ftop .installslot .bt{display:none}
+.ftop .installslot .btn{padding:5px 9px}
+.cgrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important}
+.ctile b{font-size:17px;overflow-wrap:anywhere;hyphens:auto}
+.side-foot .installslot .btn{width:100%}
+.installslot .btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .slot{height:49px;flex:none;border-bottom:1px dashed var(--line-2);display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:13.5px}
 .fmode .plist{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
 .fact2{grid-template-columns:minmax(0,1fr) clamp(300px,42%,460px)}
@@ -620,13 +682,14 @@ details.box summary{cursor:pointer;display:flex;gap:8px;align-items:baseline;fle
       <div class="brand-t">repuestos<span class="pt">.</span><small>Core OS</small></div>
     </div>
     <nav class="nav" id="nav" aria-label="Módulos"></nav>
-    <div class="side-foot"><button class="ubox" data-act="userModal"><span class="lbl-s">Usuario</span><b id="userLbl">Dueño</b><span class="cambiar">Cambiar</span></button><p class="side-note">Prototipo con datos de ejemplo. Lo que cargues queda guardado solo en este navegador.</p></div>
+    <div class="side-foot"><span class="installslot"></span><button class="ubox" data-act="userModal"><span class="lbl-s">Usuario</span><b id="userLbl">Dueño</b><span class="cambiar">Cambiar</span></button><p class="side-note">Prototipo con datos de ejemplo. Lo que cargues queda guardado solo en este navegador.</p></div>
   </aside>
   <main class="main">
     <div class="wrap">
       <header class="top">
         <div><p class="eyebrow" id="eyebrow"></p><h1 id="title"></h1></div>
         <div class="tools">
+          <span class="installslot"></span>
           <span class="syncpill"></span>
           <span id="cajaPill"></span>
           <button class="btn sm helpbtn" data-act="help"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.6a2.3 2.3 0 0 1 4.4.9c0 1.5-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg>Ayuda</button>
@@ -829,7 +892,7 @@ function render(){
   $('#eyebrow').textContent=EYEBROW[ui.view];
   document.body.classList.toggle('fmode',ui.view==='facturacion'&&ui.fTab==='nuevo');
   $('#userLbl').textContent=ROLES[ui.rol];
-  renderNav();renderPill();saveUi();hideTip();if(typeof renderSync==='function')renderSync();
+  renderNav();renderPill();saveUi();hideTip();if(typeof renderSync==='function')renderSync();if(typeof renderInstall==='function')renderInstall();
 }
 const EYEBROW={facturacion:'Tickets, facturas y presupuestos',mostrador:'Venta en el mostrador',stock:'Repuestos del taller',ot:'Piezas que dejan para reparar',clientes:'Datos y cuentas de clientes',envios:'Pedidos para mandar',caja:'La plata del día'};
 function renderNav(){
@@ -1437,7 +1500,7 @@ function fiscalModal(){
 function vFact(){
   const p=pendientes();const F=S.fiscal;
   const np=S.presus.filter(x=>presuEstado(x)==='Vigente').length;const tabs=[['nuevo','Vender'],['presu',`Presupuestos${np?' · '+np:''}`],['emit','Ventas hechas']].concat(dueno()?[['libro','Libro IVA']]:[]);
-  const head=`<div class="ftop"><div class="pills" role="group" aria-label="Secciones de facturación">${tabs.map(([k,l])=>`<button data-act="fTab" data-v="${k}" aria-pressed="${ui.fTab===k}">${l}</button>`).join('')}</div><span class="spacer"></span><span class="fm-only syncpill"></span><span class="fm-only">${S.caja.abierta?'':'<button class="chip bad" data-act="go" data-v="caja"><span class="dot"></span>Caja cerrada</button>'}</span><button class="btn sm ghost helpbtn" data-act="prnCfg" title="Impresora" aria-label="Impresora"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 7.5V3h9v4.5M5.5 14H3.5v-6.5h13V14h-2"/><path d="M5.5 11.5h9V17h-9z"/></svg><span class="bt">Impresora</span></button>${dueno()?`<button class="btn sm ghost helpbtn" data-act="fiscalEdit" title="${esc(F.fantasia)} · ${F.cond==='RI'?'Resp. Inscripto':'Monotributo'} · P.V. ${pad5(F.pv)}" aria-label="Datos fiscales"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 17h14M4.5 17V8.5L10 4l5.5 4.5V17M8 17v-4h4v4"/></svg><span class="bt">Datos fiscales</span></button>`:''}<button class="btn sm fm-only helpbtn" data-act="help" title="Ayuda" aria-label="Ayuda"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.6a2.3 2.3 0 0 1 4.4.9c0 1.5-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg><span class="bt">Ayuda</span></button></div>`;
+  const head=`<div class="ftop"><div class="pills" role="group" aria-label="Secciones de facturación">${tabs.map(([k,l])=>`<button data-act="fTab" data-v="${k}" aria-pressed="${ui.fTab===k}">${l}</button>`).join('')}</div><span class="spacer"></span><span class="fm-only installslot"></span><span class="fm-only syncpill"></span><span class="fm-only">${S.caja.abierta?'':'<button class="chip bad" data-act="go" data-v="caja"><span class="dot"></span>Caja cerrada</button>'}</span><button class="btn sm ghost helpbtn" data-act="prnCfg" title="Impresora" aria-label="Impresora"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 7.5V3h9v4.5M5.5 14H3.5v-6.5h13V14h-2"/><path d="M5.5 11.5h9V17h-9z"/></svg><span class="bt">Impresora</span></button>${dueno()?`<button class="btn sm ghost helpbtn" data-act="fiscalEdit" title="${esc(F.fantasia)} · ${F.cond==='RI'?'Resp. Inscripto':'Monotributo'} · P.V. ${pad5(F.pv)}" aria-label="Datos fiscales"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 17h14M4.5 17V8.5L10 4l5.5 4.5V17M8 17v-4h4v4"/></svg><span class="bt">Datos fiscales</span></button>`:''}<button class="btn sm fm-only helpbtn" data-act="help" title="Ayuda" aria-label="Ayuda"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.6a2.3 2.3 0 0 1 4.4.9c0 1.5-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg><span class="bt">Ayuda</span></button></div>`;
   const body=ui.fTab==='presu'?fPresu():ui.fTab==='pend'?fPend(p):ui.fTab==='emit'?fEmit(p):ui.fTab==='libro'&&dueno()?fLibro():fNuevo();
   return `<div class="fstack">${head}${body}</div>`;
 }
@@ -1459,7 +1522,7 @@ function fEmit(p){
   return `<div class="kpis">${tile('Vendido hoy',money(hoyT),`${fisc.filter(c=>isToday(c.fecha)).length} comprobantes`)}${tile('Vendido en el mes',money(mesT),`${mesC.length} comprobantes, neto de NC`)}${tile('IVA débito del mes',money(ivaM),'Facturas A y B')}${tile('Tickets del mes',S.comps.filter(c=>c.tipo==='X'&&ym(c.fecha)===mes).length,'sin factura: '+S.comps.filter(c=>c.tipo==='X'&&!c.facturadaEn&&!c.anuladoPor&&ym(c.fecha)===mes).length)}</div>
   <div class="panel"><div class="tbar"><input id="fq" class="in grow" type="search" value="${esc(ui.fq)}" data-bind="fq" placeholder="Buscar por cliente, documento o número" aria-label="Buscar comprobante">
     <select id="fTipo" class="in" data-bind="fTipo" aria-label="Tipo"><option value="">Todos los tipos</option>${['FA','FB','FC','X'].map(t=>`<option value="${t}" ${ui.fTipo===t?'selected':''}>${T_LBL[t]}</option>`).join('')}<option value="NC" ${ui.fTipo==='NC'?'selected':''}>Notas de crédito</option></select>
-    <div class="pills" role="group" aria-label="Período">${rg('hoy','Hoy')}${rg('mes','Este mes')}${rg('todo','Todo')}</div></div>
+    <div class="pills" role="group" aria-label="Período">${rg('hoy','Hoy')}${rg('mes','Este mes')}${rg('todo','Todo')}</div>${olderBtn()}</div>
   <div class="tw"><table><thead><tr><th>Fecha</th><th>Comprobante</th><th>Cliente</th><th class="r">Neto</th><th class="r">IVA</th><th class="r">Total</th><th>Estado</th><th></th></tr></thead><tbody>${list.map(c=>{const disc=c.letra==='A'||c.letra==='B';const an=c.anuladoPor&&S.comps.find(x=>x.id===c.anuladoPor);const neg=isNC(c.tipo)?'−':'';
     return `<tr><td class="tnum">${fdt(c.fecha)}</td><td><span class="row" style="flex-wrap:nowrap"><span class="lchip">${c.letra}</span><span><span class="nm">${T_LBL[c.tipo]}</span><div class="code">${compNro(c)}</div></span></span></td><td><div class="nm">${esc(c.rec.nombre)}</div><div class="small muted">${fmtDoc(c.rec)}</div></td><td class="r">${disc?neg+m2(c.n21+c.n105):'—'}</td><td class="r">${disc?neg+m2(c.i21+c.i105):'—'}</td><td class="r"><strong>${neg}${m2(c.total)}</strong></td>
     <td>${an?`<span class="chip bad">Anulada · NC ${pad8(an.nro)}</span>`:isNC(c.tipo)?`<span class="chip info">Anula ${pad8(c.asoc.nro)}</span>`:'<span class="chip good">Vigente</span>'}</td>
@@ -1478,7 +1541,7 @@ function fLibro(){
   const res=order.filter(t=>cs.some(c=>c.tipo===t)).map(t=>{const g=cs.filter(c=>c.tipo===t);const s=sum(g);return `<tr><td><span class="row" style="flex-wrap:nowrap"><span class="lchip">${letraDe(t)}</span>${T_LBL[t]}</span></td><td class="r">${g.length}</td><td class="r">${m2(s.n21)}</td><td class="r">${m2(s.i21)}</td><td class="r">${m2(s.n105)}</td><td class="r">${m2(s.i105)}</td><td class="r">${m2(s.tot)}</td></tr>`;}).join('');
   const f=n=>round2(n).toFixed(2).replace('.',',');
   LIBRO_CSV=['Fecha;Tipo;Punto de venta;Número;Receptor;Documento;Condición IVA;Neto 21%;IVA 21%;Neto 10,5%;IVA 10,5%;Total'].concat(cs.map(c=>{const g=sg(c);return [fdFull(c.fecha),T_LBL[c.tipo],pad5(c.pv),pad8(c.nro),c.rec.nombre,fmtDoc(c.rec),COND_IVA[c.rec.cond],f(g*c.n21),f(g*c.i21),f(g*c.n105),f(g*c.i105),f(g*c.total)].join(';');})).join('\n');
-  return `<div class="panel"><div class="tbar"><select id="libroMes" class="in" data-bind="libroMes" aria-label="Período">${months.map(m=>`<option value="${m}" ${m===ui.libroMes?'selected':''}>${mLbl(m)}</option>`).join('')||`<option>${mLbl(ui.libroMes)}</option>`}</select><span class="small muted">Base para la declaración de IVA. Revisala con tu contador antes de presentar.</span><span class="spacer"></span><button class="btn" data-act="libroCsv" ${cs.length?'':'disabled'}>Copiar CSV</button></div>
+  return `<div class="panel"><div class="tbar"><select id="libroMes" class="in" data-bind="libroMes" aria-label="Período">${months.map(m=>`<option value="${m}" ${m===ui.libroMes?'selected':''}>${mLbl(m)}</option>`).join('')||`<option>${mLbl(ui.libroMes)}</option>`}</select><span class="small muted">Base para la declaración de IVA. Revisala con tu contador antes de presentar.</span><span class="spacer"></span>${olderBtn()}<button class="btn" data-act="libroCsv" ${cs.length?'':'disabled'}>Copiar CSV</button></div>
   <div class="kpis" style="padding:14px">${tile('Débito fiscal',money(T.i21+T.i105),'IVA 21% + 10,5%')}${tile('Neto gravado',money(T.n21+T.n105),'Facturas A y B')}${tile('Total facturado',money(T.tot),`${cs.length} comprobantes`)}</div>
   <div class="tw"><table><thead><tr><th>Tipo</th><th class="r">Cant.</th><th class="r">Neto 21%</th><th class="r">IVA 21%</th><th class="r">Neto 10,5%</th><th class="r">IVA 10,5%</th><th class="r">Total</th></tr></thead><tbody>${res||'<tr><td colspan="7"><div class="empty">Sin comprobantes en el período.</div></td></tr>'}</tbody>${cs.length?`<tfoot><tr><td>Total del período</td><td class="r">${cs.length}</td><td class="r">${m2(T.n21)}</td><td class="r">${m2(T.i21)}</td><td class="r">${m2(T.n105)}</td><td class="r">${m2(T.i105)}</td><td class="r">${m2(T.tot)}</td></tr></tfoot>`:''}</table></div></div>
   <div class="panel"><div class="ph"><h2>Detalle de comprobantes</h2><span class="sub">${mLbl(ui.libroMes)}</span></div><div class="tw"><table><thead><tr><th>Fecha</th><th>Comprobante</th><th>Receptor</th><th>Documento</th><th class="r">Neto</th><th class="r">IVA</th><th class="r">Total</th></tr></thead><tbody>${cs.map(c=>{const n=isNC(c.tipo)?'−':'';const disc=c.letra!=='C';return `<tr><td class="tnum">${fdFull(c.fecha)}</td><td><button class="btn sm ghost code" style="padding:2px 0" data-act="compVer" data-id="${c.id}">${T_LBL[c.tipo].replace('Nota de crédito','NC').replace('Factura','Fact.')} ${compNro(c)}</button></td><td>${esc(c.rec.nombre)}</td><td class="small">${fmtDoc(c.rec)}</td><td class="r">${disc?n+m2(c.n21+c.n105):'—'}</td><td class="r">${disc?n+m2(c.i21+c.i105):'—'}</td><td class="r">${n}${m2(c.total)}</td></tr>`;}).join('')||'<tr><td colspan="7"><div class="empty">Sin comprobantes.</div></td></tr>'}</tbody></table></div></div>`;
@@ -1603,7 +1666,7 @@ function hideTip(){const p=$('#tipPop');if(p)p.hidden=true;}
 function introHTML(){const t=INTRO[ui.view];if(!t||ui.introOff[ui.view])return '';
   return `<div class="intro"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M10 9v5M10 6.2v.1"/></svg><p>${t}</p><div class="row" style="flex-wrap:nowrap"><button class="btn sm ghost" data-act="help">Ver cómo se usa</button><button class="xbtn" data-act="introX" aria-label="Ocultar esta ayuda" title="Ocultar">×</button></div></div>`;}
 function helpModal(){const h=HELP[ui.view];
-  openModal({title:h.t,wide:true,st:{},body:()=>`<ol class="hsteps">${h.steps.map(s=>`<li>${s}</li>`).join('')}</ol>${h.extra?`<p class="note acc">${h.extra}</p>`:''}${h.terms.length?`<div class="box"><h4>Palabras que vas a ver</h4><dl class="gloss">${h.terms.map(k=>`<div><dt>${GLOSS[k][0]}</dt><dd>${GLOSS[k][1]}</dd></div>`).join('')}</dl></div>`:''}${SYNC.on?`<div class="box"><h4>Base de datos del taller</h4><p class="small">Conectado: los cambios se ven en todos los dispositivos en pocos segundos.</p><div><button class="btn sm ghost" data-act="syncOut">Salir en este dispositivo</button></div></div>`:''}<div class="box"><h4>Probar el sistema</h4><p class="small muted">Es un prototipo con datos de ejemplo. Podés probarlo como otro usuario o volver a los datos de ejemplo cuando quieras.</p><div class="row"><button class="btn sm" data-act="userModal">Cambiar usuario</button><button class="btn sm ghost" data-act="welcome">Ver la bienvenida</button><button class="btn sm ghost" data-act="reset">Volver a los datos de ejemplo</button></div></div>`,
+  openModal({title:h.t,wide:true,st:{},body:()=>`<ol class="hsteps">${h.steps.map(s=>`<li>${s}</li>`).join('')}</ol>${h.extra?`<p class="note acc">${h.extra}</p>`:''}${h.terms.length?`<div class="box"><h4>Palabras que vas a ver</h4><dl class="gloss">${h.terms.map(k=>`<div><dt>${GLOSS[k][0]}</dt><dd>${GLOSS[k][1]}</dd></div>`).join('')}</dl></div>`:''}${SYNC.on?`<div class="box"><h4>Base de datos del taller</h4><p class="small">Conectado: los cambios se ven en todos los dispositivos en pocos segundos.</p><div><button class="btn sm ghost" data-act="syncOut">Salir en este dispositivo</button></div></div>`:''}<div class="box"><h4>Usar como app</h4><p class="small muted">Instalalo en la PC, el celular o la tablet: queda con su ícono, se abre en su propia ventana y funciona aunque se corte internet.</p><div><button class="btn sm" data-act="installHelp">Cómo instalarla</button></div></div><div class="box"><h4>Probar el sistema</h4><p class="small muted">Es un prototipo con datos de ejemplo. Podés probarlo como otro usuario o volver a los datos de ejemplo cuando quieras.</p><div class="row"><button class="btn sm" data-act="userModal">Cambiar usuario</button><button class="btn sm ghost" data-act="welcome">Ver la bienvenida</button><button class="btn sm ghost" data-act="reset">Volver a los datos de ejemplo</button></div></div>`,
     foot:()=>`<button class="btn primary" data-act="mclose">Entendido</button>`});}
 function userModal(){openModal({title:'¿Quién usa el sistema?',st:{},body:()=>`<p class="small muted">Cada usuario ve solo lo que necesita. En el sistema final cada uno entra con su usuario y contraseña.</p><div class="ulist">${[['dueno','Dueño','Ve todo: costos, precios, caja y reportes.'],['mostrador','Mostrador','Vende, factura, cobra y carga clientes.'],['tecnico','Técnico','Ve los arreglos y el stock. No cobra.']].map(([k,n,d])=>`<button class="ubtn" data-act="setRol" data-v="${k}" aria-pressed="${ui.rol===k}"><b>${n}</b><span>${d}</span></button>`).join('')}</div>`});}
 function welcomeModal(){openModal({title:'Bienvenido',st:{},body:()=>`<p>Este sistema reemplaza el cuaderno y la calculadora del mostrador. Un día de trabajo tiene tres pasos:</p><ol class="hsteps"><li><span><b>Abrí la caja.</b> Al llegar, contá la plata del cajón y anotala en "Caja".</span></li><li><span><b>Vendé.</b> En "Vender" tocás los productos, elegís cómo paga y sale el ticket. Si piden factura, marcás "Pide factura".</span></li><li><span><b>Cerrá la caja.</b> Al irte, contá el efectivo. El sistema te dice si falta o sobra.</span></li></ol><p class="note acc">Si te perdés, tocá <b>Ayuda</b> arriba a la derecha. Los botones <span class="tip" aria-hidden="true">?</span> explican qué significa cada palabra.</p>`,
@@ -1856,68 +1919,6 @@ function cliPicker(d,cli,lock){
 }
 
 /* --- Venta unificada --- */
-function fNuevo(){
-  const d=ui.draft;const cli=C(d.cliente)||S.clientes[0];const tipo=tipoDraft();const letra=letraDe(tipo);const lock=!!d.origen;const fact=tipo!=='X';
-  const k=calcComp(d.items);const gk={FA:'fa',FB:'fb',FC:'fc',X:'x'}[tipo];const showIva=letra==='A'||letra==='B';
-  const nU=d.items.reduce((a,i)=>a+num(i.q),0);
-  /* izquierda */
-  let left;
-  if(lock)left=`<div class="panel fcat"><div class="empty" style="margin:auto"><strong>Factura del ${esc(d.origen.ref)}.</strong>Lleva lo que ya se vendió y se cobró, por eso no se agregan productos.<div style="margin-top:14px"><button class="btn sm" data-act="fDiscard">Volver a vender</button></div></div></div>`;
-  else{
-    const cats=[...new Set(S.repuestos.map(r=>r.cat))].sort();const home=!d.cat&&!d.q.trim();
-    const top=`<div class="fcat-top"><div class="frow2"><div class="fsearch"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5v10M5.5 5v10M8 5v10M11 5v10M13 5v10M15.5 5v10M17 5v10"/></svg><input id="fsrch" class="in" type="search" data-fd="q" value="${esc(d.q)}" placeholder='Escaneá el código o buscá: "pastillas", "cg 150"' aria-label="Escanear o buscar producto" autocomplete="off"></div>
-        <button class="btn sm" data-act="fConcept" data-v="Mano de obra">+ Mano de obra</button><button class="btn sm" data-act="fEnvio">+ Envío</button><button class="btn sm" data-act="fConcept" data-v="">+ Otro</button></div>
-      ${home?'':`<div class="chips" role="tablist" aria-label="Categorías"><button class="chip back" data-act="fClr">← Categorías</button><button class="chip ${d.cat==='*'&&!d.q.trim()?'acc':''}" role="tab" aria-selected="${d.cat==='*'}" data-act="fCat" data-v="*">Todo</button>${cats.map(c=>`<button class="chip ${d.cat===c&&!d.q.trim()?'acc':''}" role="tab" aria-selected="${d.cat===c}" data-act="fCat" data-v="${esc(c)}">${esc(c)}</button>`).join('')}</div>`}</div>`;
-    let body;
-    if(home&&!S.repuestos.length)body='<div class="empty"><strong>Todavía no hay productos cargados.</strong>Cargalos en Stock con "Importar Excel" o "Nuevo repuesto".<div style="margin-top:12px"><button class="btn sm primary" data-act="go" data-v="stock">Ir a Stock</button></div></div>';
-    else if(home)body=`<div class="cgrid">${cats.map(c=>{const n=S.repuestos.filter(r=>r.cat===c).length;const lleva=d.items.filter(it=>it.r&&R(it.r)&&R(it.r).cat===c).reduce((x,it)=>x+num(it.q),0);return `<button class="ctile" data-act="fCat" data-v="${esc(c)}"><svg viewBox="0 0 24 24" aria-hidden="true">${CAT_IC[c]||CAT_IC._}</svg><b>${esc(c)}</b><span>${n} ${n===1?'producto':'productos'}</span>${lleva?`<i>lleva ${fQ(lleva)}</i>`:''}</button>`;}).join('')}<button class="ctile all" data-act="fCat" data-v="*"><svg viewBox="0 0 24 24" aria-hidden="true">${CAT_IC.all}</svg><b>Ver todo</b><span>${S.repuestos.length} productos</span></button></div>`;
-    else{const list=fList();
-      const rows=list.length?list.map(r=>{const q=fInF(r.id);const sin=r.stock-q<=0;return `<button class="prod ${q?'in':''}" data-act="fAdd" data-id="${r.id}" ${sin?'disabled':''}><span class="pn"><span class="n">${esc(r.nombre)}</span><span class="meta"><span class="code">${esc(r.cod)}</span>${condChip(r)}<span>${esc(compatTxt(r,2))}</span>${stockChip(r)}</span></span><span class="pp"><span class="price">${money(precio(r,cli.lista))}</span><span class="add">${r.stock<=0?'Sin stock':sin?'No hay más':q?`Lleva ${q} · +1`:'+ Agregar'}</span></span></button>`;}).join('')
-        :`<div class="empty"><strong>${d.q?`No encontramos "${esc(d.q)}".`:'No hay productos en esta categoría.'}</strong>Probá con otra palabra. Si es un código nuevo, cargalo en Stock.</div>`;
-      const title=d.q.trim()?`Resultados para "${esc(d.q)}"`:d.cat==='*'?'Todos los productos':esc(d.cat);
-      body=`<div class="cathead"><b>${title}</b><span class="sub">${list.length} ${list.length===1?'producto':'productos'}</span></div>${rows}`;}
-    left=`<div class="panel fcat">${top}<div class="plist" data-keep-scroll="plist-${esc(d.cat)}-${esc(d.q)}">${body}</div></div>`;
-  }
-  /* derecha */
-  const lines=d.items.map((it,i)=>{const free=!it.r;const imp=round2(num(it.q)*num(it.pu)*(1-num(it.dto)/100));
-    if(lock)return `<div class="fl2"><span class="fl2-n">${esc(it.d)}<small>${fQ(it.q)} × ${m2(num(it.pu))}</small></span><strong class="num">${m2(imp)}</strong></div>`;
-    const qty=`<div class="qty sm"><button data-act="fQty" data-ix="${i}" data-d="-1" aria-label="Uno menos">−</button><span>${fQ(it.q)}</span><button data-act="fQty" data-ix="${i}" data-d="1" aria-label="Uno más">+</button></div>`;
-    const x=`<button class="xbtn" data-act="fRm" data-ix="${i}" aria-label="Quitar ${esc(it.d||'concepto')}" title="Quitar">×</button>`;
-    if(free)return `<div class="fl2wrap free"><div class="fl2"><input id="fi-${i}-d" class="in" style="flex:1;min-width:0" data-fi="${i}:d" value="${esc(it.d)}" placeholder="¿Qué es? Ej: Cambio de aceite" aria-label="Descripción">${x}</div><div class="fl2"><input id="fi-${i}-pu" class="in r" style="width:116px" type="text" inputmode="decimal" data-fi="${i}:pu" value="${esc(it.pu)}" placeholder="Precio" aria-label="Precio">${qty}<span class="spacer"></span><strong class="num">${m2(imp)}</strong><span style="width:24px"></span></div></div>`;
-    const ed=d.edit===i?`<div class="fl-edit"><label class="field"><span>Precio c/u</span><input id="fi-${i}-pu" class="in r" type="text" inputmode="decimal" data-fi="${i}:pu" value="${esc(it.pu)}"></label><label class="field"><span>Descuento %</span><input id="fi-${i}-dto" class="in r" type="text" inputmode="decimal" data-fi="${i}:dto" value="${esc(it.dto)}"></label>${showIva?`<label class="field"><span>IVA</span><select id="fi-${i}-iva" class="in" data-fi="${i}:iva"><option value="21" ${num(it.iva)!==10.5?'selected':''}>21%</option><option value="10.5" ${num(it.iva)===10.5?'selected':''}>10,5%</option></select></label>`:''}<button class="btn sm" data-act="fEdit" data-ix="-1">Listo</button></div>`:'';
-    return `<div class="fl2wrap"><div class="fl2"><button class="fl2-n" data-act="fEdit" data-ix="${d.edit===i?-1:i}" title="Cambiar precio o descuento">${esc(it.d)}<small>${m2(num(it.pu))} c/u${num(it.dto)?` · −${fQ(it.dto)}%`:''} · <u>cambiar</u></small></button>${qty}<strong class="num">${m2(imp)}</strong>${x}</div>${ed}</div>`;}).join('');
-  const slots=Array.from({length:Math.max(0,5-d.items.length)},(_,n)=>`<div class="slot">${!d.items.length&&n===0?'Tocá un producto o escaneá el código':''}</div>`).join('');
-  const envBox=d.envio&&!lock?`<div class="envbox"><div class="row"><b class="small">Envío a domicilio</b><span class="spacer"></span><button class="xbtn" data-act="fEnvioOff" aria-label="Quitar el envío" title="Quitar el envío">×</button></div><div class="fgrid" style="grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:6px"><select id="fenvm" class="in" data-fd="envMod" aria-label="Cómo se manda">${Object.entries(ENV_MOD).map(([k2,v])=>`<option value="${k2}" ${k2===d.envMod?'selected':''}>${v}</option>`).join('')}</select><input id="fenvd" class="in" data-fd="envDest" value="${esc(d.envDest||'')}" placeholder="Dirección o localidad" aria-label="Dirección del envío"></div></div>`:'';
-  let pay;
-  if(lock)pay=`<div class="paid">Ya cobrado: ${d.pagos.map(p=>`${pagoLbl(p.medio)} ${m2(num(p.monto))}`).join(' + ')}</div>`;
-  else if(d.split)pay=splitHTML(d,k);
-  else{const sel=d.condVenta==='cc'?'cc':d.pagos[0].medio;pay=`${payTilesC(sel,cli,'fMedio')}${sel==='efectivo'&&k.total?cashC(k.total,d.pagaCon):''}${d.condVenta==='cc'?`<p class="small muted">Se anota en la cuenta de ${esc(cli.nombre)}. Le quedan ${money(cli.limite-cli.deuda)}.</p>`:''}`;}
-  const payList=lock||d.condVenta==='cc'?[]:d.split?d.pagos:[d.pagos[0]];
-  const recM=payList.map(p=>MED(p.medio)).filter(m=>m.r>0).sort((a,b)=>b.r-a.r)[0];
-  const hasRec=d.items.some(i=>String(i.d).indexOf('Recargo financiero')===0);
-  const cf=cli.id==='c1';
-  const idRow=cf&&fact?(d.showId||d.recNombre||d.recDoc?`<div class="fgrid" style="grid-template-columns:1fr 1fr;gap:6px;flex:1"><input id="frn" class="in" data-fd="recNombre" value="${esc(d.recNombre)}" placeholder="Nombre" aria-label="Nombre del consumidor"><input id="frd" class="in" data-fd="recDoc" value="${esc(d.recDoc)}" inputmode="numeric" placeholder="DNI" aria-label="DNI"></div>`:`${lock?'':'<button class="linkbtn" data-act="fIdent">+ Nombre y DNI en la factura</button>'}`):'';
-  const docRow=lock?`<span class="tchip"><b>${letra}</b>${T_LBL[tipo]}</span>`:`<label class="check small"><input id="ffact" type="checkbox" data-fd="factura" ${d.factura?'checked':''}> Pide factura</label>${fact?`<span class="tchip"><b>${letra}</b>${T_LBL[tipo]}${tipBtn(gk)}</span>`:`<span class="tchip x"><b>T</b>Ticket${tipBtn('ticket')}</span>`}`;
-  const mainLbl=lock?`Hacer ${T_LBL[tipo]}`:d.condVenta==='cc'?(fact?'Facturar a la cuenta':'Anotar en la cuenta'):fact?'Cobrar y facturar':'Cobrar';
-  const right=`<aside class="panel fside" id="factBox" aria-label="Venta">
-    <div class="fs-top">${cliPicker(d,cli,lock)}<div class="fs-row small">${idRow}<span class="spacer"></span>${docRow}</div></div>
-    <div class="fs-items" data-keep-scroll="fsitems">
-      <div class="fs-ih"><span class="lbl-s">Lleva${nU?` · ${fQ(nU)}`:''}</span><span class="spacer"></span>${lock?'':`<button class="linkbtn" data-act="fObs">${d.obs?'Editar nota':'+ Nota'}</button>${d.items.length?'<button class="linkbtn" data-act="fDiscard">Vaciar</button>':''}`}</div>
-      ${lines}${slots}${envBox}
-      ${d.showObs||d.obs?`<textarea id="fobs" class="in" data-fd="obs" rows="2" placeholder="Nota para que salga impresa. Ej: Garantía 3 meses" aria-label="Nota">${esc(d.obs)}</textarea>`:''}
-    </div>
-    <div class="fs-bot">
-      <div class="fs-ih"><span class="lbl-s">${lock?'Cobro':'¿Cómo paga?'}</span><span class="spacer"></span>${!lock&&!d.split&&d.condVenta!=='cc'?'<button class="linkbtn" data-act="fPagoAdd">Dos medios</button>':''}${lock?'':`<button class="linkbtn presu-link" data-act="presuSave" ${d.items.length?'':'disabled'}>Presupuesto</button>`}</div>
-      ${pay}
-      ${recM&&!hasRec&&k.total?`<div class="note warn small">${recM.n}: +${Math.round(recM.r*100)}% de recargo. <button class="linkbtn" data-act="fRecargo">Sumarlo</button></div>`:''}
-      ${!S.caja.abierta&&!lock&&d.condVenta!=='cc'?'<div class="note bad small">La caja está cerrada. <button class="linkbtn" data-act="go" data-v="caja">Abrir caja</button></div>':''}
-      <div class="ftot"><div><span class="ftl">Total</span>${letra==='A'?`<span class="small muted">Neto ${m2(k.n21+k.n105)} + IVA ${m2(k.i21+k.i105)}</span>`:letra==='B'?`<span class="small muted">IVA incluido ${m2(round2(k.i21+k.i105))}</span>`:''}</div><span class="ftv">${m2(k.total)}</span></div>
-      <div class="fs-btns">${CAN_PRINT?`<button class="btn primary xl" data-act="fEmitPrint" ${d.items.length?'':'disabled'}>${mainLbl} e imprimir</button><button class="btn" data-act="fEmit" ${d.items.length?'':'disabled'} title="Sin imprimir">Sin imprimir</button>`:`<button class="btn primary xl" data-act="fEmit" ${d.items.length?'':'disabled'}>${mainLbl}</button>`}</div>
-      ${lock?'':`<button class="btn ghost sm presu-btn" data-act="presuSave" ${d.items.length?'':'disabled'}>${d.presuId?'Actualizar el presupuesto':'Guardar como presupuesto'}</button>`}
-    </div></aside>`;
-  const mbar=d.items.length?`<div class="mbar"><button class="btn primary" data-act="toFact">Ver la venta (${fQ(nU)}) · ${m2(k.total)}</button></div><div class="has-mbar"></div>`:'';
-  return `<div class="fact2">${left}${right}</div>${mbar}`;
-}
 function cobrarDraft(print){
   const d=ui.draft;
   if(d.envio&&!d.origen&&!String(d.envDest||'').trim()){const f=document.getElementById('fenvd');f&&f.focus();fail('Completá la dirección del envío.');}
@@ -2144,6 +2145,314 @@ Object.assign(ACT,{
   resetOk:()=>{const modo=Mo&&Mo.st.modo;S=modo==='vacio'?emptyData():migrate(seed());save();ui.cart=[];ui.draft=newDraft();ui.clienteId='c1';ui.pagaCon='';closeModal();render();toast('Listo, se empezó de nuevo.');},
   syncOut:()=>{pinSet('');location.reload();}
 });
+
+/* ================= v4: panel de venta compacto ================= */
+function cliPickerC(d,cli,lock){
+  if(cli.id!=='c1')return `<div class="cpick sel one" title="${esc(cli.nombre)} · ${esc(fmtDoc(cli))}"><span class="cp-n"><b>${esc(cli.nombre)}</b> <span class="small muted">${fmtDoc(cli)}${cli.cc?` · cuenta: ${money(cli.limite-cli.deuda)}`:''}</span></span>${lock?'':`<button class="linkbtn" data-act="fCliData" data-id="${cli.id}">datos</button><button class="xbtn" data-act="fCliClear" aria-label="Sacar el cliente" title="Sacar el cliente">×</button>`}</div>`;
+  if(lock)return `<div class="cpick sel one"><span class="cp-n"><b>Consumidor final</b></span></div>`;
+  return cliPicker(d,cli,lock);
+}
+function fNuevo(){
+  const d=ui.draft;const cli=C(d.cliente)||S.clientes[0];const tipo=tipoDraft();const letra=letraDe(tipo);const lock=!!d.origen;const fact=tipo!=='X';
+  const k=calcComp(d.items);const gk={FA:'fa',FB:'fb',FC:'fc',X:'ticket'}[tipo];const showIva=letra==='A'||letra==='B';
+  const nU=d.items.reduce((a,i)=>a+num(i.q),0);
+  /* izquierda: igual que antes */
+  let left;
+  if(lock)left=`<div class="panel fcat"><div class="empty" style="margin:auto"><strong>Factura del ${esc(d.origen.ref)}.</strong>Lleva lo que ya se vendió y se cobró, por eso no se agregan productos.<div style="margin-top:14px"><button class="btn sm" data-act="fDiscard">Volver a vender</button></div></div></div>`;
+  else{
+    const cats=[...new Set(S.repuestos.map(r=>r.cat))].sort();const home=!d.cat&&!d.q.trim();
+    const top=`<div class="fcat-top"><div class="frow2"><div class="fsearch"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5v10M5.5 5v10M8 5v10M11 5v10M13 5v10M15.5 5v10M17 5v10"/></svg><input id="fsrch" class="in" type="search" data-fd="q" value="${esc(d.q)}" placeholder='Escaneá el código o buscá: "pastillas", "cg 150"' aria-label="Escanear o buscar producto" autocomplete="off"></div>
+        <button class="btn sm" data-act="fConcept" data-v="Mano de obra">+ Mano de obra</button><button class="btn sm" data-act="fEnvio">+ Envío</button><button class="btn sm" data-act="fConcept" data-v="">+ Otro</button></div>
+      ${home?'':`<div class="chips" role="tablist" aria-label="Categorías"><button class="chip back" data-act="fClr">← Categorías</button><button class="chip ${d.cat==='*'&&!d.q.trim()?'acc':''}" role="tab" aria-selected="${d.cat==='*'}" data-act="fCat" data-v="*">Todo</button>${cats.map(c=>`<button class="chip ${d.cat===c&&!d.q.trim()?'acc':''}" role="tab" aria-selected="${d.cat===c}" data-act="fCat" data-v="${esc(c)}">${esc(c)}</button>`).join('')}</div>`}</div>`;
+    let body;
+    if(home&&!S.repuestos.length)body='<div class="empty"><strong>Todavía no hay productos cargados.</strong>Cargalos en Stock con "Importar Excel" o "Nuevo repuesto".<div style="margin-top:12px"><button class="btn sm primary" data-act="go" data-v="stock">Ir a Stock</button></div></div>';
+    else if(home)body=`<div class="cgrid">${cats.map(c=>{const n=S.repuestos.filter(r=>r.cat===c).length;const lleva=d.items.filter(it=>it.r&&R(it.r)&&R(it.r).cat===c).reduce((x,it)=>x+num(it.q),0);return `<button class="ctile" data-act="fCat" data-v="${esc(c)}"><svg viewBox="0 0 24 24" aria-hidden="true">${CAT_IC[c]||CAT_IC._}</svg><b>${esc(c)}</b><span>${n} ${n===1?'producto':'productos'}</span>${lleva?`<i>lleva ${fQ(lleva)}</i>`:''}</button>`;}).join('')}<button class="ctile all" data-act="fCat" data-v="*"><svg viewBox="0 0 24 24" aria-hidden="true">${CAT_IC.all}</svg><b>Ver todo</b><span>${S.repuestos.length} productos</span></button></div>`;
+    else{const list=fList();
+      const rows=list.length?list.map(r=>{const q=fInF(r.id);const sin=r.stock-q<=0;return `<button class="prod ${q?'in':''}" data-act="fAdd" data-id="${r.id}" ${sin?'disabled':''}><span class="pn"><span class="n">${esc(r.nombre)}</span><span class="meta"><span class="code">${esc(r.cod)}</span>${condChip(r)}<span>${esc(compatTxt(r,2))}</span>${stockChip(r)}</span></span><span class="pp"><span class="price">${money(precio(r,cli.lista))}</span><span class="add">${r.stock<=0?'Sin stock':sin?'No hay más':q?`Lleva ${q} · +1`:'+ Agregar'}</span></span></button>`;}).join('')
+        :`<div class="empty"><strong>${d.q?`No encontramos "${esc(d.q)}".`:'No hay productos en esta categoría.'}</strong>Probá con otra palabra. Si es un código nuevo, cargalo en Stock.</div>`;
+      const title=d.q.trim()?`Resultados para "${esc(d.q)}"`:d.cat==='*'?'Todos los productos':esc(d.cat);
+      body=`<div class="cathead"><b>${title}</b><span class="sub">${list.length} ${list.length===1?'producto':'productos'}</span></div>${rows}`;}
+    left=`<div class="panel fcat">${top}<div class="plist" data-keep-scroll="plist-${esc(d.cat)}-${esc(d.q)}">${body}</div></div>`;
+  }
+  /* derecha: compacta */
+  const lines=d.items.map((it,i)=>{const free=!it.r;const imp=round2(num(it.q)*num(it.pu)*(1-num(it.dto)/100));
+    if(lock)return `<div class="ln"><span class="ln-n" title="${esc(it.d)}">${esc(it.d)}</span><span class="small muted">${fQ(it.q)} ×</span><strong class="ln-i">${m2(imp)}</strong></div>`;
+    const qty=`<div class="qty sm"><button data-act="fQty" data-ix="${i}" data-d="-1" aria-label="Uno menos">−</button><span>${fQ(it.q)}</span><button data-act="fQty" data-ix="${i}" data-d="1" aria-label="Uno más">+</button></div>`;
+    const x=`<button class="xbtn" data-act="fRm" data-ix="${i}" aria-label="Quitar ${esc(it.d||'concepto')}" title="Quitar">×</button>`;
+    if(free)return `<div class="ln free"><input id="fi-${i}-d" class="in ln-d" data-fi="${i}:d" value="${esc(it.d)}" placeholder="¿Qué es?" aria-label="Descripción"><input id="fi-${i}-pu" class="in r ln-p" type="text" inputmode="decimal" data-fi="${i}:pu" value="${esc(it.pu)}" placeholder="Precio" aria-label="Precio de ${esc(it.d||'concepto')}">${qty}<strong class="ln-i">${m2(imp)}</strong>${x}</div>`;
+    const ed=d.edit===i?`<div class="fl-edit"><label class="field"><span>Precio c/u</span><input id="fi-${i}-pu" class="in r" type="text" inputmode="decimal" data-fi="${i}:pu" value="${esc(it.pu)}"></label><label class="field"><span>Descuento %</span><input id="fi-${i}-dto" class="in r" type="text" inputmode="decimal" data-fi="${i}:dto" value="${esc(it.dto)}"></label>${showIva?`<label class="field"><span>IVA</span><select id="fi-${i}-iva" class="in" data-fi="${i}:iva"><option value="21" ${num(it.iva)!==10.5?'selected':''}>21%</option><option value="10.5" ${num(it.iva)===10.5?'selected':''}>10,5%</option></select></label>`:''}<button class="btn sm" data-act="fEdit" data-ix="-1">Listo</button></div>`:'';
+    return `<div class="lnw ${d.edit===i?'open':''}"><div class="ln"><button class="ln-n" data-act="fEdit" data-ix="${d.edit===i?-1:i}" title="${esc(it.d)} · ${m2(num(it.pu))} c/u · tocá para cambiar el precio o hacer descuento">${esc(it.d)}${num(it.dto)?` <small class="ln-dto">−${fQ(it.dto)}%</small>`:''}</button>${qty}<strong class="ln-i">${m2(imp)}</strong>${x}</div>${ed}</div>`;}).join('');
+  const slots=Array.from({length:Math.max(0,5-d.items.length)},(_,n)=>`<div class="slot2">${!d.items.length&&n===0?'Tocá un producto o escaneá el código':''}</div>`).join('');
+  const envBox=d.envio&&!lock?`<div class="envbox"><div class="row"><b class="small">Envío a domicilio</b><span class="spacer"></span><button class="xbtn" data-act="fEnvioOff" aria-label="Quitar el envío" title="Quitar el envío">×</button></div><div class="fgrid" style="grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:6px"><select id="fenvm" class="in" data-fd="envMod" aria-label="Cómo se manda">${Object.entries(ENV_MOD).map(([k2,v])=>`<option value="${k2}" ${k2===d.envMod?'selected':''}>${v}</option>`).join('')}</select><input id="fenvd" class="in" data-fd="envDest" value="${esc(d.envDest||'')}" placeholder="Dirección o localidad" aria-label="Dirección del envío"></div></div>`:'';
+  let pay;
+  if(lock)pay=`<div class="paid">Ya cobrado: ${d.pagos.map(p=>`${pagoLbl(p.medio)} ${m2(num(p.monto))}`).join(' + ')}</div>`;
+  else if(d.split)pay=splitHTML(d,k);
+  else{const sel=d.condVenta==='cc'?'cc':d.pagos[0].medio;
+    pay=`<div class="payrow">${payTilesC(sel,cli,'fMedio')}<button type="button" class="pchip ghost" data-act="fPagoAdd" title="Parte en un medio y parte en otro">+ 2 medios</button></div>${sel==='efectivo'&&k.total?cashC(k.total,d.pagaCon):''}${d.condVenta==='cc'?`<p class="small muted">Se anota en la cuenta de ${esc(cli.nombre)}. Le quedan ${money(cli.limite-cli.deuda)}.</p>`:''}`;}
+  const payList=lock||d.condVenta==='cc'?[]:d.split?d.pagos:[d.pagos[0]];
+  const recM=payList.map(p=>MED(p.medio)).filter(m=>m.r>0).sort((a,b)=>b.r-a.r)[0];
+  const hasRec=d.items.some(i=>String(i.d).indexOf('Recargo financiero')===0);
+  const cf=cli.id==='c1';
+  const idRow=cf&&fact&&!lock?(d.showId||d.recNombre||d.recDoc?`<div class="fgrid" style="grid-template-columns:1fr 1fr;gap:6px"><input id="frn" class="in" data-fd="recNombre" value="${esc(d.recNombre)}" placeholder="Nombre en la factura" aria-label="Nombre del consumidor"><input id="frd" class="in" data-fd="recDoc" value="${esc(d.recDoc)}" inputmode="numeric" placeholder="DNI" aria-label="DNI"></div>`:'<button class="linkbtn small" data-act="fIdent">+ Nombre y DNI en la factura</button>'):'';
+  const docRow=lock?`<span class="tchip mini" title="${esc(T_LBL[tipo])}"><b>${letra}</b>${T_LBL[tipo].replace('Factura','Fact.')}</span>`:`<label class="check small fx" title="Marcalo si el cliente pide factura"><input id="ffact" type="checkbox" data-fd="factura" ${d.factura?'checked':''}> Factura</label><span class="tchip mini ${fact?'':'x'}" title="${esc(T_LBL[tipo])}"><b>${fact?letra:'T'}</b>${fact?T_LBL[tipo].replace('Factura','Fact.'):'Ticket'}</span>`;
+  const mainLbl=lock?`Hacer ${T_LBL[tipo]}`:d.condVenta==='cc'?(fact?'Facturar a cuenta':'Anotar en cuenta'):fact?'Cobrar y facturar':'Cobrar';
+  const right=`<aside class="panel fside" id="factBox" aria-label="Venta">
+    <div class="fs-top"><div class="fs-row">${cliPickerC(d,cli,lock)}${docRow}</div>${idRow?`<div class="fs-row">${idRow}</div>`:''}</div>
+    <div class="fs-items" data-keep-scroll="fsitems">
+      <div class="fs-ih"><span class="lbl-s">Lleva${nU?` · ${fQ(nU)}`:''}</span><span class="spacer"></span>${lock?'':`<button class="linkbtn" data-act="fObs">${d.obs?'Editar nota':'+ Nota'}</button><button class="linkbtn" data-act="presuSave" ${d.items.length?'':'disabled'}>${d.presuId?'Actualizar presupuesto':'Guardar presupuesto'}</button>${d.items.length?'<button class="linkbtn" data-act="fDiscard">Vaciar</button>':''}`}</div>
+      ${lines}${slots}${envBox}
+      ${d.showObs||d.obs?`<textarea id="fobs" class="in" data-fd="obs" rows="2" placeholder="Nota para que salga impresa. Ej: Garantía 3 meses" aria-label="Nota" style="margin-top:6px">${esc(d.obs)}</textarea>`:''}
+    </div>
+    <div class="fs-bot">
+      ${pay}
+      ${recM&&!hasRec&&k.total?`<div class="small" style="color:var(--warn)">${recM.n}: +${Math.round(recM.r*100)}% de recargo. <button class="linkbtn" data-act="fRecargo">Sumarlo</button></div>`:''}
+      ${!S.caja.abierta&&!lock&&d.condVenta!=='cc'?'<div class="small" style="color:var(--bad)">La caja está cerrada. <button class="linkbtn" data-act="go" data-v="caja">Abrir caja</button></div>':''}
+      <div class="fbar"><div class="ftot2"><span class="ftl">Total</span><span class="ftv">${m2(k.total)}</span>${letra==='A'?`<span class="small muted">IVA ${m2(k.i21+k.i105)} aparte</span>`:letra==='B'?`<span class="small muted">IVA incl. ${m2(round2(k.i21+k.i105))}</span>`:''}</div>
+        <div class="fbtns">${CAN_PRINT?`<button class="btn primary xl" data-act="fEmitPrint" ${d.items.length?'':'disabled'}>${mainLbl} e imprimir</button><button class="linkbtn small" data-act="fEmit" ${d.items.length?'':'disabled'}>${mainLbl} sin imprimir</button>`:`<button class="btn primary xl" data-act="fEmit" ${d.items.length?'':'disabled'}>${mainLbl}</button>`}</div></div>
+    </div></aside>`;
+  const mbar=d.items.length?`<div class="mbar"><button class="btn primary" data-act="toFact">Ver la venta (${fQ(nU)}) · ${m2(k.total)}</button></div><div class="has-mbar"></div>`:'';
+  return `<div class="fact2">${left}${right}</div>${mbar}`;
+}
+
+/* ================= v5: sincronización por registro (escalable) ================= */
+var SYNC={on:false,ver:0,base:{},baseN:{},baseObj:{},pin:'',state:'local',pending:false,busy:false,timer:null,ptimer:null,active:Date.now(),months:[],loaded:[],needFull:false,loops:false};
+const SPC=['ventas','comps','movs','compras','envios','cierres','log'],SNC=['repuestos','clientes','ots','presus','pedidos'],SOB=['caja','fiscal','listas','modelos'];
+const SNUM={repuestos:'stock',clientes:'deuda'};
+const SCLAIM={comps:'nro',ots:'num',presus:'num',pedidos:'num',envios:'num'};
+const srid=(c,x)=>c==='cierres'?x.sid:c==='log'?(x.id||(x.fecha+'|'+(x.filtro||''))):x.id;
+function fnv(s){let h=0x811c9dc5;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193);}return (h>>>0).toString(36)+'.'+s.length.toString(36);}
+function metaSave(){try{localStorage.setItem('rcos-sync',JSON.stringify({ver:SYNC.ver,base:SYNC.base,baseN:SYNC.baseN,baseObj:SYNC.baseObj,months:SYNC.months,loaded:SYNC.loaded}))}catch(e){}}
+function metaLoad(){try{const m=JSON.parse(localStorage.getItem('rcos-sync')||'null');if(m&&m.ver){Object.assign(SYNC,{ver:m.ver,base:m.base||{},baseN:m.baseN||{},baseObj:m.baseObj||{},months:m.months||[],loaded:m.loaded||[]});return true;}}catch(e){}return false;}
+function metaClear(){SYNC.ver=0;SYNC.base={};SYNC.baseN={};SYNC.baseObj={};try{localStorage.removeItem('rcos-sync')}catch(e){}}
+function setBaseRec(c,x){const id=srid(c,x);(SYNC.base[c]=SYNC.base[c]||{})[id]=fnv(JSON.stringify(x));const f=SNUM[c];if(f)(SYNC.baseN[c]=SYNC.baseN[c]||{})[id]=num(x[f]);}
+function rebaseAll(){SYNC.base={};SYNC.baseN={};SYNC.baseObj={};[...SPC,...SNC].forEach(c=>(S[c]||[]).forEach(x=>setBaseRec(c,x)));SOB.forEach(o=>SYNC.baseObj[o]=fnv(JSON.stringify(S[o])));}
+function sDiff(){const put=[],inc=[],obj={};
+  [...SPC,...SNC].forEach(c=>{const B=SYNC.base[c]||{},BN=SYNC.baseN[c]||{};(S[c]||[]).forEach(x=>{const id=srid(c,x);if(!id)return;const j=JSON.stringify(x);const h=fnv(j);if(B[id]===h)return;
+    const d=JSON.parse(j);if(SCLAIM[c]&&B[id]===undefined)d._claim=1;put.push({c,id,d,h});const f=SNUM[c];if(f){const dn=round2(num(x[f])-num(BN[id]));if(dn)inc.push({c,id,f,n:dn,v:num(x[f])});}});});
+  SOB.forEach(o=>{if(S[o]===undefined)return;const j=JSON.stringify(S[o]);if(SYNC.baseObj[o]!==fnv(j))obj[o]=JSON.parse(j);});
+  return {put,inc,obj};}
+function schedulePush(){SYNC.pending=true;renderSync('saving');clearTimeout(SYNC.timer);SYNC.timer=setTimeout(push,400);}
+function applyNums(n){if(!n)return;Object.keys(S.num).forEach(t=>{if(n[t]!=null)S.num[t]=Math.max(num(S.num[t]),num(n[t]));});
+  [['otn','OT'],['pr','PR'],['pd','PD'],['en','EN']].forEach(([k,t])=>{if(n[t]!=null)S.seq[k]=Math.max(num(S.seq[k]),num(n[t]));});}
+function buildFromFull(j){const keep=S&&S.seq?Object.assign({},S.seq):{};const s=migrate(seed());
+  [...SPC,...SNC].forEach(c=>s[c]=(j.cols&&j.cols[c])||[]);SOB.forEach(o=>{if(j.objs&&j.objs[o]!=null)s[o]=j.objs[o];});
+  s.seq=Object.assign(s.seq,keep);Object.keys(s.num).forEach(t=>s.num[t]=0);S=migrate(s);applyNums(j.nums);
+  SYNC.ver=j.ver;SYNC.months=j.months||[];SYNC.loaded=j.loaded||[];SYNC.needFull=false;rebaseAll();metaSave();localSave();softRender();}
+function applyChanges(j){
+  if(j.full){buildFromFull(j);return;}
+  let touched=false;
+  Object.keys(j.cols||{}).forEach(c=>{if(!S[c])S[c]=[];const B=SYNC.base[c]||{},BN=SYNC.baseN[c]||{};const idx=new Map(S[c].map((x,i)=>[srid(c,x),i]));
+    j.cols[c].forEach(srv=>{const id=srid(c,srv);const ix=idx.get(id);touched=true;
+      if(ix===undefined){S[c].push(srv);setBaseRec(c,srv);return;}
+      const loc=S[c][ix];
+      if(B[id]===fnv(JSON.stringify(loc))){S[c][ix]=srv;setBaseRec(c,srv);return;}
+      const m=Object.assign({},loc);const f=SNUM[c];if(f)m[f]=round2(num(srv[f])+(num(loc[f])-num(BN[id])));const k=SCLAIM[c];if(k&&B[id]!==undefined)m[k]=srv[k];
+      S[c][ix]=m;setBaseRec(c,srv);});});
+  Object.keys(j.objs||{}).forEach(o=>{const lj=fnv(JSON.stringify(S[o]));if(SYNC.baseObj[o]===undefined||SYNC.baseObj[o]===lj)S[o]=j.objs[o];SYNC.baseObj[o]=fnv(JSON.stringify(j.objs[o]));touched=true;});
+  applyNums(j.nums);
+  if(j.ver)SYNC.ver=j.ver;metaSave();
+  if(touched){localSave();softRender();}
+}
+async function push(){
+  if(!SYNC.on||SYNC.busy)return;
+  const ch=sDiff();
+  if(!ch.put.length&&!Object.keys(ch.obj).length){SYNC.pending=false;if(SYNC.needFull)return fullReload();renderSync('ok');return;}
+  SYNC.busy=true;SYNC.pending=false;renderSync('saving');
+  const batch=ch.put.slice(0,400);const ids=new Set(batch.map(p=>p.c+'|'+p.id));const inc=ch.inc.filter(i=>ids.has(i.c+'|'+i.id));
+  if(ch.put.length>batch.length)SYNC.pending=true;
+  try{const r=await api('POST','/api/sync?since='+SYNC.ver,{put:batch.map(p=>({c:p.c,id:p.id,d:p.d})),inc:inc.map(i=>({c:i.c,id:i.id,f:i.f,n:i.n})),obj:ch.obj});
+    if(r.ok){const j=await r.json();
+      batch.forEach(p=>{(SYNC.base[p.c]=SYNC.base[p.c]||{})[p.id]=p.h;const f=SNUM[p.c];if(f)(SYNC.baseN[p.c]=SYNC.baseN[p.c]||{})[p.id]=num(p.d[f]);});
+      Object.keys(ch.obj).forEach(o=>SYNC.baseObj[o]=fnv(JSON.stringify(ch.obj[o])));
+      (j.renum||[]).forEach(x=>{const rec=(S[x.c]||[]).find(y=>srid(x.c,y)===x.id);if(rec){const k=SCLAIM[x.c];rec[k]=x.n;setBaseRec(x.c,rec);}if(x.c==='comps')toast(`Otro equipo usó el mismo número: el comprobante quedó como ${pad8(x.n)}.`,'warn');});
+      if(j.stale){SYNC.needFull=true;metaSave();}else applyChanges(j);
+      renderSync(SYNC.pending?'saving':'ok');}
+    else if(r.status===401||r.status===429){SYNC.busy=false;const j=await r.json().catch(()=>({}));pinModal(j.error||'Tu clave ya no es válida. Ingresala de nuevo.');return;}
+    else{SYNC.pending=true;renderSync('error');}
+  }catch(e){SYNC.pending=true;renderSync('offline');}
+  SYNC.busy=false;
+  if(SYNC.pending){clearTimeout(SYNC.timer);SYNC.timer=setTimeout(push,SYNC.state==='offline'||SYNC.state==='error'?5000:200);}
+  else if(SYNC.needFull)fullReload();
+}
+async function fullReload(){if(SYNC.busy||SYNC.pending)return;SYNC.busy=true;
+  try{const r=await api('GET','/api/sync?since=0');if(r.ok){const j=await r.json();if(!SYNC.pending)buildFromFull(j);renderSync('ok');}}catch(e){renderSync('offline');}SYNC.busy=false;}
+async function poll(){
+  if(!SYNC.on||SYNC.busy)return;
+  if(SYNC.pending||sDiff().put.length){return push();}
+  if(SYNC.needFull)return fullReload();
+  try{const r=await api('GET','/api/sync?since='+SYNC.ver);
+    if(r.status===204){if(SYNC.state!=='ok')renderSync('ok');return;}
+    if(r.status===401||r.status===429){const j=await r.json().catch(()=>({}));pinModal(j.error||'Tu clave ya no es válida.');return;}
+    if(!r.ok){renderSync('error');return;}
+    const j=await r.json();if(SYNC.busy||SYNC.pending)return;
+    if(j.full&&j.empty){startModal();return;}
+    applyChanges(j);renderSync('ok');
+  }catch(e){renderSync('offline');}
+}
+function pollLoop(){clearTimeout(SYNC.ptimer);const vis=document.visibilityState==='visible';const d=!vis?60000:(Date.now()-SYNC.active<120000?5000:30000);
+  SYNC.ptimer=setTimeout(async()=>{try{if(vis)await poll();}finally{pollLoop();}},d);}
+function startLoops(){if(SYNC.loops)return;SYNC.loops=true;pollLoop();
+  ['click','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{const idle=Date.now()-SYNC.active>120000;SYNC.active=Date.now();if(idle)pollLoop();},{passive:true}));
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){SYNC.active=Date.now();poll();pollLoop();}});
+  window.addEventListener('online',()=>poll());
+  window.addEventListener('beforeunload',e=>{if(SYNC.pending||SYNC.busy){e.preventDefault();e.returnValue='';}});}
+async function syncStart(){
+  if(!/^https?:$/.test(location.protocol))return;
+  SYNC.pin=pinGet();const had=metaLoad();let r;
+  try{r=await api('GET','/api/sync?since='+(had?SYNC.ver:0));}
+  catch(e){if(had){SYNC.on=true;startLoops();renderSync('offline');}return;}
+  const ct=r.headers.get('content-type')||'';
+  if(r.status!==204&&!ct.includes('application/json'))return;
+  if(r.status===401||r.status===429){let j={};try{j=await r.json();}catch(e){}pinModal(r.status===429?j.error:(SYNC.pin?'La clave guardada no es correcta.':''));return;}
+  SYNC.on=true;startLoops();
+  if(r.status===204){renderSync('ok');if(sDiff().put.length)schedulePush();return;}
+  let j={};try{j=await r.json();}catch(e){return;}
+  if(!r.ok){toast(j.error||'El servidor no respondió bien.','bad');renderSync('error');return;}
+  if(j.full&&j.empty){startModal();return;}
+  if(j.full&&had&&sDiff().put.length){SYNC.needFull=true;schedulePush();return;}
+  applyChanges(j);renderSync('ok');if(sDiff().put.length)schedulePush();
+}
+async function reserveNum(t){if(!SYNC.on||SYNC.state==='offline')return null;
+  try{const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),2500);const r=await fetch('/api/sync?op=next&t='+encodeURIComponent(t),{method:'POST',headers:{'Content-Type':'application/json','x-app-pin':SYNC.pin},body:'{}',signal:ctl.signal});clearTimeout(tm);if(!r.ok)return null;return await r.json();}catch(e){return null;}}
+function olderMonth(){const have=new Set(SYNC.loaded||[]);return (SYNC.months||[]).filter(m=>m!=='0000-00'&&!have.has(m)).sort().reverse()[0]||null;}
+const mesTxt=m=>{const [y,mm]=m.split('-');const t=new Date(Number(y),Number(mm)-1,1).toLocaleDateString('es-AR',{month:'long',year:'numeric'});return t.charAt(0).toUpperCase()+t.slice(1);};
+function olderBtn(){const m=SYNC.on&&olderMonth();return m?`<button class="btn sm ghost" data-act="loadOlder" data-v="${m}">Traer ${mesTxt(m)}</button>`:'';}
+
+Object.assign(ACT,{
+  fEmit:async()=>{await emitirConNumero(false);},
+  fEmitPrint:async()=>{await emitirConNumero(true);},
+  loadOlder:async d=>{try{const r=await api('GET','/api/sync?op=month&m='+d.v);if(!r.ok)fail('No se pudo traer ese mes.');const j=await r.json();
+      Object.keys(j.cols||{}).forEach(c=>{if(!S[c])S[c]=[];const have=new Set(S[c].map(x=>srid(c,x)));j.cols[c].forEach(x=>{if(!have.has(srid(c,x))){S[c].push(x);setBaseRec(c,x);}});});
+      SYNC.loaded=(SYNC.loaded||[]).concat([d.v]);metaSave();localSave();render();toast(`Listo: ${mesTxt(d.v)} cargado.`);}catch(e){toast(e.message||'Sin conexión.','bad');}},
+  startWith:d=>{S=d.v==='vacio'?emptyData():d.v==='demo'?migrate(seed()):S;ui.draft=newDraft();ui.cart=[];closeModal();metaClear();localSave();render();SYNC.on=true;SYNC.needFull=true;schedulePush();toast('Subiendo los datos a la base del taller…');},
+  resetOk:async()=>{const modo=Mo&&Mo.st.modo;
+    if(SYNC.on){try{const r=await api('POST','/api/sync?op=reset',{confirm:'BORRAR'});if(!r.ok)fail('No se pudo borrar. Probá de nuevo.');}catch(e){toast(e.message||'Sin conexión.','bad');return;}metaClear();}
+    S=modo==='vacio'?emptyData():migrate(seed());ui.cart=[];ui.draft=newDraft();ui.clienteId='c1';ui.pagaCon='';closeModal();localSave();render();
+    if(SYNC.on){SYNC.needFull=true;schedulePush();}toast('Listo, se empezó de nuevo.');},
+  syncOut:()=>{pinSet('');metaClear();location.reload();}
+});
+let emitiendo=false;
+async function emitirConNumero(print){
+  if(emitiendo)return;emitiendo=true;
+  try{const t=tipoDraft();let res=null;
+    if(SYNC.on&&!ui.draft.origen&&ui.draft.items.length){res=await reserveNum(t);if(res)S.num[t]=res.n-1;}
+    else if(SYNC.on&&ui.draft.origen){res=await reserveNum(t);if(res)S.num[t]=res.n-1;}
+    const c=cobrarDraft(print);
+    if(SYNC.on){if(res)c.ntok=res.tok;else c.prov=true;save();}
+  }catch(err){toast(err.message,'bad');}
+  finally{emitiendo=false;}
+}
+
+/* v5b: cambios campo por campo */
+SYNC.baseJ={};
+const ymOf=x=>{const f=x&&(x.fecha||x.hasta||x.desde);return typeof f==='string'&&/^\d{4}-\d{2}/.test(f)?f.slice(0,7):'0000-00';};
+function setBaseRec(c,x){const id=srid(c,x);const j=JSON.stringify(x);(SYNC.base[c]=SYNC.base[c]||{})[id]=fnv(j);(SYNC.baseJ[c]=SYNC.baseJ[c]||{})[id]=j;const f=SNUM[c];if(f)(SYNC.baseN[c]=SYNC.baseN[c]||{})[id]=num(x[f]);}
+function rebaseAll(){SYNC.base={};SYNC.baseN={};SYNC.baseObj={};SYNC.baseJ={};[...SPC,...SNC].forEach(c=>(S[c]||[]).forEach(x=>setBaseRec(c,x)));SOB.forEach(o=>SYNC.baseObj[o]=fnv(JSON.stringify(S[o])));}
+function sDiff(){const put=[],inc=[],obj={};
+  [...SPC,...SNC].forEach(c=>{const B=SYNC.base[c]||{},BN=SYNC.baseN[c]||{},BJ=SYNC.baseJ[c]||{};const nf=SNUM[c];
+    (S[c]||[]).forEach(x=>{const id=srid(c,x);if(!id)return;const j=JSON.stringify(x);const h=fnv(j);if(B[id]===h)return;
+      const isNew=B[id]===undefined;let p;
+      if(isNew||!BJ[id]){p=JSON.parse(j);}
+      else{const b=JSON.parse(BJ[id]);p={};Object.keys(x).forEach(f=>{if(f===nf)return;if(JSON.stringify(x[f])!==JSON.stringify(b[f]))p[f]=JSON.parse(JSON.stringify(x[f]));});}
+      if(SCLAIM[c]&&isNew)p._claim=1;
+      put.push({c,id,p,h,j,m:ymOf(x),empty:!isNew&&!!BJ[id]&&!Object.keys(p).length});
+      if(nf){const dn=round2(num(x[nf])-num(BN[id]));if(dn)inc.push({c,id,f:nf,n:dn});}});});
+  SOB.forEach(o=>{if(S[o]===undefined)return;const j=JSON.stringify(S[o]);if(SYNC.baseObj[o]!==fnv(j))obj[o]=JSON.parse(j);});
+  return {put,inc,obj};}
+async function push(){
+  if(!SYNC.on||SYNC.busy)return;
+  const ch=sDiff();
+  if(!ch.put.length&&!Object.keys(ch.obj).length){SYNC.pending=false;if(SYNC.needFull)return fullReload();renderSync('ok');return;}
+  SYNC.busy=true;SYNC.pending=false;renderSync('saving');
+  const batch=ch.put.slice(0,400);const ids=new Set(batch.map(p=>p.c+'|'+p.id));const inc=ch.inc.filter(i=>ids.has(i.c+'|'+i.id));
+  if(ch.put.length>batch.length)SYNC.pending=true;
+  try{const r=await api('POST','/api/sync?since='+SYNC.ver,{put:batch.filter(p=>!p.empty).map(p=>({c:p.c,id:p.id,p:p.p,m:p.m})),inc:inc.map(i=>({c:i.c,id:i.id,f:i.f,n:i.n})),obj:ch.obj});
+    if(r.ok){const j=await r.json();
+      batch.forEach(p=>{(SYNC.base[p.c]=SYNC.base[p.c]||{})[p.id]=p.h;(SYNC.baseJ[p.c]=SYNC.baseJ[p.c]||{})[p.id]=p.j;});inc.forEach(i=>{const BN=SYNC.baseN[i.c]=SYNC.baseN[i.c]||{};BN[i.id]=round2(num(BN[i.id])+i.n);});
+      Object.keys(ch.obj).forEach(o=>SYNC.baseObj[o]=fnv(JSON.stringify(ch.obj[o])));
+      (j.renum||[]).forEach(x=>{const rec=(S[x.c]||[]).find(y=>srid(x.c,y)===x.id);if(rec){rec[SCLAIM[x.c]]=x.n;setBaseRec(x.c,rec);}if(x.c==='comps')toast(`Otro equipo usó el mismo número: el comprobante quedó como ${pad8(x.n)}.`,'warn');});
+      if(j.stale){SYNC.needFull=true;metaSave();}else applyChanges(j);
+      renderSync(SYNC.pending?'saving':'ok');}
+    else if(r.status===401){SYNC.busy=false;const j=await r.json().catch(()=>({}));pinModal(j.error||'Tu clave ya no es válida. Ingresala de nuevo.');return;}
+    else{SYNC.pending=true;renderSync(r.status===429||r.status===503?'saving':'error');}
+  }catch(e){SYNC.pending=true;renderSync('offline');}
+  SYNC.busy=false;
+  if(SYNC.pending){clearTimeout(SYNC.timer);SYNC.timer=setTimeout(push,SYNC.state==='offline'||SYNC.state==='error'?5000:300+Math.random()*700);}
+  else if(SYNC.needFull)fullReload();
+}
+function applyChanges(j){
+  if(typeof emitiendo!=='undefined'&&emitiendo&&!j.full)return;
+  if(j.full){buildFromFull(j);return;}
+  let touched=false;
+  Object.keys(j.cols||{}).forEach(c=>{if(!S[c])S[c]=[];const B=SYNC.base[c]||{},BN=SYNC.baseN[c]||{},BJ=SYNC.baseJ[c]||{};const nf=SNUM[c];const idx=new Map(S[c].map((x,i)=>[srid(c,x),i]));
+    j.cols[c].forEach(srv=>{const id=srid(c,srv);const ix=idx.get(id);touched=true;
+      if(ix===undefined){S[c].push(srv);setBaseRec(c,srv);return;}
+      const loc=S[c][ix];const lj=JSON.stringify(loc);
+      if(B[id]===fnv(lj)){S[c][ix]=srv;setBaseRec(c,srv);return;}
+      const b=BJ[id]?JSON.parse(BJ[id]):null;const m=Object.assign({},srv);
+      Object.keys(loc).forEach(f=>{if(f===nf)return;if(!b||JSON.stringify(loc[f])!==JSON.stringify(b[f]))m[f]=loc[f];});
+      if(nf)m[nf]=round2(num(srv[nf])+(num(loc[nf])-num(BN[id])));
+      const k=SCLAIM[c];if(k&&B[id]!==undefined)m[k]=srv[k];
+      S[c][ix]=m;setBaseRec(c,srv);});});
+  Object.keys(j.objs||{}).forEach(o=>{const lj=fnv(JSON.stringify(S[o]));if(SYNC.baseObj[o]===undefined||SYNC.baseObj[o]===lj)S[o]=j.objs[o];SYNC.baseObj[o]=fnv(JSON.stringify(j.objs[o]));touched=true;});
+  applyNums(j.nums);
+  if(j.ver)SYNC.ver=j.ver;metaSave();
+  if(touched){localSave();softRender();}
+}
+
+/* v5c: reserva atómica de stock antes de cobrar */
+async function apiFast(url,body){const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),3000);try{return await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-app-pin':SYNC.pin},body:JSON.stringify(body||{}),signal:ctl.signal});}finally{clearTimeout(tm);}}
+async function emitirConNumero(print){
+  if(emitiendo)return;emitiendo=true;
+  try{const d=ui.draft;const t=tipoDraft();let res=null,items=[];
+    if(SYNC.on&&SYNC.state!=='offline'){
+      if(!d.origen){const agg={};d.items.filter(i=>i.r).forEach(i=>{agg[i.r]=(agg[i.r]||0)+num(i.q);});items=Object.entries(agg).map(([id,q])=>({id,q}));}
+      try{const r=await apiFast('/api/sync?op=reserve',{t,items});
+        if(r.status===409){const j=await r.json();const rr=R(j.id);if(rr){rr.stock=j.stock;setBaseRec('repuestos',rr);localSave();render();}
+          toast(`${rr?rr.nombre:'Un repuesto'}: ${j.stock>0?`solo quedan ${fQ(j.stock)}`:'no queda stock'}. Otro equipo lo vendió recién.`,'bad');return;}
+        if(r.ok)res=await r.json();
+      }catch(e){res=null;}
+    }
+    if(res)S.num[t]=res.n-1;
+    let c;
+    try{c=cobrarDraft(print);}
+    catch(err){if(res&&items.length){apiFast('/api/sync?op=release',{items}).catch(()=>{});}throw err;}
+    if(SYNC.on){
+      if(res){c.ntok=res.tok;const BN=SYNC.baseN.repuestos=SYNC.baseN.repuestos||{};items.forEach(i=>{BN[i.id]=round2(num(BN[i.id])-i.q);});}
+      else c.prov=true;
+      save();}
+  }catch(err){toast(err.message,'bad');}
+  finally{emitiendo=false;setTimeout(()=>{if(!SYNC.busy)poll();},60);}
+}
+
+/* ================= v6: app instalable ================= */
+let installEvt=null;
+const isStandalone=()=>{try{return window.matchMedia('(display-mode: standalone)').matches||window.matchMedia('(display-mode: window-controls-overlay)').matches||navigator.standalone===true;}catch(e){return false;}};
+const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const isAndroid=()=>/android/i.test(navigator.userAgent);
+const swOk=()=>'serviceWorker' in navigator&&/^https?:$/.test(location.protocol)&&(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1');
+function canInstall(){return swOk()&&!isStandalone()&&(!!installEvt||isIOS());}
+function renderInstall(){document.querySelectorAll('.installslot').forEach(el=>{el.innerHTML=canInstall()?'<button class="btn sm primary helpbtn" data-act="install" title="Instalar el sistema como app en este equipo"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9M6.5 8.5 10 12l3.5-3.5M4 14.5v2h12v-2"/></svg><span class="bt">Instalar app</span></button>':'';});}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;renderInstall();});
+window.addEventListener('appinstalled',()=>{installEvt=null;renderInstall();toast('Listo: la app quedó instalada. Buscala en el escritorio o en el menú de aplicaciones.');});
+function installHelp(){const ios=isIOS(),and=isAndroid();
+  openModal({title:'Instalar la app',st:{},body:()=>`<p>Se instala como una aplicación más: con su ícono, en su propia ventana y abre aunque no haya internet. No ocupa casi nada de espacio.</p>
+    ${isStandalone()?'<div class="note acc">Ya la estás usando como app instalada.</div>':''}
+    <div class="box"><h4>${ios?'En este iPhone o iPad':'En iPhone o iPad'}</h4><ol class="hsteps"><li><span>Abrí el sistema en <b>Safari</b>.</span></li><li><span>Tocá el botón <b>Compartir</b> (el cuadrado con la flecha hacia arriba).</span></li><li><span>Elegí <b>"Agregar a inicio"</b> y tocá <b>Agregar</b>.</span></li></ol></div>
+    <div class="box"><h4>${and?'En este celular Android':'En Android'}</h4><ol class="hsteps"><li><span>Abrí el sistema en <b>Chrome</b>.</span></li><li><span>Tocá el menú <b>⋮</b> arriba a la derecha.</span></li><li><span>Elegí <b>"Instalar app"</b> o <b>"Agregar a la pantalla principal"</b>.</span></li></ol></div>
+    <div class="box"><h4>${!ios&&!and?'En esta computadora':'En la computadora'}</h4><ol class="hsteps"><li><span>Abrí el sistema en <b>Chrome</b> o <b>Edge</b>.</span></li><li><span>Tocá el ícono de instalar que aparece a la derecha de la barra de direcciones, o el menú <b>⋮</b> → <b>"Instalar Repuestos Core OS"</b>.</span></li><li><span>Queda en el escritorio y en el menú Inicio.</span></li></ol></div>
+    ${swOk()?'':'<p class="note warn">La instalación funciona en la versión publicada en Vercel (con https). En esta vista previa no se puede instalar.</p>'}`,
+    foot:()=>`${installEvt?'<button class="btn primary" data-act="install">Instalar ahora</button>':''}<button class="btn ghost" data-act="mclose">Listo</button>`});}
+Object.assign(ACT,{
+  install:async()=>{if(installEvt){const ev=installEvt;closeModal();ev.prompt();try{const ch=await ev.userChoice;if(ch.outcome!=='accepted')toast('Podés instalarla cuando quieras desde Ayuda.');}catch(e){}installEvt=null;renderInstall();return;}installHelp();},
+  installHelp:()=>installHelp()
+});
+/* Registro del service worker y avisos de versión nueva */
+if(swOk()){window.addEventListener('load',()=>{let had=!!navigator.serviceWorker.controller;
+  navigator.serviceWorker.register('/sw.js').then(reg=>{setInterval(()=>reg.update().catch(()=>{}),60*60*1000);}).catch(()=>{});
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had)toast('Se descargó una versión nueva del sistema. Se ve la próxima vez que lo abras.');had=true;});});}
+/* Accesos directos del ícono (Vender, Stock, Caja) */
+(()=>{const h=(location.hash||'').slice(1);const map={vender:'facturacion',stock:'stock',caja:'caja',arreglos:'ot',clientes:'clientes',envios:'envios'};if(map[h]){ui.view=map[h];if(h==='vender')ui.fTab='nuevo';try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}})();
 
 /* ---------- Eventos ---------- */
 document.addEventListener('click',e=>{
