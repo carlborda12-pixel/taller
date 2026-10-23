@@ -671,6 +671,167 @@ button.ln-n:hover{color:var(--accent)}
 
 @media (max-width:860px){.nav .lbl small,.side-foot{display:none}.nav button{align-items:center}.nav svg,.nav .bdg{margin-top:0}}
 @media (max-width:420px){.paygrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.pay{padding:8px 10px}.vuelto.big b{font-size:30px}}
+/* ===== v7: celular ===== */
+.cliv{position:fixed;inset:0;z-index:90;background:var(--bg);color:var(--fg);display:flex;flex-direction:column}
+.cliv-h{display:flex;align-items:center;gap:12px;padding:max(14px,env(safe-area-inset-top,0px)) 18px 12px;border-bottom:1px solid var(--line);background:var(--side)}
+.cliv-h .mark{width:36px;height:36px;flex:none}
+.cliv-h b{display:block;font-family:var(--f-display);font-size:21px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;line-height:1.1}
+.cliv-h small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+.cliv-b{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:4px 18px 18px;width:100%;max-width:720px;margin:0 auto}
+.cliv-who{font-size:16px;color:var(--muted);padding:14px 0 4px}
+.cliv-who b{color:var(--fg);font-weight:600}
+.cliv-it{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:3px 12px;align-items:baseline;padding:15px 0;border-bottom:1px solid var(--line-2)}
+.cliv-it .q{font-family:var(--f-mono);font-size:16px;font-weight:600;color:var(--accent);min-width:2.4em}
+.cliv-it .n{font-size:19px;font-weight:500;line-height:1.3;overflow-wrap:break-word}
+.cliv-it .i{font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cliv-it .u{grid-column:2 / -1;font-size:14px;color:var(--muted)}
+.cliv-f{border-top:1px solid var(--line);background:var(--surface);padding:14px 18px max(14px,env(safe-area-inset-bottom,0px))}
+.cliv-tot{display:flex;justify-content:space-between;align-items:baseline;gap:12px;max-width:720px;margin:0 auto}
+.cliv-tot span{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.08em;font-size:19px;font-weight:600;color:var(--muted)}
+.cliv-tot b{font-family:var(--f-display);font-size:46px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1}
+.cliv-alt{max-width:720px;margin:6px auto 0;font-size:15px;color:var(--muted);text-align:right}
+.cliv-alt b{color:var(--fg)}
+.cliv-btns{display:flex;gap:10px;max-width:720px;margin:14px auto 0}
+.cliv-btns{display:grid!important;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+.cliv-btns .btn{min-height:52px;font-size:16px;gap:8px;white-space:nowrap;padding-inline:10px}
+.cliv-btns svg,.mshow svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mshow{flex:none!important;gap:6px}
+.fbtns .cshow{align-self:center}
+.cshow svg{width:16px;height:16px;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:5px}
+
+@media (max-width:720px){
+  html{-webkit-text-size-adjust:100%}
+  /* barra de abajo, como una app */
+  .side{overflow:visible!important;padding-block:8px!important;gap:10px}
+  .side .brand .mark{width:30px;height:30px}
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:45;display:grid!important;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:2px!important;padding:5px max(4px,env(safe-area-inset-right,0px)) max(6px,env(safe-area-inset-bottom,0px)) max(4px,env(safe-area-inset-left,0px));background:var(--side);border-top:1px solid var(--line);box-shadow:0 -6px 18px rgba(0,0,0,.35)}
+  .nav button{position:relative;flex-direction:column;align-items:center!important;justify-content:center;gap:3px;min-height:54px;padding:6px 1px 4px!important;font-family:var(--f-body)!important;text-transform:none!important;font-size:11.5px!important;font-weight:600!important;letter-spacing:0!important;border-radius:8px!important;box-shadow:none!important;white-space:nowrap}
+  .nav button[aria-current="page"]{background:var(--accent-soft)!important;color:var(--accent)!important}
+  .nav svg{width:23px;height:23px;margin:0!important}
+  .nav .lbl{flex:none;text-align:center;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .nav .lbl small{display:none!important}
+  .nav .bdg{position:absolute;top:3px;left:calc(50% + 5px);margin:0!important;font-size:10px;min-width:17px;padding:0 4px;line-height:16px}
+  .main,.fmode .main{padding-top:14px!important;padding-bottom:calc(86px + env(safe-area-inset-bottom,0px))!important}
+  .mbar{bottom:calc(64px + env(safe-area-inset-bottom,0px));padding-top:8px!important;padding-bottom:8px!important;gap:8px;box-shadow:0 -4px 14px rgba(0,0,0,.4)}
+  .mbar .btn{min-height:48px;font-size:15px}
+  .has-mbar{padding-bottom:64px}
+  .fbox-vis .mbar{transform:translateY(130%);opacity:0;pointer-events:none}
+  .mbar{transition:transform .2s ease,opacity .2s ease}
+  .toasts{bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
+
+  /* encabezado de cada pantalla */
+  .wrap{gap:14px}
+  .top{align-items:center;gap:8px 12px}
+  .top h1{font-size:26px}
+  .eyebrow{font-size:10.5px}
+  .tools{gap:8px}
+  .tools .chip{font-size:12px}
+  .intro{padding:10px 12px;gap:10px;margin-bottom:12px}
+  .intro p{font-size:14px;line-height:1.45}
+
+  /* textos y campos: más grandes y sin zoom en iPhone */
+  .in,select.in,textarea.in{font-size:16px!important;min-height:44px}
+  .btn{min-height:42px}
+  .btn.sm{min-height:38px}
+  .small{font-size:13px}
+  .tbar{padding:10px 12px;gap:8px}
+  .tbar .in,.tbar .grow,.tbar select{flex:1 1 100%!important;width:100%!important}
+  .tbar .spacer{display:none}
+  .tbar>label{flex:1 1 100%}
+  .tbar>.btn{flex:1 1 calc(50% - 4px);min-width:0;white-space:normal;line-height:1.15;padding-inline:8px;font-size:13.5px}
+  .tbar>.btn.primary{flex-basis:100%}
+  .ph{padding:12px}
+  .ph h2{font-size:16px}
+
+  /* tablas convertidas en tarjetas */
+  .tw{overflow:visible}
+  table.stk,table.stk tbody,table.stk tfoot{display:block;width:100%}
+  table.stk thead{display:none}
+  table.stk tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px 12px;padding:13px 14px;border-bottom:1px solid var(--line-2)}
+  table.stk tbody tr:last-child{border-bottom:0}
+  table.stk td,table.stk th{display:block;padding:0!important;border:0!important;text-align:left!important;min-width:0;font-size:14.5px;white-space:normal!important}
+  table.stk td::before,table.stk th::before{content:attr(data-th);display:block;font-family:var(--f-mono);font-size:10.5px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+  table.stk [data-th=""]::before,table.stk .t1::before{display:none}
+  table.stk .t1{grid-column:1 / -1;order:-1;font-size:16.5px;font-weight:500}
+  table.stk .t1 .small{font-size:13px}
+  table.stk .full{grid-column:1 / -1}
+  table.stk .w2{grid-column:span 2}
+  table.stk tr.hl{background:var(--warn-soft);box-shadow:inset 4px 0 0 var(--warn)}
+  table.stk tr.hl td{background:none!important}
+  table.stk tbody tr:last-child{border-bottom:0}
+  table.stk td:empty{display:none}
+  table.stk .row{justify-content:flex-start!important;flex-wrap:wrap!important}
+  table.stk td .btn{flex:1 1 auto}
+
+  /* Arreglos: columnas una abajo de otra */
+  .board{grid-auto-flow:row!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important}
+  .col{min-height:0!important}
+  .otc .p{font-size:16px}
+
+  /* Vender */
+  .ftop{gap:8px!important}
+  .ftop .pills{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;overflow:visible!important}
+  .ftop .pills button{padding:11px 6px!important;font-size:14px!important;border-right:1px solid var(--line)!important;border-bottom:1px solid var(--line)}
+  .ftop .pills button:nth-child(2n){border-right:0!important}
+  .ftop .pills button:nth-last-child(-n+2):nth-child(2n+1),.ftop .pills button:last-child{border-bottom:0}
+  .ftop .spacer{flex:1}
+  .fcat-top{padding:12px!important}
+  .frow2{gap:6px!important}
+  .frow2 .fsearch{flex:1 1 100%!important}
+  .frow2>.btn{flex:1 1 0;padding-inline:4px;font-size:13px}
+  .cgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;padding:12px!important}
+  .ctile{min-height:0!important;padding:12px!important;gap:2px!important}
+  .ctile svg{width:26px!important;height:26px!important;margin-bottom:6px!important}
+  .ctile b{font-size:14.5px!important;letter-spacing:.02em!important;overflow-wrap:break-word!important;hyphens:none!important}
+  .ctile span{font-size:12.5px}
+  .cathead{padding:12px!important}
+  .prod{padding:13px 12px!important;gap:10px!important}
+  .prod .n{font-size:15.5px;line-height:1.3}
+  .prod .price{font-size:16px}
+  #factBox{scroll-margin-top:62px}
+  .fs-top .fs-row{flex-wrap:wrap!important}
+  .fs-top .cpick{flex:1 1 100%!important;max-width:none!important}
+  .fbtns .cshow{align-self:stretch;text-align:center;text-decoration:none;font-size:15px;font-weight:600;padding:11px;margin-top:4px;border:1.5px solid var(--line);border-radius:8px;color:var(--fg)}
+  .fs-items{padding:8px 12px!important}
+  .fs-ih{flex-wrap:wrap;gap:6px 14px!important}
+  .fs-ih .lbl-s{flex:1 1 100%}
+  .fs-ih .spacer{display:none}
+  .fs-ih .linkbtn{font-size:14px}
+  .ln{flex-wrap:wrap;row-gap:6px;padding:9px 0!important}
+  .ln-n{flex:1 1 100%!important;white-space:normal!important;font-size:15.5px!important;line-height:1.3}
+  .ln .qty{margin-right:auto}
+  .ln .qty.sm button{width:36px!important;height:36px!important;font-size:18px!important}
+  .ln .qty.sm span{min-width:28px;font-size:15px!important}
+  .ln-i{font-size:16px!important;font-weight:600}
+  .ln .xbtn{font-size:22px!important;padding:0 6px!important}
+  .lnw~.slot2,.ln~.slot2,.slot2+.slot2{display:none}
+  .payrow{flex-wrap:wrap!important;overflow:visible!important}
+  .payrow .paychips{flex-wrap:wrap!important}
+  .pchip{min-height:38px!important;padding:6px 12px!important;font-size:13.5px!important}
+  .fbar{gap:10px!important}
+  .ftot2 .ftv{font-size:32px!important}
+  .fbtns{flex:1 1 100%!important;max-width:none!important}
+  .fbtns .btn.xl{min-height:54px!important;font-size:18px!important}
+
+  /* ventanas: pantalla completa */
+  .ov{padding:0!important;align-items:stretch!important}
+  .modal,.modal.wide{width:100%!important;min-height:100%;border-radius:0!important;border:0!important}
+  .mh{position:sticky;top:0;z-index:3;background:var(--surface);padding-top:max(14px,env(safe-area-inset-top,0px))!important}
+  .mh h2{font-size:20px}
+  .mh .x{font-size:28px;min-width:44px;min-height:44px}
+  .mb{flex:1}
+  .mf{position:sticky;bottom:0;z-index:3;border-radius:0!important;padding-bottom:max(12px,env(safe-area-inset-bottom,0px))!important}
+  .mf .btn{flex:1 1 40%;min-width:0;min-height:46px;white-space:normal;line-height:1.15;padding-inline:8px;font-size:13.5px}
+  .mf .btn.primary{flex-basis:100%}
+
+  .cliv-it .n,.cliv-it .i{font-size:18px}
+  .cliv-tot b{font-size:40px}
+}
+@media (max-width:360px){
+  .nav button{font-size:10.5px!important}
+  .nav svg{width:21px;height:21px}
+  .cliv-tot b{font-size:34px}
+}
 </style>
 </head>
 <body>
@@ -1008,7 +1169,7 @@ function vClientes(){
   const deuda=S.clientes.reduce((a,c)=>a+c.deuda,0);
   return `<div class="panel"><div class="tbar"><input id="cliQ" class="in grow" type="search" value="${esc(ui.cliQ)}" data-bind="cliQ" placeholder="Buscar por nombre, teléfono o moto" aria-label="Buscar cliente"><span class="spacer"></span><button class="btn primary" data-act="cliEdit">Nuevo cliente</button></div>
   <div class="ph"><span class="sub">${list.length} clientes</span><span class="sub">Cuentas corrientes por cobrar: <strong class="num">${money(deuda)}</strong></span></div>
-  <div class="tw"><table><thead><tr><th>Cliente</th><th>Tipo · lista</th><th>Motos</th><th class="r">Compras</th><th class="r">Arreglos</th><th class="r">Cuenta corriente</th><th></th></tr></thead><tbody>${list.map(c=>{const vs=S.ventas.filter(v=>v.cliente===c.id);const os=S.ots.filter(o=>o.cliente===c.id);const act=os.filter(o=>o.estado!=='Entregada').length;return `<tr><td><div class="nm">${esc(c.nombre)}</div><div class="small muted">${esc(c.tel||'Sin teléfono')}</div></td><td><span class="chip">${TIPOS[c.tipo]}</span> <span class="small muted">${S.listas.find(l=>l.id===c.lista).n}</span></td><td class="small">${c.motos.map(m=>esc(modLbl(M(m.m)))+' '+m.a).join('<br>')||'<span class="muted">—</span>'}</td><td class="r">${vs.length}</td><td class="r">${os.length}${act?` <span class="chip info">${act} activo${act>1?'s':''}</span>`:''}</td><td class="r">${c.cc?(c.deuda?`<span class="chip warn">Debe ${money(c.deuda)}</span>`:'<span class="chip good">Al día</span>'):'<span class="muted small">No habilitada</span>'}</td><td class="r"><button class="btn sm" data-act="cliVer" data-id="${c.id}">Ver ficha</button></td></tr>`;}).join('')}</tbody></table></div></div>`;
+  <div class="tw"><table><thead><tr><th>Cliente</th><th>Tipo · lista</th><th>Motos</th><th class="r">Compras</th><th class="r">Arreglos</th><th class="r">Cuenta corriente</th><th></th></tr></thead><tbody>${list.map(c=>{const vs=S.ventas.filter(v=>v.cliente===c.id);const os=S.ots.filter(o=>o.cliente===c.id);const act=os.filter(o=>o.estado!=='Entregada').length;return `<tr><td><div class="nm">${esc(c.nombre)}</div><div class="small muted">${esc(c.tel||'Sin teléfono')}</div></td><td><span class="chip">${TIPOS[c.tipo]}</span> <span class="small muted">${esc(S.listas.find(l=>l.id===c.lista).n)}</span></td><td class="small">${c.motos.map(m=>esc(modLbl(M(m.m)))+' '+m.a).join('<br>')||'<span class="muted">—</span>'}</td><td class="r">${vs.length}</td><td class="r">${os.length}${act?` <span class="chip info">${act} activo${act>1?'s':''}</span>`:''}</td><td class="r">${c.cc?(c.deuda?`<span class="chip warn">Debe ${money(c.deuda)}</span>`:'<span class="chip good">Al día</span>'):'<span class="muted small">No habilitada</span>'}</td><td class="r"><button class="btn sm" data-act="cliVer" data-id="${c.id}">Ver ficha</button></td></tr>`;}).join('')}</tbody></table></div></div>`;
 }
 
 /* ---------- Vista: Envíos ---------- */
@@ -1107,7 +1268,7 @@ function repModal(id){
       <datalist id="dl-cat">${cats.map(c=>`<option value="${esc(c)}">`).join('')}</datalist><datalist id="dl-prov">${provs.map(c=>`<option value="${esc(c)}">`).join('')}</datalist>
       <div class="box"><h4>Precio de venta</h4><p class="small muted">Se calcula con el margen de cada lista. Para usados y reacondicionados podés fijar un precio propio.</p>
         <div class="fgrid"><label class="field"><span>Precio fijo público</span><input id="rp-pp" class="in" type="text" inputmode="decimal" min="0" step="100" value="${esc(s.pmPub)}" data-m="pmPub" placeholder="Automático"></label><label class="field"><span>Precio fijo mecánico</span><input id="rp-pm" class="in" type="text" inputmode="decimal" min="0" step="100" value="${esc(s.pmMec)}" data-m="pmMec" placeholder="Automático"></label></div>
-        <p class="small">Resultado: ${S.listas.map(l=>`${l.n} <strong class="num">${money(precio(fake,l.id))}</strong>`).join(' · ')}</p></div>
+        <p class="small">Resultado: ${S.listas.map(l=>`${esc(l.n)} <strong class="num">${money(precio(fake,l.id))}</strong>`).join(' · ')}</p></div>
       <div class="box"><h4>Compatible con</h4><p class="small muted">Marcá las motos y el rango de años. Sin ninguna marcada, el repuesto se muestra como universal.</p>
         <div class="tw"><table><thead><tr><th></th><th>Moto</th><th>Desde</th><th>Hasta</th></tr></thead><tbody>${S.modelos.map(m=>{const c=s.compat[m.id];return `<tr><td><input id="cmp-${m.id}" type="checkbox" class="check" data-m="cmp:${m.id}:on" ${c.on?'checked':''} aria-label="${esc(modLbl(m))}"></td><td><label for="cmp-${m.id}">${esc(modLbl(m))}</label></td><td><input id="cmpd-${m.id}" class="in" type="text" inputmode="decimal" style="width:84px" value="${c.d}" data-m="cmp:${m.id}:d" ${c.on?'':'disabled'} aria-label="Año desde"></td><td><input id="cmph-${m.id}" class="in" type="text" inputmode="decimal" style="width:84px" value="${c.h}" data-m="cmp:${m.id}:h" ${c.on?'':'disabled'} aria-label="Año hasta"></td></tr>`;}).join('')}</tbody></table></div></div>`;},
     foot:()=>`<button class="btn ghost" data-act="mclose">Cancelar</button><button class="btn primary" data-act="repSave">${r?'Guardar cambios':'Crear repuesto'}</button>`});
@@ -1150,7 +1311,7 @@ function cliEditModal(id){
     body:s=>`<div class="fgrid"><label class="field" style="grid-column:1/-1"><span>Nombre o razón social *</span><input id="cl-n" class="in" value="${esc(s.nombre)}" data-m="nombre" autofocus></label>
       <label class="field"><span>Teléfono / WhatsApp</span><input id="cl-t" class="in" value="${esc(s.tel)}" data-m="tel" inputmode="tel" placeholder="3764 00-0000"></label>
       <label class="field"><span>Tipo</span><select id="cl-tp" class="in" data-m="tipo">${Object.entries(TIPOS).map(([k,v])=>`<option value="${k}" ${k===s.tipo?'selected':''}>${v}</option>`).join('')}</select></label>
-      <label class="field"><span>Lista de precios</span><select id="cl-l" class="in" data-m="lista">${S.listas.map(l=>`<option value="${l.id}" ${l.id===s.lista?'selected':''}>${l.n}</option>`).join('')}</select></label></div>
+      <label class="field"><span>Lista de precios</span><select id="cl-l" class="in" data-m="lista">${S.listas.map(l=>`<option value="${l.id}" ${l.id===s.lista?'selected':''}>${esc(l.n)}</option>`).join('')}</select></label></div>
       <div class="box"><h4>Datos fiscales</h4><div class="fgrid"><label class="field"><span>Documento</span><select id="cl-dt" class="in" data-m="docTipo"><option value="CF" ${s.docTipo==='CF'?'selected':''}>Sin identificar</option><option value="DNI" ${s.docTipo==='DNI'?'selected':''}>DNI</option><option value="CUIT" ${s.docTipo==='CUIT'?'selected':''}>CUIT</option></select></label>${s.docTipo==='CF'?'':`<label class="field"><span>${s.docTipo==='CUIT'?'CUIT':'Número de DNI'}</span><input id="cl-doc" class="in code" value="${esc(s.doc)}" data-m="doc" inputmode="numeric" placeholder="${s.docTipo==='CUIT'?'30-12345678-9':'30123456'}"></label>`}<label class="field"><span>Condición frente al IVA</span><select id="cl-iva" class="in" data-m="condIVA">${Object.entries(COND_IVA).map(([k,v])=>`<option value="${k}" ${k===s.condIVA?'selected':''}>${v}</option>`).join('')}</select></label></div>${s.docTipo==='CUIT'&&s.doc?(cuitOk(s.doc)?'<span class="chip good">CUIT válido</span>':'<span class="chip bad">El dígito verificador no coincide</span>'):''}<label class="field"><span>Domicilio fiscal</span><input id="cl-dom" class="in" value="${esc(s.dom)}" data-m="dom"></label></div>
       <div class="box"><label class="check"><input id="cl-cc" type="checkbox" data-m="cc" ${s.cc?'checked':''}> Habilitar cuenta corriente</label>${s.cc?`<label class="field"><span>Límite de deuda</span><input id="cl-lim" class="in" type="text" inputmode="decimal" min="0" step="1000" value="${esc(s.limite)}" data-m="limite"></label>`:''}</div>
       <div class="box"><h4>Motos del cliente</h4><p class="small muted">Sirven para filtrar repuestos compatibles en Mostrador.</p>${s.motos.map((m,i)=>`<div class="fgrid"><select id="cl-m${i}" class="in" data-m="moto:${i}:m" aria-label="Moto ${i+1}"><option value="">— Sin moto —</option>${S.modelos.map(x=>`<option value="${x.id}" ${x.id===m.m?'selected':''}>${esc(modLbl(x))}</option>`).join('')}</select><input id="cl-a${i}" class="in" type="text" inputmode="decimal" min="1980" max="2030" placeholder="Año" value="${esc(m.a)}" data-m="moto:${i}:a" aria-label="Año moto ${i+1}"></div>`).join('')}</div>`,
@@ -1160,7 +1321,7 @@ function cliVerModal(id){
   const c=C(id);
   openModal({title:c.nombre,wide:true,st:{id,pago:c.deuda?String(c.deuda):'',medio:'efectivo'},
     body:s=>{const cl=C(s.id);const vs=S.ventas.filter(v=>v.cliente===cl.id).sort((a,b)=>b.fecha.localeCompare(a.fecha));const os=S.ots.filter(o=>o.cliente===cl.id).sort((a,b)=>b.num-a.num);
-      return `<div class="info-g"><div><span class="lbl-s">Teléfono</span><span>${esc(cl.tel||'—')}</span></div><div><span class="lbl-s">Tipo · lista</span><span>${TIPOS[cl.tipo]} · ${S.listas.find(l=>l.id===cl.lista).n}</span></div><div><span class="lbl-s">Motos</span><span>${cl.motos.map(m=>esc(modLbl(M(m.m)))+' '+m.a).join(', ')||'—'}</span></div><div><span class="lbl-s">Total comprado</span><span class="num">${money(vs.reduce((a,v)=>a+v.total,0))}</span></div></div>
+      return `<div class="info-g"><div><span class="lbl-s">Teléfono</span><span>${esc(cl.tel||'—')}</span></div><div><span class="lbl-s">Tipo · lista</span><span>${TIPOS[cl.tipo]} · ${esc(S.listas.find(l=>l.id===cl.lista).n)}</span></div><div><span class="lbl-s">Motos</span><span>${cl.motos.map(m=>esc(modLbl(M(m.m)))+' '+m.a).join(', ')||'—'}</span></div><div><span class="lbl-s">Total comprado</span><span class="num">${money(vs.reduce((a,v)=>a+v.total,0))}</span></div></div>
       ${cl.cc?`<div class="box"><div class="row" style="justify-content:space-between"><h4>Cuenta corriente</h4>${cl.deuda?`<span class="chip warn">Debe ${money(cl.deuda)}</span>`:'<span class="chip good">Al día</span>'}</div><p class="small muted">Límite ${money(cl.limite)} · disponible ${money(cl.limite-cl.deuda)}</p>${cl.deuda?`<div class="fgrid"><label class="field"><span>Monto del pago</span><input id="cv-p" class="in" type="text" inputmode="decimal" min="0" step="100" value="${esc(s.pago)}" data-m="pago"></label><label class="field"><span>Medio</span><select id="cv-m" class="in" data-m="medio">${medioOpts(s.medio,null,true)}</select></label></div><div><button class="btn primary sm" data-act="cliPago">Registrar pago</button></div>`:''}</div>`:''}
       <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))"><div class="box"><h4>Compras (${vs.length})</h4>${vs.length?vs.slice(0,8).map(v=>`<div class="row" style="justify-content:space-between"><button class="btn sm ghost code" style="padding:2px 0" data-act="ticket" data-id="${v.id}">${vNum(v)}</button><span class="small muted">${fdate(v.fecha)} · ${MED(v.medio).n}</span><span class="num">${money(v.total)}</span></div>`).join(''):'<p class="small muted">Sin compras.</p>'}</div>
       <div class="box"><h4>Arreglos (${os.length})</h4>${os.length?os.map(o=>`<div class="row" style="justify-content:space-between"><button class="btn sm ghost" style="padding:2px 0;text-align:left;white-space:normal" data-act="otOpen" data-id="${o.id}"><span class="code">OT-${pad4(o.num)}</span> ${esc(o.pieza)}</button>${otChip(o)}</div>`).join(''):'<p class="small muted">Sin arreglos.</p>'}</div></div>`;},
@@ -1198,7 +1359,7 @@ function otBody(st){
   <div class="box"><h4>Falla declarada</h4><p>${esc(o.falla)}</p></div>
   <div class="box"><h4>Diagnóstico del técnico</h4>${edit?`<textarea id="ot-diag" class="in" data-m="diag" placeholder="Qué encontraste y qué hay que hacer">${esc(st.diag)}</textarea>`:`<p>${esc(o.diag)||'<span class="muted">Pendiente</span>'}</p>`}</div>`;
   if(o.estado!=='Recibida'){
-    h+=`<div class="box"><div class="row" style="justify-content:space-between"><h4>Presupuesto</h4><span class="small muted">Precios de lista ${S.listas.find(l=>l.id===c.lista).n}</span></div>
+    h+=`<div class="box"><div class="row" style="justify-content:space-between"><h4>Presupuesto</h4><span class="small muted">Precios de lista ${esc(S.listas.find(l=>l.id===c.lista).n)}</span></div>
     ${items.length?`<div class="tw"><table><thead><tr><th>Repuesto</th><th class="r">Cant.</th><th class="r">Precio</th><th class="r">Subtotal</th>${edit?'<th></th>':''}</tr></thead><tbody>${items.map((i,ix)=>{const r=R(i.r);return `<tr><td>${esc(i.n)}${r&&!o.stockOut&&r.stock<i.q?' <span class="chip bad">Falta stock</span>':''}</td><td class="r">${i.q}</td><td class="r">${money(i.p)}</td><td class="r">${money(i.p*i.q)}</td>${edit?`<td class="r"><button class="xbtn" data-act="otRmItem" data-ix="${ix}" aria-label="Quitar">×</button></td>`:''}</tr>`;}).join('')}</tbody></table></div>`:`<p class="small muted">Sin repuestos cargados.</p>`}
     ${edit?`<div class="row" style="flex-wrap:wrap"><select id="ot-addr" class="in" style="flex:1 1 260px" data-m="addR" aria-label="Repuesto a agregar"><option value="">Agregar repuesto del stock…</option>${opts}</select><input id="ot-addq" class="in" type="text" inputmode="decimal" min="1" style="width:74px" value="${esc(st.addQ)}" data-m="addQ" aria-label="Cantidad"><button class="btn sm" data-act="otAddItem" ${st.addR?'':'disabled'}>Agregar</button></div>
     <label class="field" style="max-width:220px"><span>Mano de obra</span><input id="ot-mo" class="in" type="text" inputmode="decimal" min="0" step="500" value="${esc(st.mo)}" data-m="mo"></label>`:`<div class="row" style="justify-content:space-between"><span class="muted">Mano de obra</span><span class="num">${money(mo)}</span></div>`}
@@ -1385,7 +1546,7 @@ function cuitDigits(c){return String(c||'').replace(/\D/g,'');}
 function cuitOk(c){const d=cuitDigits(c);if(d.length!==11)return false;const w=[5,4,3,2,7,6,5,4,3,2];let t=0;for(let i=0;i<10;i++)t+=Number(d[i])*w[i];let v=11-t%11;if(v===11)v=0;if(v===10)return false;return v===Number(d[10]);}
 function fmtCuit(c){const d=cuitDigits(c);return d.length===11?`${d.slice(0,2)}-${d.slice(2,10)}-${d.slice(10)}`:c;}
 function mkCuit(p,n){const w=[5,4,3,2,7,6,5,4,3,2];for(let k=0;k<60;k++){const b=p+String(Number(n)+k).padStart(8,'0');let t=0;for(let i=0;i<10;i++)t+=Number(b[i])*w[i];let v=11-t%11;if(v===11)v=0;if(v<10)return `${p}-${b.slice(2)}-${v}`;}return `${p}-${n}-0`;}
-function fmtDoc(r){if(r.docTipo==='CUIT')return 'CUIT '+r.doc;if(r.docTipo==='DNI')return 'DNI '+Number(cuitDigits(r.doc)).toLocaleString('es-AR');return 'Sin identificar';}
+function fmtDoc(r){if(r.docTipo==='CUIT')return 'CUIT '+String(r.doc||'').replace(/[^\d-]/g,'');if(r.docTipo==='DNI')return 'DNI '+Number(cuitDigits(r.doc)).toLocaleString('es-AR');return 'Sin identificar';}
 function recDe(c,over){const o=over||{};const dn=cuitDigits(o.doc);return {nombre:String(o.nombre||'').trim()||c.nombre,docTipo:dn?'DNI':(c.docTipo||'CF'),doc:dn||c.doc||'',cond:c.condIVA||'CF',dom:c.dom||''};}
 function calcComp(items){
   let n21=0,i21=0,n105=0,i105=0,total=0;
@@ -1666,7 +1827,7 @@ function hideTip(){const p=$('#tipPop');if(p)p.hidden=true;}
 function introHTML(){const t=INTRO[ui.view];if(!t||ui.introOff[ui.view])return '';
   return `<div class="intro"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M10 9v5M10 6.2v.1"/></svg><p>${t}</p><div class="row" style="flex-wrap:nowrap"><button class="btn sm ghost" data-act="help">Ver cómo se usa</button><button class="xbtn" data-act="introX" aria-label="Ocultar esta ayuda" title="Ocultar">×</button></div></div>`;}
 function helpModal(){const h=HELP[ui.view];
-  openModal({title:h.t,wide:true,st:{},body:()=>`<ol class="hsteps">${h.steps.map(s=>`<li>${s}</li>`).join('')}</ol>${h.extra?`<p class="note acc">${h.extra}</p>`:''}${h.terms.length?`<div class="box"><h4>Palabras que vas a ver</h4><dl class="gloss">${h.terms.map(k=>`<div><dt>${GLOSS[k][0]}</dt><dd>${GLOSS[k][1]}</dd></div>`).join('')}</dl></div>`:''}${SYNC.on?`<div class="box"><h4>Base de datos del taller</h4><p class="small">Conectado: los cambios se ven en todos los dispositivos en pocos segundos.</p><div><button class="btn sm ghost" data-act="syncOut">Salir en este dispositivo</button></div></div>`:''}<div class="box"><h4>Usar como app</h4><p class="small muted">Instalalo en la PC, el celular o la tablet: queda con su ícono, se abre en su propia ventana y funciona aunque se corte internet.</p><div><button class="btn sm" data-act="installHelp">Cómo instalarla</button></div></div><div class="box"><h4>Probar el sistema</h4><p class="small muted">Es un prototipo con datos de ejemplo. Podés probarlo como otro usuario o volver a los datos de ejemplo cuando quieras.</p><div class="row"><button class="btn sm" data-act="userModal">Cambiar usuario</button><button class="btn sm ghost" data-act="welcome">Ver la bienvenida</button><button class="btn sm ghost" data-act="reset">Volver a los datos de ejemplo</button></div></div>`,
+  openModal({title:h.t,wide:true,st:{},body:()=>`<ol class="hsteps">${h.steps.map(s=>`<li>${s}</li>`).join('')}</ol>${h.extra?`<p class="note acc">${h.extra}</p>`:''}${h.terms.length?`<div class="box"><h4>Palabras que vas a ver</h4><dl class="gloss">${h.terms.map(k=>`<div><dt>${GLOSS[k][0]}</dt><dd>${GLOSS[k][1]}</dd></div>`).join('')}</dl></div>`:''}${SYNC.on?`<div class="box"><h4>Base de datos del taller</h4><p class="small">Conectado: los cambios se ven en todos los dispositivos en pocos segundos.</p><div><button class="btn sm ghost" data-act="syncOut">Salir en este dispositivo</button></div></div>`:''}<div class="box"><h4>Usar como app</h4><p class="small muted">Instalalo en la PC, el celular o la tablet: queda con su ícono, se abre en su propia ventana y funciona aunque se corte internet.</p><div><button class="btn sm" data-act="installHelp">Cómo instalarla</button></div></div><div class="box"><h4>Probar el sistema</h4><p class="small muted">Es un prototipo con datos de ejemplo. Podés probarlo como otro usuario o volver a los datos de ejemplo cuando quieras.</p><div class="row"><button class="btn sm" data-act="userModal">Cambiar usuario</button><button class="btn sm ghost" data-act="welcome">Ver la bienvenida</button><button class="btn sm ghost" data-act="reset">Volver a los datos de ejemplo</button>${typeof SYNC!=='undefined'&&SYNC.on?'<button class="btn sm ghost" data-act="backups">Copias de seguridad</button>':''}</div></div>`,
     foot:()=>`<button class="btn primary" data-act="mclose">Entendido</button>`});}
 function userModal(){openModal({title:'¿Quién usa el sistema?',st:{},body:()=>`<p class="small muted">Cada usuario ve solo lo que necesita. En el sistema final cada uno entra con su usuario y contraseña.</p><div class="ulist">${[['dueno','Dueño','Ve todo: costos, precios, caja y reportes.'],['mostrador','Mostrador','Vende, factura, cobra y carga clientes.'],['tecnico','Técnico','Ve los arreglos y el stock. No cobra.']].map(([k,n,d])=>`<button class="ubtn" data-act="setRol" data-v="${k}" aria-pressed="${ui.rol===k}"><b>${n}</b><span>${d}</span></button>`).join('')}</div>`});}
 function welcomeModal(){openModal({title:'Bienvenido',st:{},body:()=>`<p>Este sistema reemplaza el cuaderno y la calculadora del mostrador. Un día de trabajo tiene tres pasos:</p><ol class="hsteps"><li><span><b>Abrí la caja.</b> Al llegar, contá la plata del cajón y anotala en "Caja".</span></li><li><span><b>Vendé.</b> En "Vender" tocás los productos, elegís cómo paga y sale el ticket. Si piden factura, marcás "Pide factura".</span></li><li><span><b>Cerrá la caja.</b> Al irte, contá el efectivo. El sistema te dice si falta o sobra.</span></li></ol><p class="note acc">Si te perdés, tocá <b>Ayuda</b> arriba a la derecha. Los botones <span class="tip" aria-hidden="true">?</span> explican qué significa cada palabra.</p>`,
@@ -1705,7 +1866,7 @@ function vMostrador(){
   const warn=!S.caja.abierta&&ui.medio!=='cc'?`<div class="note bad">La caja está cerrada y así no se puede cobrar. <button class="btn sm" data-act="go" data-v="caja">Abrir caja</button></div>`:'';
   return `<div class="pos">
   <div class="panel">
-    <div class="ph"><h2 class="stp"><span class="stepn">1</span>Buscá el repuesto</h2><span class="sub">Precios de lista ${lst.n} ${tipBtn('lista')}</span></div>
+    <div class="ph"><h2 class="stp"><span class="stepn">1</span>Buscá el repuesto</h2><span class="sub">Precios de lista ${esc(lst.n)} ${tipBtn('lista')}</span></div>
     <div class="search">
       <div class="q"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><input id="q" class="in" type="search" value="${esc(ui.q)}" data-bind="q" placeholder='Escribí qué buscás: "pastillas cg 150", "bujía" o el código' aria-label="Buscar repuesto" autocomplete="off"></div>
       <select id="fModelo" class="in" data-bind="fModelo" aria-label="Moto"><option value="">Cualquier moto</option>${S.modelos.map(m=>`<option value="${m.id}" ${m.id===ui.fModelo?'selected':''}>${esc(modLbl(m))}</option>`).join('')}</select>
@@ -1718,7 +1879,7 @@ function vMostrador(){
   <aside class="panel cart" id="cartBox" aria-label="Venta en curso">
     <div class="ph"><h2 class="stp"><span class="stepn">2</span>Revisá la venta</h2><span class="sub">${nU} ${nU===1?'unidad':'unidades'}</span></div>
     <div class="pb">
-      <label class="field"><span>¿Para quién es?</span><select id="clienteId" class="in" data-bind="clienteId">${S.clientes.map(c=>`<option value="${c.id}" ${c.id===cli.id?'selected':''}>${esc(c.nombre)}${c.id==='c1'?'':' · lista '+S.listas.find(l=>l.id===c.lista).n}</option>`).join('')}</select></label>
+      <label class="field"><span>¿Para quién es?</span><select id="clienteId" class="in" data-bind="clienteId">${S.clientes.map(c=>`<option value="${c.id}" ${c.id===cli.id?'selected':''}>${esc(c.nombre)}${c.id==='c1'?'':' · lista '+esc(S.listas.find(l=>l.id===c.lista).n)}</option>`).join('')}</select></label>
       ${cli.id==='c1'?'<p class="small muted" style="margin-top:-6px">Dejalo así si no conocés al cliente.</p>':''}
       <div>${cartRows}</div>
       <label class="check"><input id="envio" type="checkbox" data-bind="envio" ${ui.envio?'checked':''}> Hay que enviarlo al cliente</label>
@@ -1911,7 +2072,7 @@ function presuTxt(p){const c=C(p.cliente);const k=calcComp(p.items);
 
 /* --- Cliente: buscar escribiendo --- */
 function cliPicker(d,cli,lock){
-  if(cli.id!=='c1')return `<div class="cpick sel"><div style="min-width:0;flex:1"><b>${esc(cli.nombre)}</b><div class="small muted">${fmtDoc(cli)} · lista ${S.listas.find(l=>l.id===cli.lista).n}${cli.cc?` · cuenta: le quedan ${money(cli.limite-cli.deuda)}`:''}</div></div>${lock?'':`<button class="linkbtn" data-act="fCliData" data-id="${cli.id}">datos</button><button class="xbtn" data-act="fCliClear" aria-label="Sacar el cliente" title="Sacar el cliente">×</button>`}</div>`;
+  if(cli.id!=='c1')return `<div class="cpick sel"><div style="min-width:0;flex:1"><b>${esc(cli.nombre)}</b><div class="small muted">${fmtDoc(cli)} · lista ${esc(S.listas.find(l=>l.id===cli.lista).n)}${cli.cc?` · cuenta: le quedan ${money(cli.limite-cli.deuda)}`:''}</div></div>${lock?'':`<button class="linkbtn" data-act="fCliData" data-id="${cli.id}">datos</button><button class="xbtn" data-act="fCliClear" aria-label="Sacar el cliente" title="Sacar el cliente">×</button>`}</div>`;
   if(lock)return `<div class="cpick sel"><b>Consumidor final</b></div>`;
   const q=d.cliQ||'';const nq=norm(q);
   const res=q.trim()?S.clientes.filter(c=>c.id!=='c1'&&norm([c.nombre,c.tel,c.doc].join(' ')).replace(/[-.\s]/g,'').includes(nq.replace(/[-.\s]/g,''))||c.id!=='c1'&&norm(c.nombre).includes(nq)).slice(0,6):[];
@@ -1956,7 +2117,7 @@ function presuModal(id){const p=S.presus.find(x=>x.id===id);const e=presuEstado(
 /* --- Importar stock desde Excel --- */
 const IMP_FIELDS=[['cod','Código',['codigo','cod','sku','articulo','codigo interno','cod interno']],['nombre','Nombre o descripción',['nombre','descripcion','producto','detalle','repuesto','articulo descripcion']],['barras','Código de barras',['barras','ean','codigo de barras','cod barras','cod. barras']],['oem','Código de fábrica',['oem','fabrica','original','nro parte','numero de parte']],['cat','Categoría',['categoria','rubro','familia','tipo']],['marca','Marca',['marca']],['prov','Proveedor',['proveedor','prov']],['stock','Cantidad en stock',['stock','cantidad','existencia','cant','unidades']],['min','Stock mínimo',['minimo','stock minimo','min','reponer']],['costo','Costo',['costo','precio costo','precio de costo','compra','precio compra']],['precio','Precio de venta',['precio','precio venta','precio de venta','venta','pvp','publico','precio publico','lista']],['ubic','Ubicación',['ubicacion','lugar','estante','deposito']],['motos','Sirve para (motos)',['moto','motos','modelo','modelos','compatible','compatibilidad','aplicacion']]];
 let XLSX_P=null;
-function loadXLSX(){if(window.XLSX)return Promise.resolve(window.XLSX);if(XLSX_P)return XLSX_P;XLSX_P=new Promise((ok,ko)=>{const sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';sc.onload=()=>window.XLSX?ok(window.XLSX):ko(new Error('x'));sc.onerror=()=>{XLSX_P=null;ko(new Error('No se pudo cargar el lector de Excel. Revisá la conexión a internet o guardá la planilla como CSV.'));};document.head.appendChild(sc);});return XLSX_P;}
+function loadXLSX(){if(window.XLSX)return Promise.resolve(window.XLSX);if(XLSX_P)return XLSX_P;XLSX_P=new Promise((ok,ko)=>{const sc=document.createElement('script');sc.src='vendor/xlsx-0.20.3.full.min.js';sc.integrity='sha384-qiFNcDD4LfYmU3hM29UDKfL3UHhoEREpKZz/uAhFeJKXK+5vLY+0Wz888hK2DIn1';sc.crossOrigin='anonymous';sc.onload=()=>window.XLSX?ok(window.XLSX):ko(new Error('x'));sc.onerror=()=>{XLSX_P=null;ko(new Error('No se pudo cargar el lector de Excel. Revisá la conexión a internet o guardá la planilla como CSV.'));};document.head.appendChild(sc);});return XLSX_P;}
 function parseCSV(t){const first=t.split(/\r?\n/)[0]||'';const sep=(first.match(/;/g)||[]).length>(first.match(/,/g)||[]).length?';':',';const rows=[];let row=[],cell='',q=false;
   for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){cell+='"';i++;}else q=false;}else cell+=ch;}else if(ch==='"')q=true;else if(ch===sep){row.push(cell);cell='';}else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&t[i+1]==='\n')i++;row.push(cell);rows.push(row);row=[];cell='';}else cell+=ch;}
   if(cell!==''||row.length){row.push(cell);rows.push(row);}return rows;}
@@ -2453,6 +2614,231 @@ if(swOk()){window.addEventListener('load',()=>{let had=!!navigator.serviceWorker
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had)toast('Se descargó una versión nueva del sistema. Se ve la próxima vez que lo abras.');had=true;});});}
 /* Accesos directos del ícono (Vender, Stock, Caja) */
 (()=>{const h=(location.hash||'').slice(1);const map={vender:'facturacion',stock:'stock',caja:'caja',arreglos:'ot',clientes:'clientes',envios:'envios'};if(map[h]){ui.view=map[h];if(h==='vender')ui.fTab='nuevo';try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}})();
+
+/* ================= v7: celular y "Mostrar al cliente" ================= */
+const TITLE_COLS=['repuesto','cliente','concepto','producto','pieza','detalle','descripcion','proveedor','nombre'];
+function cardTables(){document.querySelectorAll('#view table,#modal .mb table').forEach(t=>{
+  if(t.classList.contains('nostk')||t.closest('.paper,.paperwrap,.roll,#print'))return;
+  const names=[];t.querySelectorAll('thead th').forEach(th=>{const n=+th.colSpan||1;const tx=th.textContent.trim();for(let i=0;i<n;i++)names.push(tx);});
+  let ti=names.findIndex(n=>TITLE_COLS.includes(norm(n)));if(ti<0)ti=0;
+  t.classList.add('stk');
+  t.querySelectorAll('tbody tr,tfoot tr').forEach(tr=>{let c=0;[...tr.children].forEach(td=>{const span=+td.colSpan||1;
+    if(!td.hasAttribute('data-th')){const h=span>1?'':(names[c]||'');td.setAttribute('data-th',h);if(c===ti&&span===1&&names.length)td.classList.add('t1');else if(!h||td.querySelector('button,.btn,input,select'))td.classList.add('full');else{const L=td.textContent.trim().length;if(L>34)td.classList.add('full');else if(L>14)td.classList.add('w2');}}
+    c+=span;});});
+});}
+(()=>{const mo=new MutationObserver(()=>cardTables());['#view','#modal'].forEach(s=>{const e=document.querySelector(s);if(e)mo.observe(e,{childList:true,subtree:true});});})();
+
+/* La barra "Ver la venta" se esconde cuando la venta ya está a la vista */
+(()=>{if(!('IntersectionObserver' in window))return;let cur=null;const io=new IntersectionObserver(es=>{es.forEach(e=>document.body.classList.toggle('fbox-vis',e.isIntersecting));},{rootMargin:'0px 0px -35% 0px'});
+  const mo=new MutationObserver(()=>{const b=document.getElementById('factBox');if(b!==cur){if(cur)io.unobserve(cur);cur=b;if(b)io.observe(b);else document.body.classList.remove('fbox-vis');}});
+  const v=document.querySelector('#view');if(v)mo.observe(v,{childList:true,subtree:true});})();
+/* Número de WhatsApp en formato internacional (Argentina) */
+function waNum(tel){let d=String(tel||'').replace(/\D/g,'');if(!d)return '';
+  if(d.startsWith('549'))return d;if(d.startsWith('54'))d=d.slice(2);if(d.startsWith('0'))d=d.slice(1);
+  if(d.length===12){for(const a of [4,3,2]){if(d.substr(a,2)==='15'){d=d.slice(0,a)+d.slice(a+2);break;}}}
+  return d.length===10?'549'+d:'';}
+const EYE='<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M1.8 10S5 4.5 10 4.5 18.2 10 18.2 10 15 15.5 10 15.5 1.8 10 1.8 10z"/><circle cx="10" cy="10" r="2.6"/></svg>';
+const WA_IC='<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.2 16.8l1-3.4A7 7 0 1 1 7 16l-3.8.8z"/><path d="M7.6 7.2c.2 2.3 2.6 4.9 5.2 5.2l1-1.2-1.6-.9-.8.7c-.9-.4-1.8-1.3-2.3-2.3l.7-.8-.8-1.6z"/></svg>';
+let CLIV=null;
+function cliData(src){
+  if(src&&src!=='draft'){const p=S.presus.find(x=>x.id===src);if(!p)return null;const c=C(p.cliente)||S.clientes[0];
+    return {kind:`Presupuesto N.º ${pad4(p.num)}`,cli:c,items:p.items,vence:presuVence(p),txt:presuTxt(p),medio:null};}
+  const d=ui.draft;const cli=C(d.cliente)||S.clientes[0];
+  return {kind:d.presuId?'Presupuesto':'Tu compra',cli,items:d.items.filter(i=>String(i.d).trim()),vence:null,txt:null,medio:d.condVenta==='cc'||d.split||d.origen?null:d.pagos[0].medio};
+}
+function cliTxt(x,k){if(x.txt)return x.txt;const F=S.fiscal;
+  return `${F.fantasia}\n${x.cli&&x.cli.id!=='c1'?x.cli.nombre+'\n':''}`+k.lines.map(l=>`• ${fQ(l.q)} × ${l.d}: ${m2(l.imp)}`).join('\n')+`\nTotal: ${m2(k.total)}\nPrecios del ${fdFull(now())}.`;}
+function cliShow(src){
+  const x=cliData(src||'draft');if(!x||!x.items.length){toast('Agregá algo a la venta para mostrársela al cliente.','warn');return;}
+  const k=calcComp(x.items);const F=S.fiscal;const md=x.medio?MED(x.medio):null;const hasRec=x.items.some(i=>String(i.d).indexOf('Recargo financiero')===0);
+  const mark=(document.querySelector('.brand .mark')||{}).outerHTML||'';
+  CLIV={src:src||'draft',txt:cliTxt(x,k),tel:x.cli&&x.cli.id!=='c1'?x.cli.tel:''};
+  let el=document.getElementById('cliv');if(!el){el=document.createElement('div');el.id='cliv';el.className='cliv';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');document.body.appendChild(el);}
+  el.setAttribute('aria-label',x.kind);
+  el.innerHTML=`<header class="cliv-h">${mark}<div><b>${esc(F.fantasia)}</b><small>${esc(x.kind)} · ${fdFull(now())}</small></div></header>
+  <div class="cliv-b">${x.cli&&x.cli.id!=='c1'?`<div class="cliv-who">Para <b>${esc(x.cli.nombre)}</b></div>`:''}
+    ${k.lines.map(l=>`<div class="cliv-it"><span class="q">${fQ(l.q)}×</span><span class="n">${esc(l.d)}</span><span class="i">${m2(l.imp)}</span>${l.q!==1||l.dto?`<span class="u">${m2(l.pu)} c/u${l.dto?` · ${fQ(l.dto)}% de descuento`:''}</span>`:''}</div>`).join('')}
+  </div>
+  <footer class="cliv-f"><div class="cliv-tot"><span>Total</span><b>${m2(k.total)}</b></div>
+    ${md&&md.r>0&&!hasRec?`<div class="cliv-alt">Con ${esc(md.n)} (+${Math.round(md.r*100)}%): <b>${m2(Math.round(k.total*(1+md.r)))}</b></div>`:''}
+    ${x.vence?`<div class="cliv-alt">Vale hasta el ${fdFull(x.vence.toISOString())}</div>`:''}
+    <div class="cliv-btns"><button class="btn" data-act="cliWa">${WA_IC}WhatsApp</button><button class="btn primary" data-act="cliClose">Listo</button></div></footer>`;
+  document.documentElement.style.overflow='hidden';
+  if(!(history.state&&history.state.cliv)){try{history.pushState({cliv:1},'');}catch(e){}}
+  setTimeout(()=>{const b=el.querySelector('[data-act="cliClose"]');if(b)b.focus({preventScroll:true});},30);
+}
+function cliHide(){const el=document.getElementById('cliv');if(el)el.remove();CLIV=null;document.documentElement.style.overflow='';}
+window.addEventListener('popstate',()=>{if(CLIV)cliHide();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&CLIV){e.stopPropagation();ACT.cliClose();}},true);
+Object.assign(ACT,{
+  cliShow:d=>{if(Mo&&d&&d.id)closeModal();cliShow(d&&d.id);},
+  cliClose:()=>{if(history.state&&history.state.cliv){try{history.back();return;}catch(e){}}cliHide();},
+  cliWa:()=>{if(!CLIV)return;const n=waNum(CLIV.tel);window.open(`https://wa.me/${n}?text=${encodeURIComponent(CLIV.txt)}`,'_blank','noopener');}
+});
+/* Botones para mostrarle la venta al cliente */
+const _fNuevo7=fNuevo;
+fNuevo=function(){let h=_fNuevo7();const d=ui.draft;if(!d.items.length||d.origen)return h;
+  h=h.replace('</div></div>\n    </div></aside>','<button class="linkbtn small cshow" data-act="cliShow">${EYE}Mostrar al cliente</button></div></div>\n    </div></aside>');
+  h=h.replace('<div class="mbar"><button class="btn primary" data-act="toFact">',`<div class="mbar"><button class="btn mshow" data-act="cliShow" aria-label="Mostrar al cliente">${EYE}Mostrar</button><button class="btn primary" data-act="toFact">`);
+  return h;};
+const _presuModal7=presuModal;
+presuModal=function(id){_presuModal7(id);if(!Mo)return;const f=Mo.foot;Mo.foot=s=>`<button class="btn ghost" data-act="cliShow" data-id="${id}">Mostrar al cliente</button>`+(f?f(s):'');renderModal();};
+
+/* ================= v8: ventas que no se descuentan dos veces, bloqueo de clave, copias ================= */
+SYNC.rq=SYNC.rq||[];SYNC.inflight=SYNC.inflight||null;SYNC.locked=false;
+const newRid=p=>(p||'v')+Date.now().toString(36)+(typeof DEV==='string'?DEV:'')+'-'+Math.random().toString(36).slice(2,8);
+function metaSave(){try{localStorage.setItem('rcos-sync',JSON.stringify({ver:SYNC.ver,base:SYNC.base,baseN:SYNC.baseN,baseObj:SYNC.baseObj,months:SYNC.months,loaded:SYNC.loaded,rq:SYNC.rq,inflight:SYNC.inflight}))}catch(e){}}
+function metaLoad(){try{const m=JSON.parse(localStorage.getItem('rcos-sync')||'null');if(m){SYNC.rq=Array.isArray(m.rq)?m.rq:[];SYNC.inflight=m.inflight||null;}
+  if(m&&m.ver){Object.assign(SYNC,{ver:m.ver,base:m.base||{},baseN:m.baseN||{},baseObj:m.baseObj||{},months:m.months||[],loaded:m.loaded||[]});return true;}}catch(e){}return false;}
+function metaClear(){SYNC.ver=0;SYNC.base={};SYNC.baseN={};SYNC.baseObj={};SYNC.baseJ={};SYNC.rq=[];SYNC.inflight=null;try{localStorage.removeItem('rcos-sync')}catch(e){}}
+
+/* Si el servidor dice "clave mal" o "bloqueado", este equipo deja de insistir hasta que se escriba la clave.
+   Así un equipo con la clave vieja no bloquea a todo el taller probando solo cada 5 segundos. */
+const isLockedRes=r=>r&&(r.status===401||r.headers.get('x-locked')==='1');
+const _api8=api;
+api=async function(m,u,b){const r=await _api8(m,u,b);if(isLockedRes(r))SYNC.locked=true;else if(r.ok)SYNC.locked=false;return r;};
+async function apiT(url,body,ms){const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),ms||8000);
+  try{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-app-pin':SYNC.pin},body:JSON.stringify(body||{}),signal:ctl.signal,cache:'no-store'});if(isLockedRes(r))SYNC.locked=true;return r;}finally{clearTimeout(tm);}}
+async function lockMsg(r){const j=await r.clone().json().catch(()=>({}));pinModal(j.error||'Tu clave ya no es válida. Ingresala de nuevo.');}
+const _pinOk8=ACT.pinOk;ACT.pinOk=d=>{SYNC.locked=false;return _pinOk8(d);};
+const _poll8=poll;poll=async function(){if(SYNC.locked)return;if(SYNC.on&&!SYNC.busy&&(SYNC.rq.length||SYNC.inflight))return push();return _poll8();};
+
+/* Cola de ventas pendientes de confirmar en el servidor (se mandan con su código y el servidor no las repite) */
+async function flushRq(){
+  while(SYNC.rq.length){const op=SYNC.rq[0];let r;
+    try{r=op.op==='rel'?await apiT('/api/sync?op=release',{rid:op.rid},10000):await apiT('/api/sync?op=reserve',{rid:op.rid,t:op.t,items:op.items,force:1,num:0},10000);}
+    catch(e){renderSync('offline');return false;}
+    if(isLockedRes(r)){lockMsg(r);return false;}
+    if(r.status>=500||r.status===429)return false;
+    if(r.ok&&op.op==='res'){const j=await r.json().catch(()=>({}));
+      if(j.replay&&j.n&&j.tok){const c=S.comps.find(x=>x.rid===op.rid);if(c&&c.prov&&c.nro===j.n&&!(SYNC.base.comps||{})[c.id]){c.ntok=j.tok;localSave();}}}
+    SYNC.rq.shift();metaSave();}
+  return true;}
+
+/* Subir cambios: cada lote lleva un código. Si no llega la respuesta, se manda el MISMO lote otra vez
+   y el servidor no vuelve a sumar el stock ni la deuda. */
+push=async function(){
+  if(!SYNC.on||SYNC.busy||SYNC.locked)return;
+  if(SYNC.rq.length){SYNC.busy=true;renderSync('saving');let ok=false;try{ok=await flushRq();}finally{SYNC.busy=false;}
+    if(!ok){SYNC.pending=true;clearTimeout(SYNC.timer);if(!SYNC.locked)SYNC.timer=setTimeout(push,5000);return;}}
+  let job=SYNC.inflight;
+  if(!job){const ch=sDiff();
+    if(!ch.put.length&&!Object.keys(ch.obj).length){SYNC.pending=false;if(SYNC.needFull)return fullReload();renderSync('ok');return;}
+    const batch=ch.put.slice(0,400);const ids=new Set(batch.map(p=>p.c+'|'+p.id));const inc=ch.inc.filter(i=>ids.has(i.c+'|'+i.id));
+    job={bid:newRid('b'),more:ch.put.length>batch.length,
+      body:{put:batch.filter(p=>!p.empty).map(p=>({c:p.c,id:p.id,p:p.p,m:p.m})),inc:inc.map(i=>({c:i.c,id:i.id,f:i.f,n:i.n})),obj:ch.obj},
+      base:batch.map(p=>({c:p.c,id:p.id,h:p.h,j:p.j})),objH:Object.fromEntries(Object.keys(ch.obj).map(o=>[o,fnv(JSON.stringify(ch.obj[o]))]))};}
+  SYNC.busy=true;SYNC.pending=false;SYNC.inflight=job;metaSave();renderSync('saving');
+  try{const r=await api('POST','/api/sync?since='+SYNC.ver,Object.assign({bid:job.bid},job.body));
+    if(r.ok){const j=await r.json();
+      job.base.forEach(p=>{(SYNC.base[p.c]=SYNC.base[p.c]||{})[p.id]=p.h;(SYNC.baseJ[p.c]=SYNC.baseJ[p.c]||{})[p.id]=p.j;const f=SNUM[p.c];if(f)(SYNC.baseN[p.c]=SYNC.baseN[p.c]||{})[p.id]=num(JSON.parse(p.j)[f]);});
+      Object.keys(job.objH).forEach(o=>SYNC.baseObj[o]=job.objH[o]);
+      SYNC.inflight=null;
+      (j.renum||[]).forEach(x=>{const rec=(S[x.c]||[]).find(y=>srid(x.c,y)===x.id);if(rec){rec[SCLAIM[x.c]]=x.n;setBaseRec(x.c,rec);}if(x.c==='comps')toast(`Otro equipo usó el mismo número: el comprobante quedó como ${pad8(x.n)}.`,'warn');});
+      if(j.stale){SYNC.needFull=true;metaSave();}else applyChanges(j);
+      metaSave();
+      if(job.more||sDiff().put.length)SYNC.pending=true;
+      renderSync(SYNC.pending?'saving':'ok');}
+    else if(isLockedRes(r)){SYNC.busy=false;lockMsg(r);return;}
+    else if(r.status===400||r.status===413){SYNC.inflight=null;metaSave();SYNC.pending=true;renderSync('error');}
+    else{SYNC.pending=true;renderSync(r.status===429||r.status===503?'saving':'error');}
+  }catch(e){SYNC.pending=true;renderSync('offline');}
+  SYNC.busy=false;
+  if(SYNC.pending){clearTimeout(SYNC.timer);SYNC.timer=setTimeout(push,SYNC.state==='offline'||SYNC.state==='error'?5000:300+Math.random()*700);}
+  else if(SYNC.needFull)fullReload();
+};
+window.addEventListener('beforeunload',e=>{if(SYNC.on&&(SYNC.rq.length||SYNC.inflight)){e.preventDefault();e.returnValue='';}});
+
+/* Cobrar: la venta lleva un código único (rid). Si el servidor tarda (pasa cuando Vercel estuvo un rato
+   sin uso), se reintenta con el MISMO código: el servidor descuenta una sola vez. Si no contesta,
+   la venta se hace igual y queda en cola para confirmarse cuando vuelva la conexión. */
+async function emitirConNumero(print){
+  if(emitiendo)return;emitiendo=true;
+  try{const d=ui.draft;const t=tipoDraft();const rid=newRid('v');let res=null,items=[],sent=false;
+    if(!d.origen){const agg={};d.items.filter(i=>i.r).forEach(i=>{agg[i.r]=(agg[i.r]||0)+num(i.q);});items=Object.entries(agg).map(([id,q])=>({id,q}));}
+    if(SYNC.on&&!SYNC.locked&&SYNC.state!=='offline'&&navigator.onLine!==false){
+      const waits=[6000,10000];
+      for(let a=0;a<waits.length&&!res;a++){
+        if(a)toast('El servidor está tardando en contestar. Probando de nuevo…','warn');
+        let r;try{sent=true;r=await apiT('/api/sync?op=reserve',{t,items,rid},waits[a]);}catch(e){continue;}
+        if(r.status===409){const j=await r.json();
+          /* si un intento anterior quedó sin respuesta, se anula por las dudas (no descuenta si llega tarde) */
+          if(a>0){SYNC.rq.push({op:'rel',rid});metaSave();schedulePush();}const rr=R(j.id);if(rr){rr.stock=j.stock;setBaseRec('repuestos',rr);localSave();render();}
+          toast(`${rr?rr.nombre:'Un repuesto'}: ${j.stock>0?`solo quedan ${fQ(j.stock)}`:'no queda stock'}. Otro equipo lo vendió recién.`,'bad');return;}
+        if(r.ok){const j=await r.json();if(j.st!=='rel')res=j;break;}
+        if(isLockedRes(r)||r.status===400)break;
+      }
+    }
+    if(res&&res.n)S.num[t]=res.n-1;
+    let c;
+    try{c=cobrarDraft(print);}
+    catch(err){if(sent){SYNC.rq.push({op:'rel',rid});metaSave();schedulePush();}throw err;}
+    if(SYNC.on){
+      /* el stock de esta venta lo descuenta la reserva (ya hecha o en cola), no la sincronización común */
+      const BN=SYNC.baseN.repuestos=SYNC.baseN.repuestos||{};items.forEach(i=>{BN[i.id]=round2(num(BN[i.id])-i.q);});
+      c.rid=rid;
+      if(res&&res.n)c.ntok=res.tok;
+      else{c.prov=true;if(items.length)SYNC.rq.push({op:'res',rid,t,items});}
+      metaSave();save();}
+  }catch(err){toast(err.message,'bad');}
+  finally{emitiendo=false;}
+}
+
+/* Borrar todo: pide la clave para borrar (distinta de la del taller) y antes guarda una copia */
+const _reset8=ACT.reset,_resetOk8=ACT.resetOk;
+Object.assign(ACT,{
+  reset:()=>{if(!SYNC.on)return _reset8();
+    openModal({title:'Volver a empezar',st:{conf:'',modo:'demo',admin:''},body:s=>`<div class="note bad">Esto borra los datos en <b>todos los dispositivos</b> del taller.</div>
+      <p>Antes de borrar se guarda una copia automática. Si te arrepentís, se vuelve atrás desde <b>Copias de seguridad</b>.</p>
+      <div class="pills" role="group" aria-label="Cómo empezar"><button data-act="mset" data-k="modo" data-v="demo" aria-pressed="${s.modo==='demo'}">Con datos de ejemplo</button><button data-act="mset" data-k="modo" data-v="vacio" aria-pressed="${s.modo==='vacio'}">Vacío</button></div>
+      <label class="field"><span>Clave para borrar</span><input id="rs-a" class="in" type="password" autocomplete="off" value="${esc(s.admin)}" data-m="admin"></label>
+      <p class="small muted">Es una clave aparte, distinta de la del taller. La configura el dueño en Vercel (ADMIN_PIN).</p>
+      <label class="field"><span>Para confirmar, escribí BORRAR</span><input id="rs-c" class="in" value="${esc(s.conf)}" data-m="conf" autocomplete="off"></label>`,
+      foot:s=>`<button class="btn ghost" data-act="mclose">Cancelar</button><button class="btn danger" data-act="resetOk" ${String(s.conf).trim().toUpperCase()==='BORRAR'&&String(s.admin).trim()?'':'disabled'}>Borrar y empezar</button>`});},
+  resetOk:async()=>{if(!SYNC.on)return _resetOk8();const modo=Mo&&Mo.st.modo,admin=String(Mo&&Mo.st.admin||'').trim();
+    try{const r=await api('POST','/api/sync?op=reset',{confirm:'BORRAR',admin});const j=await r.json().catch(()=>({}));
+      if(r.headers.get('x-locked')==='1'){closeModal();pinModal(j.error);return;}
+      if(!r.ok){toast(j.error||'No se pudo borrar. Probá de nuevo.','bad');return;}}
+    catch(e){toast('Sin conexión. Probá de nuevo.','bad');return;}
+    metaClear();S=modo==='vacio'?emptyData():migrate(seed());ui.cart=[];ui.draft=newDraft();ui.clienteId='c1';ui.pagaCon='';closeModal();localSave();render();
+    SYNC.needFull=true;schedulePush();toast('Listo, se empezó de nuevo. Lo anterior quedó guardado en Copias de seguridad.');},
+  backups:()=>backupsModal(),
+  bkNow:async()=>{try{const r=await api('POST','/api/sync?op=backup',{});const j=await r.json().catch(()=>({}));if(!r.ok)fail(j.error||'No se pudo hacer la copia.');toast('Listo: copia guardada.');backupsModal();}catch(e){toast(e.message||'Sin conexión.','bad');}},
+  bkDown:async d=>{try{const r=await api('GET','/api/sync?op=backup-get&id='+encodeURIComponent(d.id));const j=await r.json().catch(()=>({}));if(!r.ok)fail(j.error||'No se pudo bajar la copia.');
+      const blob=new Blob([JSON.stringify(j)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`repuestos-copia-${(j.copia&&j.copia.dia)||'taller'}.json`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},2000);
+      toast('Copia descargada. Guardala en un pendrive o en tu correo.');}catch(e){toast(e.message||'Sin conexión.','bad');}},
+  bkPick:d=>{if(!Mo)return;Mo.st.sel=d.id;Mo.st.admin='';renderModal();const i=document.getElementById('bk-a');i&&i.focus();},
+  bkCancel:()=>{if(!Mo)return;Mo.st.sel=null;Mo.st.file=null;renderModal();},
+  bkRestore:async()=>{if(!Mo)return;const s=Mo.st;const admin=String(s.admin||'').trim();if(!admin)fail('Escribí la clave para borrar.');
+    const body=s.sel==='file'?{admin,file:{gz:s.file.gz}}:{admin,id:s.sel};
+    try{const r=await api('POST','/api/sync?op=restore',body);const j=await r.json().catch(()=>({}));
+      if(r.headers.get('x-locked')==='1'){closeModal();pinModal(j.error);return;}
+      if(!r.ok)fail(j.error||'No se pudo restaurar.');
+      metaClear();closeModal();toast('Listo: el sistema volvió a esa copia. Recargando…');setTimeout(()=>location.reload(),1200);}
+    catch(e){toast(e.message||'Sin conexión.','bad');}}
+});
+const BK_MOT={diaria:'Copia del día',manual:'Hecha a mano','antes de borrar':'Antes de borrar todo','antes de restaurar':'Antes de restaurar'};
+const kbTxt=n=>n>1048576?(n/1048576).toLocaleString('es-AR',{maximumFractionDigits:1})+' MB':Math.max(1,Math.round(n/1024))+' KB';
+async function backupsModal(){
+  if(!SYNC.on){toast('Las copias de seguridad funcionan en la versión publicada en Vercel, con la base de datos conectada.','warn');return;}
+  let j;try{const r=await api('GET','/api/sync?op=backups');j=await r.json().catch(()=>({}));if(isLockedRes(r)){pinModal(j.error);return;}if(!r.ok){toast(j.error||'No se pudieron ver las copias.','bad');return;}}catch(e){toast('Sin conexión.','bad');return;}
+  const list=j.list||[];const sel0=null;
+  openModal({title:'Copias de seguridad',wide:true,st:{bk:1,list,adminOk:!!j.adminOk,sel:sel0,admin:'',file:null},body:s=>{
+    const pick=s.sel==='file'?s.file:s.list.find(m=>m.id===s.sel);
+    return `<p>El sistema guarda solo una copia de todo cada día, y otra antes de borrar o restaurar. Quedan las de los últimos ${14} días. Para tener una fuera del sistema, tocá <b>Descargar</b> y guardala en un pendrive o en tu correo.</p>
+    ${s.adminOk?'':'<div class="note warn">Para volver a una copia hace falta configurar la clave para borrar (ADMIN_PIN) en Vercel.</div>'}
+    ${pick?`<div class="box"><h4>Volver a la copia ${s.sel==='file'?`del archivo ${esc(s.file.name)}`:`del ${esc(fdt(pick.at))}`}</h4>
+      <p>El sistema queda como estaba en ese momento, en <b>todos los equipos</b>. Lo que se cargó después se pierde, pero antes se guarda una copia de cómo está ahora, por las dudas.</p>
+      <label class="field"><span>Clave para borrar</span><input id="bk-a" class="in" type="password" autocomplete="off" value="${esc(s.admin)}" data-m="admin"></label>
+      <div class="row"><button class="btn ghost" data-act="bkCancel">Cancelar</button><button class="btn danger" data-act="bkRestore" ${String(s.admin).trim()?'':'disabled'}>Volver a esta copia</button></div></div>`:''}
+    <div class="tw"><table><thead><tr><th>Fecha</th><th>Qué es</th><th class="r">Tamaño</th><th></th></tr></thead><tbody>${s.list.length?s.list.map(m=>`<tr><td class="tnum">${esc(fdt(m.at))}</td><td>${esc(BK_MOT[m.motivo]||m.motivo)}</td><td class="r small">${kbTxt(m.gz)}</td><td class="r"><div class="row" style="justify-content:flex-end;flex-wrap:nowrap"><button class="btn sm ghost" data-act="bkDown" data-id="${esc(m.id)}">Descargar</button>${s.adminOk?`<button class="btn sm" data-act="bkPick" data-id="${esc(m.id)}">Volver a esta</button>`:''}</div></td></tr>`).join(''):'<tr><td colspan="4" class="muted">Todavía no hay copias. La primera se hace sola con el primer cambio del día, o tocá "Hacer una copia ahora".</td></tr>'}</tbody></table></div>
+    ${s.adminOk?`<label class="field"><span>¿Tenés una copia descargada? Elegí el archivo para volver a ella</span><input id="bk-file" class="in" type="file" accept=".json,application/json"></label>`:''}`;},
+    foot:()=>`<button class="btn ghost" data-act="mclose">Cerrar</button><button class="btn primary" data-act="bkNow">Hacer una copia ahora</button>`});
+}
+document.addEventListener('change',e=>{if(e.target&&e.target.id==='bk-file'&&Mo&&Mo.st&&Mo.st.bk){const f=e.target.files&&e.target.files[0];if(!f)return;
+  if(f.size>4*1024*1024){toast('El archivo es muy grande para subirlo desde acá.','bad');return;}
+  f.text().then(t=>{let j=null;try{j=JSON.parse(t);}catch(err){}if(!j||j.app!=='repuestos-core-os'||!j.gz){toast('Ese archivo no es una copia de este sistema.','bad');return;}
+    Mo.st.file={name:f.name,gz:j.gz,at:(j.copia&&j.copia.at)||''};Mo.st.sel='file';Mo.st.admin='';renderModal();const i=document.getElementById('bk-a');i&&i.focus();});}});
 
 /* ---------- Eventos ---------- */
 document.addEventListener('click',e=>{

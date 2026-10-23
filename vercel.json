@@ -1,16 +1,111 @@
 {
-  "regions": ["gru1"],
-  "functions": { "api/sync.js": { "maxDuration": 15 } },
+  "regions": [
+    "gru1"
+  ],
+  "functions": {
+    "api/sync.js": {
+      "maxDuration": 30
+    },
+    "api/backup.js": {
+      "maxDuration": 60
+    }
+  },
   "headers": [
-    { "source": "/sw.js", "headers": [
-      { "key": "Cache-Control", "value": "no-cache" },
-      { "key": "Service-Worker-Allowed", "value": "/" },
-      { "key": "Content-Type", "value": "application/javascript; charset=utf-8" } ] },
-    { "source": "/manifest.webmanifest", "headers": [
-      { "key": "Content-Type", "value": "application/manifest+json" },
-      { "key": "Cache-Control", "value": "no-cache" } ] },
-    { "source": "/", "headers": [ { "key": "Cache-Control", "value": "no-cache" } ] },
-    { "source": "/index.html", "headers": [ { "key": "Cache-Control", "value": "no-cache" } ] },
-    { "source": "/icons/(.*)", "headers": [ { "key": "Cache-Control", "value": "public, max-age=604800" } ] }
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'sha256-GjtFGOH5VlevsIdNDPOgMG6PJq0ObPb6QsoB99ogzUM='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        },
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.webmanifest",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
+      "source": "/icons/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/backup",
+      "schedule": "0 9 * * *"
+    }
   ]
 }

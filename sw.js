@@ -1,6 +1,6 @@
 // Repuestos Core OS · service worker: permite instalar la app y abrirla sin internet.
 // Cambiá VERSION en cada publicación para que todos los equipos reciban la versión nueva.
-const VERSION = 'rcos-2.1.0';
+const VERSION = 'rcos-2.4.0';
 const SHELL = ['/', '/index.html', '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png',
   '/icons/maskable-192.png', '/icons/maskable-512.png', '/icons/apple-touch-icon.png', '/icons/favicon-32.png'];
 const EXT = VERSION + '-ext';
@@ -36,8 +36,8 @@ self.addEventListener('fetch', e => {
     })));
     return;
   }
-  // Tipografías y el lector de Excel: se guardan la primera vez que se usan.
-  if (/(^|\.)fonts\.(googleapis|gstatic)\.com$|(^|\.)cdnjs\.cloudflare\.com$/.test(url.hostname)) {
+  // Tipografías: se guardan la primera vez que se usan. (El lector de Excel ahora es un archivo propio.)
+  if (/(^|\.)fonts\.(googleapis|gstatic)\.com$/.test(url.hostname)) {
     e.respondWith(caches.open(EXT).then(c => c.match(req).then(hit => hit || fetch(req).then(r => {
       if (r.ok || r.type === 'opaque') c.put(req, r.clone());
       return r;
