@@ -1,8 +1,8 @@
 // Repuestos Core OS · service worker: permite instalar la app y abrirla sin internet.
 // Cambiá VERSION en cada publicación para que todos los equipos reciban la versión nueva.
-const VERSION = 'rcos-2.4.0';
+const VERSION = 'rcos-2.5.0';
 const SHELL = ['/', '/index.html', '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png',
-  '/icons/maskable-192.png', '/icons/maskable-512.png', '/icons/apple-touch-icon.png', '/icons/favicon-32.png'];
+  '/icons/maskable-192.png', '/icons/maskable-512.png', '/icons/apple-touch-icon.png', '/icons/favicon-32.png', '/icons/badge-96.png'];
 const EXT = VERSION + '-ext';
 
 self.addEventListener('install', e => {
@@ -43,4 +43,14 @@ self.addEventListener('fetch', e => {
       return r;
     }))));
   }
+});
+
+// Al tocar el aviso de stock bajo: abre la app (o la trae al frente) en Stock.
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || '/?app=1#stock';
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+    for (const c of list) { if ('focus' in c) { c.postMessage({ go: 'stock' }); return c.focus(); } }
+    return self.clients.openWindow ? self.clients.openWindow(url) : null;
+  }));
 });

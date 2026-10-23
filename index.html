@@ -13,6 +13,19 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="application-name" content="Repuestos Core OS">
 <meta name="description" content="Ventas, stock, arreglos, clientes, envíos y caja del taller de repuestos.">
+<link rel="apple-touch-startup-image" href="/icons/splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/icons/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/icons/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/icons/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/icons/splash-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/icons/splash-1179x2556.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/icons/splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/icons/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/icons/splash-1284x2778.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/icons/splash-1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/icons/splash-1536x2048.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/icons/splash-1668x2388.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/icons/splash-2048x2732.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
 <title>Repuestos Core OS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -832,6 +845,21 @@ button.ln-n:hover{color:var(--accent)}
   .nav svg{width:21px;height:21px}
   .cliv-tot b{font-size:34px}
 }
+/* ===== v10: pantalla de ingreso ===== */
+body.locked .app,body.locked #modal,body.locked .mbar,body.locked #cliv{display:none!important}
+#lock{position:fixed;inset:0;z-index:95;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:max(20px,env(safe-area-inset-top,0px)) 16px max(20px,env(safe-area-inset-bottom,0px));overflow-y:auto}
+.lk-card{width:min(400px,100%);display:flex;flex-direction:column;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px 22px;box-shadow:var(--shadow)}
+.lk-card>.mark{width:48px;height:48px}
+.lk-brand{font-family:var(--f-display);font-size:30px;font-weight:600;line-height:1;margin-top:-4px}.lk-brand .pt{color:var(--accent)}
+.lk-brand small{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.3em;color:var(--muted);margin-top:4px;font-weight:400}
+.lk-card h2{font-family:var(--f-display);font-size:22px;text-transform:uppercase;letter-spacing:.03em;margin-top:6px}
+.lk-card .in{font-size:16px;min-height:46px}
+.lk-card .btn.block{width:100%;min-height:48px;font-size:16px}
+.lk-card .linkbtn{align-self:center;font-size:14px}
+.lk-or{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px}.lk-or::before,.lk-or::after{content:"";flex:1;border-top:1px solid var(--line)}
+.gbtn{display:flex;justify-content:center;min-height:44px}
+#userChip:empty{display:none}
+@media (max-width:720px){.pills.big[aria-label="Secciones de caja"]{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;overflow:visible}.pills.big[aria-label="Secciones de caja"] button{padding:10px 4px!important;font-size:13.5px!important;white-space:normal}}
 </style>
 </head>
 <body>
@@ -852,6 +880,7 @@ button.ln-n:hover{color:var(--accent)}
         <div class="tools">
           <span class="installslot"></span>
           <span class="syncpill"></span>
+          <span id="userChip"></span>
           <span id="cajaPill"></span>
           <button class="btn sm helpbtn" data-act="help"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.6a2.3 2.3 0 0 1 4.4.9c0 1.5-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg>Ayuda</button>
         </div>
@@ -1138,7 +1167,7 @@ function vStock(){
       <label class="check"><input id="stockBajo" type="checkbox" data-bind="stockBajo" ${ui.stockBajo?'checked':''}> Solo lo que hay que reponer</label>
       <span class="spacer"></span>
       ${tecnico()?'':`<button class="btn" data-act="ingreso">Cargar mercadería</button>`}
-      ${tecnico()?'':`<button class="btn" data-act="pedidoNew">Pedido a proveedores</button>`}${d?`<button class="btn" data-act="impNew">Importar Excel</button><button class="btn" data-act="precios">Actualizar precios</button><button class="btn primary" data-act="repEdit">Nuevo repuesto</button>`:''}
+      ${tecnico()?'':`<button class="btn" data-act="pedidoNew">Pedido a proveedores</button>`}${d?`<button class="btn" data-act="impNew">Importar Excel</button><button class="btn" data-act="csvStock">Exportar CSV</button><button class="btn" data-act="precios">Actualizar precios</button><button class="btn primary" data-act="repEdit">Nuevo repuesto</button>`:''}
     </div>
     <div class="ph" style="border-bottom:1px solid var(--line-2)"><span class="sub">${list.length} de ${S.repuestos.length} repuestos${d?` · valor a costo ${money(valor)}`:''}</span><span class="sub">Margen: Público +${Math.round(S.listas[0].margen*100)}% · Mecánico +${Math.round(S.listas[1].margen*100)}%</span></div>
     <div class="tw"><table><thead><tr><th>Repuesto</th><th>Sirve para</th><th>Lugar</th><th>Stock</th>${d?'<th class="r">Costo</th>':''}<th class="r">Público</th><th class="r">Mecánico</th><th></th></tr></thead><tbody>${rows||`<tr><td colspan="8"><div class="empty">Ningún repuesto coincide con el filtro.</div></td></tr>`}</tbody></table></div>
@@ -1167,7 +1196,7 @@ function vClientes(){
   const q=norm(ui.cliQ);
   const list=S.clientes.filter(c=>!q||norm([c.nombre,c.tel,...c.motos.map(m=>modLbl(M(m.m)))].join(' ')).includes(q));
   const deuda=S.clientes.reduce((a,c)=>a+c.deuda,0);
-  return `<div class="panel"><div class="tbar"><input id="cliQ" class="in grow" type="search" value="${esc(ui.cliQ)}" data-bind="cliQ" placeholder="Buscar por nombre, teléfono o moto" aria-label="Buscar cliente"><span class="spacer"></span><button class="btn primary" data-act="cliEdit">Nuevo cliente</button></div>
+  return `<div class="panel"><div class="tbar"><input id="cliQ" class="in grow" type="search" value="${esc(ui.cliQ)}" data-bind="cliQ" placeholder="Buscar por nombre, teléfono o moto" aria-label="Buscar cliente"><span class="spacer"></span>${dueno()?'<button class="btn" data-act="csvClientes">Exportar CSV</button>':''}<button class="btn primary" data-act="cliEdit">Nuevo cliente</button></div>
   <div class="ph"><span class="sub">${list.length} clientes</span><span class="sub">Cuentas corrientes por cobrar: <strong class="num">${money(deuda)}</strong></span></div>
   <div class="tw"><table><thead><tr><th>Cliente</th><th>Tipo · lista</th><th>Motos</th><th class="r">Compras</th><th class="r">Arreglos</th><th class="r">Cuenta corriente</th><th></th></tr></thead><tbody>${list.map(c=>{const vs=S.ventas.filter(v=>v.cliente===c.id);const os=S.ots.filter(o=>o.cliente===c.id);const act=os.filter(o=>o.estado!=='Entregada').length;return `<tr><td><div class="nm">${esc(c.nombre)}</div><div class="small muted">${esc(c.tel||'Sin teléfono')}</div></td><td><span class="chip">${TIPOS[c.tipo]}</span> <span class="small muted">${esc(S.listas.find(l=>l.id===c.lista).n)}</span></td><td class="small">${c.motos.map(m=>esc(modLbl(M(m.m)))+' '+m.a).join('<br>')||'<span class="muted">—</span>'}</td><td class="r">${vs.length}</td><td class="r">${os.length}${act?` <span class="chip info">${act} activo${act>1?'s':''}</span>`:''}</td><td class="r">${c.cc?(c.deuda?`<span class="chip warn">Debe ${money(c.deuda)}</span>`:'<span class="chip good">Al día</span>'):'<span class="muted small">No habilitada</span>'}</td><td class="r"><button class="btn sm" data-act="cliVer" data-id="${c.id}">Ver ficha</button></td></tr>`;}).join('')}</tbody></table></div></div>`;
 }
@@ -1265,7 +1294,7 @@ function repModal(id){
         <label class="field"><span>Stock mínimo</span><input id="rp-min" class="in" type="text" inputmode="decimal" min="0" value="${esc(s.min)}" data-m="min"></label>
         <label class="field"><span>Costo</span><input id="rp-cos" class="in" type="text" inputmode="decimal" min="0" step="50" value="${esc(s.costo)}" data-m="costo"></label>
       </div>
-      <datalist id="dl-cat">${cats.map(c=>`<option value="${esc(c)}">`).join('')}</datalist><datalist id="dl-prov">${provs.map(c=>`<option value="${esc(c)}">`).join('')}</datalist>
+      <datalist id="dl-cat">${cats.map(c=>`<option value="${esc(c)}">`).join('')}</datalist><datalist id="dl-prov">${[...new Set(provs.concat((S.proveedores||[]).map(p=>p.nombre)))].map(c=>`<option value="${esc(c)}">`).join('')}</datalist>
       <div class="box"><h4>Precio de venta</h4><p class="small muted">Se calcula con el margen de cada lista. Para usados y reacondicionados podés fijar un precio propio.</p>
         <div class="fgrid"><label class="field"><span>Precio fijo público</span><input id="rp-pp" class="in" type="text" inputmode="decimal" min="0" step="100" value="${esc(s.pmPub)}" data-m="pmPub" placeholder="Automático"></label><label class="field"><span>Precio fijo mecánico</span><input id="rp-pm" class="in" type="text" inputmode="decimal" min="0" step="100" value="${esc(s.pmMec)}" data-m="pmMec" placeholder="Automático"></label></div>
         <p class="small">Resultado: ${S.listas.map(l=>`${esc(l.n)} <strong class="num">${money(precio(fake,l.id))}</strong>`).join(' · ')}</p></div>
@@ -1702,7 +1731,7 @@ function fLibro(){
   const res=order.filter(t=>cs.some(c=>c.tipo===t)).map(t=>{const g=cs.filter(c=>c.tipo===t);const s=sum(g);return `<tr><td><span class="row" style="flex-wrap:nowrap"><span class="lchip">${letraDe(t)}</span>${T_LBL[t]}</span></td><td class="r">${g.length}</td><td class="r">${m2(s.n21)}</td><td class="r">${m2(s.i21)}</td><td class="r">${m2(s.n105)}</td><td class="r">${m2(s.i105)}</td><td class="r">${m2(s.tot)}</td></tr>`;}).join('');
   const f=n=>round2(n).toFixed(2).replace('.',',');
   LIBRO_CSV=['Fecha;Tipo;Punto de venta;Número;Receptor;Documento;Condición IVA;Neto 21%;IVA 21%;Neto 10,5%;IVA 10,5%;Total'].concat(cs.map(c=>{const g=sg(c);return [fdFull(c.fecha),T_LBL[c.tipo],pad5(c.pv),pad8(c.nro),c.rec.nombre,fmtDoc(c.rec),COND_IVA[c.rec.cond],f(g*c.n21),f(g*c.i21),f(g*c.n105),f(g*c.i105),f(g*c.total)].join(';');})).join('\n');
-  return `<div class="panel"><div class="tbar"><select id="libroMes" class="in" data-bind="libroMes" aria-label="Período">${months.map(m=>`<option value="${m}" ${m===ui.libroMes?'selected':''}>${mLbl(m)}</option>`).join('')||`<option>${mLbl(ui.libroMes)}</option>`}</select><span class="small muted">Base para la declaración de IVA. Revisala con tu contador antes de presentar.</span><span class="spacer"></span>${olderBtn()}<button class="btn" data-act="libroCsv" ${cs.length?'':'disabled'}>Copiar CSV</button></div>
+  return `<div class="panel"><div class="tbar"><select id="libroMes" class="in" data-bind="libroMes" aria-label="Período">${months.map(m=>`<option value="${m}" ${m===ui.libroMes?'selected':''}>${mLbl(m)}</option>`).join('')||`<option>${mLbl(ui.libroMes)}</option>`}</select><span class="small muted">Base para la declaración de IVA. Revisala con tu contador antes de presentar.</span><span class="spacer"></span>${olderBtn()}<button class="btn" data-act="libroCsv" ${cs.length?'':'disabled'}>Copiar CSV</button><button class="btn" data-act="libroCsvDl" ${cs.length?'':'disabled'}>Descargar CSV</button></div>
   <div class="kpis" style="padding:14px">${tile('Débito fiscal',money(T.i21+T.i105),'IVA 21% + 10,5%')}${tile('Neto gravado',money(T.n21+T.n105),'Facturas A y B')}${tile('Total facturado',money(T.tot),`${cs.length} comprobantes`)}</div>
   <div class="tw"><table><thead><tr><th>Tipo</th><th class="r">Cant.</th><th class="r">Neto 21%</th><th class="r">IVA 21%</th><th class="r">Neto 10,5%</th><th class="r">IVA 10,5%</th><th class="r">Total</th></tr></thead><tbody>${res||'<tr><td colspan="7"><div class="empty">Sin comprobantes en el período.</div></td></tr>'}</tbody>${cs.length?`<tfoot><tr><td>Total del período</td><td class="r">${cs.length}</td><td class="r">${m2(T.n21)}</td><td class="r">${m2(T.i21)}</td><td class="r">${m2(T.n105)}</td><td class="r">${m2(T.i105)}</td><td class="r">${m2(T.tot)}</td></tr></tfoot>`:''}</table></div></div>
   <div class="panel"><div class="ph"><h2>Detalle de comprobantes</h2><span class="sub">${mLbl(ui.libroMes)}</span></div><div class="tw"><table><thead><tr><th>Fecha</th><th>Comprobante</th><th>Receptor</th><th>Documento</th><th class="r">Neto</th><th class="r">IVA</th><th class="r">Total</th></tr></thead><tbody>${cs.map(c=>{const n=isNC(c.tipo)?'−':'';const disc=c.letra!=='C';return `<tr><td class="tnum">${fdFull(c.fecha)}</td><td><button class="btn sm ghost code" style="padding:2px 0" data-act="compVer" data-id="${c.id}">${T_LBL[c.tipo].replace('Nota de crédito','NC').replace('Factura','Fact.')} ${compNro(c)}</button></td><td>${esc(c.rec.nombre)}</td><td class="small">${fmtDoc(c.rec)}</td><td class="r">${disc?n+m2(c.n21+c.n105):'—'}</td><td class="r">${disc?n+m2(c.i21+c.i105):'—'}</td><td class="r">${n}${m2(c.total)}</td></tr>`;}).join('')||'<tr><td colspan="7"><div class="empty">Sin comprobantes.</div></td></tr>'}</tbody></table></div></div>`;
@@ -2162,11 +2191,11 @@ function pedidoModal(){const sg=sugeridos();const sel={};sg.forEach(r=>sel[r.id]
     body:s=>{if(!sg.length)return '<div class="empty"><strong>No hay nada para pedir.</strong>Todos los repuestos están por encima del stock mínimo, o ya están pedidos.</div>';
       const provs=[...new Set(sg.map(r=>r.prov))];
       return `<p class="small muted">Estos repuestos llegaron al stock mínimo. La cantidad sugerida alcanza para tener el doble del mínimo; podés cambiarla. Copiá el pedido y mandalo por WhatsApp, y marcalo como pedido para seguirlo.</p>${provs.map(pv=>{const rs=sg.filter(r=>r.prov===pv);const on=rs.filter(r=>s.sel[r.id].on&&num(s.sel[r.id].q)>0);const tot=on.reduce((a,r)=>a+num(s.sel[r.id].q)*r.costo,0);
-        return `<div class="box"><div class="row"><h4>${esc(pv)}</h4><span class="small muted">${on.length} de ${rs.length} repuestos${dueno()?' · estimado '+money(tot):''}</span><span class="spacer"></span><button class="btn sm ghost" data-act="pedCopy" data-p="${esc(pv)}" ${on.length?'':'disabled'}>Copiar pedido</button><button class="btn sm primary" data-act="pedMark" data-p="${esc(pv)}" ${on.length?'':'disabled'}>Marcar como pedido</button></div>
+        return `<div class="box"><div class="row"><h4>${esc(pv)}</h4><span class="small muted">${on.length} de ${rs.length} repuestos${dueno()?' · estimado '+money(tot):''}</span><span class="spacer"></span><button class="btn sm ghost" data-act="pedCopy" data-p="${esc(pv)}" ${on.length?'':'disabled'}>${typeof provTel==='function'&&provTel(pv)?'Mandar por WhatsApp':'Copiar pedido'}</button><button class="btn sm primary" data-act="pedMark" data-p="${esc(pv)}" ${on.length?'':'disabled'}>Marcar como pedido</button></div>
         <div class="tw"><table><thead><tr><th></th><th>Repuesto</th><th class="r">Hay</th><th class="r">Mínimo</th><th class="r">Pedir</th>${dueno()?'<th class="r">Costo</th>':''}</tr></thead><tbody>${rs.map(r=>`<tr><td><input id="pd-on-${r.id}" type="checkbox" class="check" data-m="sel:${r.id}:on" ${s.sel[r.id].on?'checked':''} aria-label="Incluir ${esc(r.nombre)}"></td><td><div class="nm">${esc(r.nombre)}</div><div class="code">${esc(r.cod)}</div></td><td class="r">${r.stock<=0?'<span class="chip bad">0</span>':r.stock}</td><td class="r">${r.min}</td><td class="r"><input id="pd-q-${r.id}" class="in r" style="width:70px" type="text" inputmode="numeric" data-m="sel:${r.id}:q" value="${esc(s.sel[r.id].q)}" aria-label="Cantidad a pedir"></td>${dueno()?`<td class="r">${money(r.costo)}</td>`:''}</tr>`).join('')}</tbody></table></div></div>`;}).join('')}`;},
     foot:()=>'<button class="btn primary" data-act="mclose">Listo</button>'});}
 function pedidosPanel(){const ab=S.pedidos.filter(p=>p.estado==='pedido').sort((a,b)=>b.num-a.num);const sg=sugeridos().length;
-  return `<div class="panel"><div class="ph"><h2>Pedidos a proveedores</h2>${tecnico()?'':`<button class="btn sm ${sg?'primary':''}" data-act="pedidoNew">${sg?`Armar pedido (${sg} para reponer)`:'Armar pedido'}</button>`}</div>${ab.length?ab.map(p=>`<div class="li"><div class="grow"><div class="t">${esc(p.prov)} <span class="code">PED-${pad4(p.num)}</span></div><div class="m">${fdt(p.fecha)} · ${p.items.map(i=>`${fQ(i.q)}× ${esc(i.n)}`).join(', ')}</div></div><button class="btn sm ghost" data-act="copy" data-text="${esc(pedidoTxt(p.prov,p.items))}">Copiar</button>${tecnico()?'':`<button class="btn sm" data-act="pedRecibir" data-id="${p.id}">Llegó</button>`}</div>`).join(''):`<div class="empty">${sg?`Hay ${sg} repuestos para reponer. Tocá "Armar pedido".`:'No hay pedidos pendientes.'}</div>`}</div>`;}
+  return `<div class="panel"><div class="ph"><h2>Pedidos a proveedores</h2><div class="row">${tecnico()?'':'<button class="btn sm ghost" data-act="provList">Proveedores</button>'}<button class="btn sm ghost" data-act="notifToggle" title="Notificación en este equipo cuando un repuesto llega al mínimo">${typeof notifOn==='function'&&notifOn()?'Avisos de stock: activados':'Avisarme en este equipo'}</button>${tecnico()?'':`<button class="btn sm ${sg?'primary':''}" data-act="pedidoNew">${sg?`Armar pedido (${sg} para reponer)`:'Armar pedido'}</button>`}</div></div>${ab.length?ab.map(p=>`<div class="li"><div class="grow"><div class="t">${esc(p.prov)} <span class="code">PED-${pad4(p.num)}</span></div><div class="m">${fdt(p.fecha)} · ${p.items.map(i=>`${fQ(i.q)}× ${esc(i.n)}`).join(', ')}</div></div><button class="btn sm ghost" data-act="pedWa" data-id="${p.id}">${typeof provTel==='function'&&provTel(p.prov)?'WhatsApp':'Copiar'}</button>${tecnico()?'':`<button class="btn sm" data-act="pedRecibir" data-id="${p.id}">Llegó</button>`}</div>`).join(''):`<div class="empty">${sg?`Hay ${sg} repuestos para reponer. Tocá "Armar pedido".`:'No hay pedidos pendientes.'}</div>`}</div>`;}
 
 /* --- Lector de código de barras --- */
 let scanBuf='',scanT=0;
@@ -2228,7 +2257,7 @@ function localSave(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
 function schedulePush(){SYNC.pending=true;renderSync('saving');clearTimeout(SYNC.timer);SYNC.timer=setTimeout(push,500);}
 function pinGet(){try{return localStorage.getItem('rcos-pin')||''}catch(e){return ''}}
 function pinSet(v){try{v?localStorage.setItem('rcos-pin',v):localStorage.removeItem('rcos-pin')}catch(e){}}
-function api(method,url,body){return fetch(url,{method,headers:{'Content-Type':'application/json','x-app-pin':SYNC.pin},body:body?JSON.stringify(body):undefined,cache:'no-store'});}
+function api(method,url,body){return fetch(url,{method,headers:{'Content-Type':'application/json','x-app-pin':SYNC.pin,'x-rc':'1'},body:body?JSON.stringify(body):undefined,cache:'no-store'});}
 function renderSync(st){if(st)SYNC.state=st;const m={ok:['good','Sincronizado'],saving:['','Guardando…'],offline:['warn','Sin conexión · se guarda al volver'],error:['bad','No se pudo guardar · reintentando']};const x=SYNC.on?m[SYNC.state]:null;
   document.querySelectorAll('.syncpill').forEach(e=>{e.innerHTML=x?`<span class="chip ${x[0]}" title="Los cambios se ven en todos los dispositivos"><span class="dot"></span>${x[1]}</span>`:'';});}
 function emptyData(){const s=migrate(seed());['repuestos','ventas','comps','ots','envios','compras','movs','cierres','presus','pedidos','log'].forEach(k=>s[k]=[]);s.clientes=s.clientes.filter(c=>c.id==='c1');
@@ -2474,7 +2503,7 @@ async function syncStart(){
   applyChanges(j);renderSync('ok');if(sDiff().put.length)schedulePush();
 }
 async function reserveNum(t){if(!SYNC.on||SYNC.state==='offline')return null;
-  try{const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),2500);const r=await fetch('/api/sync?op=next&t='+encodeURIComponent(t),{method:'POST',headers:{'Content-Type':'application/json','x-app-pin':SYNC.pin},body:'{}',signal:ctl.signal});clearTimeout(tm);if(!r.ok)return null;return await r.json();}catch(e){return null;}}
+  try{const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),2500);const r=await fetch('/api/sync?op=next&t='+encodeURIComponent(t),{method:'POST',headers:{'Content-Type':'application/json','x-app-pin':SYNC.pin,'x-rc':'1'},body:'{}',signal:ctl.signal});clearTimeout(tm);if(!r.ok)return null;return await r.json();}catch(e){return null;}}
 function olderMonth(){const have=new Set(SYNC.loaded||[]);return (SYNC.months||[]).filter(m=>m!=='0000-00'&&!have.has(m)).sort().reverse()[0]||null;}
 const mesTxt=m=>{const [y,mm]=m.split('-');const t=new Date(Number(y),Number(mm)-1,1).toLocaleDateString('es-AR',{month:'long',year:'numeric'});return t.charAt(0).toUpperCase()+t.slice(1);};
 function olderBtn(){const m=SYNC.on&&olderMonth();return m?`<button class="btn sm ghost" data-act="loadOlder" data-v="${m}">Traer ${mesTxt(m)}</button>`:'';}
@@ -2562,7 +2591,7 @@ function applyChanges(j){
 }
 
 /* v5c: reserva atómica de stock antes de cobrar */
-async function apiFast(url,body){const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),3000);try{return await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-app-pin':SYNC.pin},body:JSON.stringify(body||{}),signal:ctl.signal});}finally{clearTimeout(tm);}}
+async function apiFast(url,body){const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),3000);try{return await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-app-pin':SYNC.pin,'x-rc':'1'},body:JSON.stringify(body||{}),signal:ctl.signal});}finally{clearTimeout(tm);}}
 async function emitirConNumero(print){
   if(emitiendo)return;emitiendo=true;
   try{const d=ui.draft;const t=tipoDraft();let res=null,items=[];
@@ -2698,7 +2727,7 @@ const isLockedRes=r=>r&&(r.status===401||r.headers.get('x-locked')==='1');
 const _api8=api;
 api=async function(m,u,b){const r=await _api8(m,u,b);if(isLockedRes(r))SYNC.locked=true;else if(r.ok)SYNC.locked=false;return r;};
 async function apiT(url,body,ms){const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),ms||8000);
-  try{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-app-pin':SYNC.pin},body:JSON.stringify(body||{}),signal:ctl.signal,cache:'no-store'});if(isLockedRes(r))SYNC.locked=true;return r;}finally{clearTimeout(tm);}}
+  try{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-app-pin':SYNC.pin,'x-rc':'1'},body:JSON.stringify(body||{}),signal:ctl.signal,cache:'no-store'});if(isLockedRes(r))SYNC.locked=true;return r;}finally{clearTimeout(tm);}}
 async function lockMsg(r){const j=await r.clone().json().catch(()=>({}));pinModal(j.error||'Tu clave ya no es válida. Ingresala de nuevo.');}
 const _pinOk8=ACT.pinOk;ACT.pinOk=d=>{SYNC.locked=false;return _pinOk8(d);};
 const _poll8=poll;poll=async function(){if(SYNC.locked)return;if(SYNC.on&&!SYNC.busy&&(SYNC.rq.length||SYNC.inflight))return push();return _poll8();};
@@ -2839,6 +2868,391 @@ document.addEventListener('change',e=>{if(e.target&&e.target.id==='bk-file'&&Mo&
   if(f.size>4*1024*1024){toast('El archivo es muy grande para subirlo desde acá.','bad');return;}
   f.text().then(t=>{let j=null;try{j=JSON.parse(t);}catch(err){}if(!j||j.app!=='repuestos-core-os'||!j.gz){toast('Ese archivo no es una copia de este sistema.','bad');return;}
     Mo.st.file={name:f.name,gz:j.gz,at:(j.copia&&j.copia.at)||''};Mo.st.sel='file';Mo.st.admin='';renderModal();const i=document.getElementById('bk-a');i&&i.focus();});}});
+
+/* ================= v9: comisiones, ganancia, mes a mes, proveedores, avisos de stock, CSV ================= */
+SOB.includes('cfg')||SOB.push('cfg');
+SNC.includes('proveedores')||SNC.push('proveedores');
+const COM_MEDIOS=['transferencia','mp','debito','credito1','credito3'];
+const slugProv=n=>'pv-'+norm(n).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60);
+const ymL=iso=>{const d=new Date(iso);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');};
+const pct=n=>(Math.round(num(n)*100)/100).toLocaleString('es-AR')+'%';
+
+/* --- Datos nuevos: configuración (comisiones) y proveedores --- */
+const _migrate9=migrate;
+migrate=function(st){st=_migrate9(st);
+  if(!st.cfg||typeof st.cfg!=='object')st.cfg={};
+  if(!st.cfg.com)st.cfg.com={};
+  if(!Array.isArray(st.proveedores))st.proveedores=[];
+  /* proveedores que ya figuran en repuestos, pedidos y compras: se crean solos (mismo código en todos los equipos) */
+  const have=new Set(st.proveedores.flatMap(p=>[p.id,'n:'+norm(p.nombre)]));
+  const names=[...(st.repuestos||[]).filter(r=>r.cond==='nuevo'||!r.cond).map(r=>r.prov),...(st.pedidos||[]).map(p=>p.prov),...(st.compras||[]).filter(c=>c.origen==='proveedor').map(c=>c.quien)];
+  names.forEach(n=>{n=String(n||'').trim();if(!n)return;const id=slugProv(n);if(have.has(id)||have.has('n:'+norm(n)))return;have.add(id);have.add('n:'+norm(n));st.proveedores.push({id,nombre:n,tel:'',email:'',contacto:'',cuit:'',nota:''});});
+  return st;};
+
+/* --- Comisiones de los medios de pago --- */
+/* Cada cobro con transferencia, Mercado Pago, débito o crédito se anota en la caja descontando la comisión.
+   Se guarda el bruto y la comisión en el movimiento. Solo afecta a lo que se cobra desde que se configura. */
+function applyCom(){const c=S.cfg&&S.cfg.com;if(!c||!S.cfg.comDesde)return;
+  (S.movs||[]).forEach(m=>{if(m.tipo!=='ingreso'||m.com!==undefined||!(m.fecha>=S.cfg.comDesde))return;
+    const p=num(c[m.medio]);if(!(p>0))return;const bruto=num(m.monto);const com=Math.round(bruto*p/100);
+    m.bruto=bruto;m.com=com;m.comPct=p;m.monto=round2(bruto-com);});}
+/* Costo de cada línea al momento de la venta (para la ganancia real, aunque después cambie el costo) */
+function stampCost(){(S.comps||[]).forEach(c=>{if(c._cu)return;(c.lines||[]).forEach(l=>{if(l.r&&l.cu===undefined){const r=R(l.r);if(r)l.cu=num(r.costo);}});c._cu=1;});}
+const _save9=save;
+save=function(){try{applyCom();stampCost();}catch(e){console.error(e);}return _save9.apply(this,arguments);};
+
+function comModal(){if(!dueno())return;const c=S.cfg.com||{};
+  openModal({title:'Comisiones de cobro',st:Object.fromEntries(COM_MEDIOS.map(id=>[id,c[id]!==undefined?String(c[id]).replace('.',','):''])),body:s=>`<p>Lo que te descuenta el banco, Mercado Pago o la tarjeta por cada cobro. Desde que lo guardes, la caja anota lo que realmente te llega: el monto cobrado menos la comisión.</p>
+    <div class="fgrid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">${COM_MEDIOS.map(id=>`<label class="field"><span>${esc(MED(id).n)} (%)</span><input id="com-${id}" class="in r" type="text" inputmode="decimal" placeholder="0" value="${esc(s[id])}" data-m="${id}"></label>`).join('')}</div>
+    <p class="small muted">Fijate el porcentaje en tu cuenta de Mercado Pago y en el resumen del posnet; cambia según el plazo de acreditación. Lo que ya se cobró no cambia.</p>`,
+    foot:()=>`<button class="btn ghost" data-act="mclose">Cancelar</button><button class="btn primary" data-act="comSave">Guardar</button>`});}
+
+/* --- Caja con pestañas: Hoy · Mes a mes · Ganancia --- */
+const _vCaja9=VIEWS.caja;
+function cajaTabs(){const t=[['hoy','Caja de hoy']];if(dueno())t.push(['meses','Mes a mes'],['ganancia','Ganancia']);if(!t.some(x=>x[0]===ui.cajaTab))ui.cajaTab='hoy';
+  return t.length>1?`<div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px"><div class="pills big" role="group" aria-label="Secciones de caja">${t.map(([k,l])=>`<button data-act="cajaTab" data-v="${k}" aria-pressed="${ui.cajaTab===k}">${l}</button>`).join('')}</div>${dueno()?`<div class="row">${ui.cajaTab==='hoy'?'<button class="btn sm ghost" data-act="csvCaja">Exportar CSV</button>':''}<button class="btn sm ghost" data-act="comCfg">Comisiones de cobro</button></div>`:''}</div>`:'';}
+VIEWS.caja=function(){const tabs=cajaTabs();
+  if(ui.cajaTab==='meses')return `<div style="display:flex;flex-direction:column;gap:16px">${tabs}${vMeses()}</div>`;
+  if(ui.cajaTab==='ganancia')return `<div style="display:flex;flex-direction:column;gap:16px">${tabs}${vGanancia()}</div>`;
+  const ms=S.movs.filter(m=>m.sid===S.caja.sid);const com=ms.reduce((a,m)=>a+num(m.com),0);
+  const nota=com?`<div class="note acc">Comisiones descontadas en esta caja: <b>${money(com)}</b>. Los montos de los cobros con tarjeta, transferencia y Mercado Pago ya están sin la comisión.</div>`:(dueno()&&!S.cfg.comDesde?`<div class="note">¿Mercado Pago o la tarjeta te cobran comisión? <button class="linkbtn" data-act="comCfg">Cargala acá</button> y la caja va a anotar lo que realmente te llega.</div>`:'');
+  return `<div style="display:flex;flex-direction:column;gap:16px">${tabs}${nota}${_vCaja9()}</div>`;};
+
+function mesesData(){const by={};
+  (S.movs||[]).forEach(m=>{const k=ymL(m.fecha);const o=by[k]=by[k]||{ing:0,com:0,egr:0,n:0,med:{}};
+    if(m.tipo==='ingreso'){o.ing+=num(m.monto);o.com+=num(m.com);o.n++;o.med[m.medio]=(o.med[m.medio]||0)+num(m.monto);}else o.egr+=num(m.monto);});
+  return Object.keys(by).sort().reverse().map(k=>Object.assign({mes:k},by[k],{bruto:by[k].ing+by[k].com,neto:by[k].ing-by[k].egr}));}
+function vMeses(){const rows=mesesData();
+  if(!rows.length)return '<div class="panel"><div class="empty"><strong>Todavía no hay movimientos de caja.</strong>Cuando cobres o pagues algo, acá vas a ver cada mes.</div></div>';
+  const chg=(a,b)=>{if(b===undefined)return '<span class="muted">—</span>';if(!b)return '<span class="muted">—</span>';const v=(a-b)/Math.abs(b)*100;return `<span class="chip ${v>=0?'good':'bad'}">${v>=0?'+':''}${Math.round(v)}%</span>`;};
+  const meds=MEDIOS.filter(m=>m.id!=='cc'&&rows.some(r=>r.med[m.id]));
+  return `<div class="panel"><div class="ph"><h2>Mes a mes</h2><span class="sub">Cada mes queda guardado; se compara con el anterior.</span><div class="row">${olderBtn()}<button class="btn sm" data-act="csvMeses">Exportar CSV</button></div></div>
+    <div class="tw"><table><thead><tr><th>Mes</th><th class="r">Cobrado</th><th class="r">Comisiones</th><th class="r">Entró</th><th class="r">Salió</th><th class="r">Quedó</th><th class="r">Contra el mes anterior</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${esc(mesTxt(r.mes))}</td><td class="r">${money(r.bruto)}</td><td class="r">${r.com?'−'+money(r.com):'—'}</td><td class="r">${money(r.ing)}</td><td class="r">${money(r.egr)}</td><td class="r"><b>${money(r.neto)}</b></td><td class="r">${chg(r.neto,rows[i+1]&&rows[i+1].neto)}</td></tr>`).join('')}</tbody></table></div></div>
+    ${meds.length?`<div class="panel"><div class="ph"><h2>Lo que entró por medio de pago</h2></div><div class="tw"><table><thead><tr><th>Mes</th>${meds.map(m=>`<th class="r">${esc(m.n)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(mesTxt(r.mes))}</td>${meds.map(m=>`<td class="r">${r.med[m.id]?money(r.med[m.id]):'—'}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`:''}`;}
+
+/* --- Ganancia real: lo vendido contra lo que costó --- */
+const VENTA_T=['X','FA','FB','FC'];
+function ganData(mes){const lines=[];let sinCosto=0;
+  const add=(src,r,d,q,imp,cu)=>{const rr=r&&R(r);const c=cu!==undefined?num(cu):rr?num(rr.costo):0;if(r&&!(c>0))sinCosto++;lines.push({src,r,d,q:num(q),imp:num(imp),cost:r?num(q)*c:0,cat:rr?rr.cat:(r?'Sin categoría':'Mano de obra y otros')});};
+  (S.comps||[]).forEach(c=>{if(c.origen||ymL(c.fecha)!==mes)return;const nc=/^NC/.test(c.tipo);if(!nc&&!VENTA_T.includes(c.tipo))return;const g=nc?-1:1;
+    (c.lines||[]).forEach(l=>add('venta',l.r,l.d,g*l.q,g*l.imp,l.cu));});
+  (S.ventas||[]).forEach(v=>{if(v.viaFact||v.factId||ymL(v.fecha)!==mes)return;(v.items||[]).forEach(i=>add('venta',i.r,i.n,i.q,num(i.p)*num(i.q)));if(num(v.recargo))add('venta',null,'Recargo',1,v.recargo);if(num(v.envio))add('venta',null,'Envío',1,v.envio);});
+  (S.ots||[]).forEach(o=>{const h=(o.hist||[]).filter(x=>x.e==='Entregada').pop();if(!h||ymL(h.f)!==mes)return;
+    if((o.hist||[]).some(x=>x.e==='Rechazada')){if(num(o.cobrado))add('arreglo',null,`Diagnóstico OT-${pad4(o.num)}`,1,o.cobrado);return;}
+    (o.items||[]).forEach(i=>add('arreglo',i.r,i.n,i.q,num(i.p)*num(i.q)));if(num(o.mo))add('arreglo',null,`Mano de obra OT-${pad4(o.num)}`,1,o.mo);});
+  const com=(S.movs||[]).filter(m=>ymL(m.fecha)===mes).reduce((a,m)=>a+num(m.com),0);
+  const ven=lines.reduce((a,l)=>a+l.imp,0),cost=lines.reduce((a,l)=>a+l.cost,0);
+  return {lines,ven,cost,com,gan:ven-cost-com,sinCosto};}
+function ganMeses(){const s=new Set();(S.comps||[]).forEach(c=>s.add(ymL(c.fecha)));(S.ots||[]).forEach(o=>(o.hist||[]).forEach(h=>h.e==='Entregada'&&s.add(ymL(h.f))));(S.ventas||[]).forEach(v=>s.add(ymL(v.fecha)));s.add(ymL(now()));return [...s].sort().reverse();}
+function vGanancia(){const ms=ganMeses();if(!ms.includes(ui.ganMes))ui.ganMes=ms[0];const g=ganData(ui.ganMes);
+  const grp=(key)=>{const o={};g.lines.forEach(l=>{const k=key(l);const x=o[k]=o[k]||{k,ven:0,cost:0,q:0};x.ven+=l.imp;x.cost+=l.cost;x.q+=l.q;});return Object.values(o).sort((a,b)=>(b.ven-b.cost)-(a.ven-a.cost));};
+  const bySrc=grp(l=>l.src),byCat=grp(l=>l.cat),byProd=grp(l=>l.r?(R(l.r)||{nombre:l.d}).nombre:l.d).slice(0,15);
+  const mg=g.ven?Math.round((g.gan/g.ven)*100):0;
+  const row=x=>`<tr><td>${esc(x.k)}</td><td class="r">${money(x.ven)}</td><td class="r">${money(x.cost)}</td><td class="r"><b>${money(x.ven-x.cost)}</b></td><td class="r">${x.ven?Math.round((x.ven-x.cost)/x.ven*100)+'%':'—'}</td></tr>`;
+  const th='<thead><tr><th></th><th class="r">Vendido</th><th class="r">Costo</th><th class="r">Ganancia</th><th class="r">Margen</th></tr></thead>';
+  return `<div class="panel"><div class="tbar"><select id="ganMes" class="in" data-bind="ganMes" aria-label="Mes">${ms.map(m=>`<option value="${m}" ${m===ui.ganMes?'selected':''}>${esc(mesTxt(m))}</option>`).join('')}</select><span class="small muted">Ventas del mostrador y arreglos entregados. Los montos incluyen IVA.</span><span class="spacer"></span><button class="btn" data-act="csvGan">Exportar CSV</button></div>
+    <div class="kpis" style="padding:14px">${tile('Vendido',money(g.ven),'tickets, facturas y arreglos')}${tile('Costo de lo vendido',money(g.cost),'lo que pagaste esos repuestos')}${tile('Comisiones',money(g.com),'de los cobros del mes')}${tile('Ganancia',money(g.gan),`margen ${mg}%`,g.gan<0?'warn':'')}</div>
+    ${g.sinCosto?`<div class="pb"><div class="note warn">${g.sinCosto} ${g.sinCosto===1?'venta tiene un repuesto':'ventas tienen repuestos'} sin costo cargado: se cuentan como si no hubieran costado nada.</div></div>`:''}</div>
+    ${g.lines.length?`<div class="grid2"><div class="panel"><div class="ph"><h2>Por origen</h2></div><div class="tw"><table>${th}<tbody>${bySrc.map(x=>row(Object.assign({},x,{k:x.k==='venta'?'Mostrador':'Arreglos'}))).join('')}</tbody></table></div></div>
+    <div class="panel"><div class="ph"><h2>Por categoría</h2></div><div class="tw"><table>${th}<tbody>${byCat.map(row).join('')}</tbody></table></div></div></div>
+    <div class="panel"><div class="ph"><h2>Lo que más ganancia dejó</h2></div><div class="tw"><table>${th}<tbody>${byProd.map(row).join('')}</tbody></table></div></div>`:'<div class="panel"><div class="empty"><strong>No hay ventas en este mes.</strong></div></div>'}`;}
+
+/* --- Proveedores con ficha propia --- */
+const PV=id=>(S.proveedores||[]).find(p=>p.id===id);
+const PVn=n=>(S.proveedores||[]).find(p=>norm(p.nombre)===norm(n))||PV(slugProv(n));
+const provTel=n=>{const p=PVn(n);return p&&waNum(p.tel)?p.tel:'';};
+function provListModal(){openModal({title:'Proveedores',wide:true,st:{q:''},body:s=>{const q=norm(s.q);
+  const list=(S.proveedores||[]).filter(p=>!q||norm([p.nombre,p.contacto,p.tel].join(' ')).includes(q)).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  return `<div class="tbar" style="padding:0;border:0"><input id="pv-q" class="in grow" type="search" value="${esc(s.q)}" data-m="q" placeholder="Buscar proveedor" aria-label="Buscar proveedor"><span class="spacer"></span><button class="btn primary" data-act="provEdit">Nuevo proveedor</button></div>
+    ${list.length?`<div class="tw"><table><thead><tr><th>Proveedor</th><th>Teléfono</th><th class="r">Repuestos</th><th class="r">Para reponer</th><th></th></tr></thead><tbody>${list.map(p=>{const rs=S.repuestos.filter(r=>norm(r.prov)===norm(p.nombre));const bajo=rs.filter(r=>isBajo(r)||r.stock<=0).length;
+      return `<tr><td><div class="nm">${esc(p.nombre)}</div>${p.contacto?`<div class="small muted">${esc(p.contacto)}</div>`:''}</td><td class="small">${p.tel?esc(p.tel):'<span class="muted">Sin cargar</span>'}</td><td class="r">${rs.length}</td><td class="r">${bajo?`<span class="chip warn">${bajo}</span>`:'—'}</td><td class="r"><button class="btn sm" data-act="provVer" data-id="${esc(p.id)}">Ver ficha</button></td></tr>`;}).join('')}</tbody></table></div>`:'<div class="empty"><strong>No hay proveedores.</strong>Se crean solos cuando cargás un repuesto con proveedor, o tocá "Nuevo proveedor".</div>'}`;},
+  foot:()=>'<button class="btn primary" data-act="mclose">Listo</button>'});}
+function provVerModal(id){const p=PV(id);if(!p)return;
+  const rs=S.repuestos.filter(r=>norm(r.prov)===norm(p.nombre)).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  const cs=(S.compras||[]).filter(c=>c.origen==='proveedor'&&norm(c.quien)===norm(p.nombre)).sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  const ps=(S.pedidos||[]).filter(x=>norm(x.prov)===norm(p.nombre)).sort((a,b)=>b.num-a.num);
+  const bajo=rs.filter(r=>(isBajo(r)||r.stock<=0)&&r.cond==='nuevo');const tot=cs.reduce((a,c)=>a+num(c.total),0);
+  openModal({title:p.nombre,wide:true,st:{id},body:()=>`<div class="kpis">${tile('Repuestos',rs.length,'que le comprás')}${tile('Para reponer',bajo.length,'en el mínimo o sin stock',bajo.length?'warn':'')}${dueno()?tile('Comprado',money(tot),`${cs.length} ${cs.length===1?'compra':'compras'}`):''}</div>
+    <div class="box"><h4>Contacto</h4><p>${p.contacto?esc(p.contacto)+' · ':''}${p.tel?esc(p.tel):'<span class="muted">Sin teléfono</span>'}${p.email?' · '+esc(p.email):''}${p.cuit?' · CUIT '+esc(p.cuit):''}</p>${p.nota?`<p class="small muted">${esc(p.nota)}</p>`:''}
+      ${p.tel&&!waNum(p.tel)?'<p class="small" style="color:var(--warn)">El teléfono no parece un celular argentino completo (con código de área). Revisalo para poder mandarle WhatsApp.</p>':''}</div>
+    ${bajo.length?`<div class="box"><h4>Para pedirle</h4><p class="small">${bajo.map(r=>`${esc(r.nombre)} (hay ${fQ(r.stock)})`).join(' · ')}</p><button class="btn sm primary" data-act="pedidoNew">Armar el pedido</button></div>`:''}
+    ${ps.length?`<div class="box"><h4>Pedidos</h4>${ps.slice(0,8).map(x=>`<div class="li"><div class="grow"><div class="t">PED-${pad4(x.num)} · ${fdt(x.fecha)}</div><div class="m">${x.items.map(i=>`${fQ(i.q)}× ${esc(i.n)}`).join(', ')}</div></div><span class="chip ${x.estado==='pedido'?'warn':'good'}">${x.estado==='pedido'?'Pedido':'Llegó'}</span></div>`).join('')}</div>`:''}
+    ${cs.length&&dueno()?`<div class="box"><h4>Compras</h4><div class="tw"><table><thead><tr><th>Fecha</th><th>Repuesto</th><th class="r">Cant.</th><th class="r">Total</th></tr></thead><tbody>${cs.slice(0,20).map(c=>`<tr><td class="tnum">${fdate(c.fecha)}</td><td>${esc(c.n)}</td><td class="r">${fQ(c.q)}</td><td class="r">${money(c.total)}</td></tr>`).join('')}</tbody></table></div></div>`:''}
+    ${rs.length?`<details class="box"><summary><h4>Repuestos que le comprás (${rs.length})</h4></summary><p class="small">${rs.map(r=>esc(r.nombre)).join(' · ')}</p></details>`:''}`,
+    foot:()=>`<button class="btn ghost" data-act="provList">Volver</button><button class="btn" data-act="provEdit" data-id="${esc(p.id)}">Editar datos</button>${waNum(p.tel)?`<button class="btn primary" data-act="provWa" data-id="${esc(p.id)}">WhatsApp</button>`:''}`});}
+function provEditModal(id){const p=id?PV(id):null;const b=p||{nombre:'',tel:'',email:'',contacto:'',cuit:'',nota:''};
+  openModal({title:p?'Editar proveedor':'Nuevo proveedor',st:Object.assign({id:p?p.id:''},b),body:s=>`<div class="fgrid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+    <label class="field"><span>Nombre</span><input id="pv-n" class="in" value="${esc(s.nombre)}" data-m="nombre" autocomplete="off"></label>
+    <label class="field"><span>Celular (con código de área)</span><input id="pv-t" class="in" type="tel" inputmode="tel" value="${esc(s.tel)}" data-m="tel" placeholder="Ej: 3764 41-2290"></label>
+    <label class="field"><span>Persona de contacto</span><input id="pv-c" class="in" value="${esc(s.contacto)}" data-m="contacto"></label>
+    <label class="field"><span>Correo</span><input id="pv-e" class="in" type="email" value="${esc(s.email)}" data-m="email"></label>
+    <label class="field"><span>CUIT</span><input id="pv-cu" class="in" inputmode="numeric" value="${esc(s.cuit)}" data-m="cuit"></label></div>
+    <label class="field"><span>Nota (días de entrega, condiciones)</span><textarea id="pv-no" class="in" rows="2" data-m="nota">${esc(s.nota)}</textarea></label>
+    ${p?'<p class="small muted">Si le cambiás el nombre, se cambia también en los repuestos y pedidos de este proveedor.</p>':''}`,
+    foot:()=>`<button class="btn ghost" data-act="${p?'provVer':'provList'}" ${p?`data-id="${esc(p.id)}"`:''}>Cancelar</button><button class="btn primary" data-act="provSave">Guardar</button>`});}
+
+/* --- Aviso de stock bajo en el equipo (notificación del sistema y número en el ícono) --- */
+const NOTIF_K='rcos-notif',NOTIF_SEEN='rcos-notif-vistos';
+const notifOn=()=>{try{return localStorage.getItem(NOTIF_K)==='1'&&'Notification' in window&&Notification.permission==='granted';}catch(e){return false;}};
+function bajos(){return (S.repuestos||[]).filter(r=>r.cond==='nuevo'&&((r.min>0&&r.stock<=r.min)||r.stock<=0));}
+function stockAlerts(){const b=bajos();
+  try{if('setAppBadge' in navigator){b.length?navigator.setAppBadge(b.length).catch(()=>{}):navigator.clearAppBadge().catch(()=>{});}}catch(e){}
+  if(!notifOn()||!('serviceWorker' in navigator))return;
+  let seen=[];try{seen=JSON.parse(localStorage.getItem(NOTIF_SEEN)||'[]');}catch(e){}
+  const ids=new Set(b.map(r=>r.id));seen=seen.filter(id=>ids.has(id));          /* lo que se repuso puede volver a avisar */
+  const nuevos=b.filter(r=>!seen.includes(r.id));
+  if(nuevos.length){const t=nuevos.length===1?`${nuevos[0].nombre}: ${nuevos[0].stock<=0?'sin stock':'quedan '+fQ(nuevos[0].stock)}`:`${nuevos.length} repuestos llegaron al mínimo`;
+    const body=nuevos.slice(0,5).map(r=>`${r.nombre} (hay ${fQ(r.stock)})`).join('\n')+(nuevos.length>5?`\n… y ${nuevos.length-5} más`:'');
+    navigator.serviceWorker.ready.then(reg=>reg.showNotification(t,{body:nuevos.length===1?'Tocá para armar el pedido al proveedor.':body,icon:'/icons/icon-192.png',badge:'/icons/badge-96.png',tag:'rcos-stock',renotify:true,data:{url:'/?app=1#stock'}})).catch(()=>{});
+    seen=seen.concat(nuevos.map(r=>r.id));}
+  try{localStorage.setItem(NOTIF_SEEN,JSON.stringify(seen));}catch(e){}}
+let stockT=null;const stockSoon=()=>{clearTimeout(stockT);stockT=setTimeout(stockAlerts,800);};
+const _save9b=save;save=function(){const r=_save9b.apply(this,arguments);stockSoon();return r;};
+const _apply9=applyChanges;applyChanges=function(j){const r=_apply9(j);stockSoon();return r;};
+if('serviceWorker' in navigator)navigator.serviceWorker.addEventListener('message',e=>{const d=e.data||{};if(d.go){ui.view=d.go;closeModal&&Mo&&closeModal();render();}});
+async function notifToggle(){
+  if(notifOn()){try{localStorage.setItem(NOTIF_K,'0');}catch(e){}toast('Listo: este equipo ya no avisa del stock bajo.');render();return;}
+  if(!('Notification' in window)||!('serviceWorker' in navigator)){toast(isIOS()?'En iPhone, primero instalá la app (Compartir → Agregar a inicio) y abrila desde el ícono.':'Este navegador no permite avisos.','warn');return;}
+  const p=await Notification.requestPermission().catch(()=>'denied');
+  if(p!=='granted'){toast('El navegador no dio permiso para avisar. Se cambia en la configuración del sitio.','warn');return;}
+  try{localStorage.setItem(NOTIF_K,'1');localStorage.setItem(NOTIF_SEEN,'[]');}catch(e){}
+  toast('Listo: este equipo te avisa cuando un repuesto llegue al mínimo.');stockAlerts();render();}
+
+/* --- Exportar a CSV para Excel en Argentina: ";" entre columnas y coma decimal --- */
+function csvCell(v){if(v===null||v===undefined)return '';
+  if(typeof v==='number'){if(!isFinite(v))return '';return String(Math.round(v*100)/100).replace('.',',');}
+  let s=String(v);if(/^[=+\-@\t\r]/.test(s))s="'"+s;            /* evita que Excel lo tome como fórmula */
+  return /[";\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}
+function csvDownload(name,rows){const txt='﻿'+rows.map(r=>r.map(csvCell).join(';')).join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/csv;charset=utf-8'}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},2000);
+  toast(`Listo: ${name} descargado. Abrilo con Excel.`);}
+const hoyF=()=>new Date().toLocaleDateString('sv-SE');
+
+Object.assign(ACT,{
+  cajaTab:d=>{ui.cajaTab=d.v;render();},
+  comCfg:()=>comModal(),
+  comSave:()=>{const s=Mo.st;const c={};for(const id of COM_MEDIOS){const v=num(s[id]);if(v<0||v>50)fail(`La comisión de ${MED(id).n} tiene que estar entre 0 y 50%.`);if(v)c[id]=v;}
+    S.cfg.com=c;S.cfg.comDesde=now();save();closeModal();render();toast(Object.keys(c).length?'Listo: desde ahora la caja descuenta las comisiones.':'Listo: sin comisiones.');},
+  csvMeses:()=>{const rows=mesesData();csvDownload(`caja-mes-a-mes-${hoyF()}.csv`,[['Mes','Cobrado','Comisiones','Entró','Salió','Quedó'],...rows.map(r=>[mesTxt(r.mes),r.bruto,r.com,r.ing,r.egr,r.neto])]);},
+  csvGan:()=>{if(!ui.ganMes)ui.ganMes=ganMeses()[0];const g=ganData(ui.ganMes);csvDownload(`ganancia-${ui.ganMes}.csv`,[['Origen','Categoría','Detalle','Cantidad','Vendido','Costo','Ganancia'],...g.lines.map(l=>[l.src==='venta'?'Mostrador':'Arreglo',l.cat,l.d,l.q,l.imp,l.cost,l.imp-l.cost]),[],['Comisiones del mes','','','','','',-g.com],['Ganancia','','','',g.ven,g.cost,g.gan]]);},
+  csvStock:()=>{const d=dueno();csvDownload(`stock-${hoyF()}.csv`,[['Código','Nombre','Categoría','Marca','Proveedor','Condición','Stock','Mínimo',...(d?['Costo']:[]),...S.listas.map(l=>'Precio '+l.n),'Ubicación','Código de barras'],
+      ...S.repuestos.map(r=>[r.cod,r.nombre,r.cat,r.marca,r.prov,CONDS[r.cond]||r.cond,num(r.stock),num(r.min),...(d?[num(r.costo)]:[]),...S.listas.map(l=>precio(r,l.id)),r.ubic||'',r.barras||''])]);},
+  csvClientes:()=>{csvDownload(`clientes-${hoyF()}.csv`,[['Nombre','Teléfono','Correo','Documento','Tipo','Lista','Cuenta corriente','Debe','Motos'],
+      ...S.clientes.filter(c=>c.id!=='c1').map(c=>[c.nombre,c.tel||'',c.email||'',fmtDoc(c),TIPOS[c.tipo]||'',(S.listas.find(l=>l.id===c.lista)||{}).n||'',c.cc?'Sí':'No',num(c.deuda),(c.motos||[]).map(m=>modLbl(M(m.m))+(m.anio?' '+m.anio:'')).join(', ')])]);},
+  csvCaja:()=>{const ms=S.movs.filter(m=>m.sid===S.caja.sid).sort((a,b)=>a.fecha.localeCompare(b.fecha));csvDownload(`caja-${hoyF()}.csv`,[['Fecha','Hora','Tipo','Concepto','Medio','Cobrado','Comisión','Monto'],...ms.map(m=>[fdate(m.fecha),ftime(m.fecha),m.tipo==='ingreso'?'Entra':'Sale',m.concepto,MED(m.medio).n,m.bruto!==undefined?m.bruto:m.monto,num(m.com),m.tipo==='ingreso'?num(m.monto):-num(m.monto)])]);},
+  libroCsvDl:()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+String(LIBRO_CSV).replace(/\r?\n/g,'\r\n')],{type:'text/csv;charset=utf-8'}));a.download=`libro-iva-${ui.libroMes}.csv`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},2000);toast('Libro IVA descargado.');},
+  csvProv:()=>csvDownload(`proveedores-${hoyF()}.csv`,[['Proveedor','Contacto','Teléfono','Correo','CUIT','Repuestos','Nota'],...(S.proveedores||[]).map(p=>[p.nombre,p.contacto,p.tel,p.email,p.cuit,S.repuestos.filter(r=>norm(r.prov)===norm(p.nombre)).length,p.nota])]),
+  provList:()=>provListModal(),
+  provVer:d=>provVerModal(d.id),
+  provEdit:d=>provEditModal(d&&d.id),
+  provSave:()=>{const s=Mo.st;const n=String(s.nombre||'').trim();if(!n)fail('Escribí el nombre del proveedor.');
+    const dup=(S.proveedores||[]).find(p=>norm(p.nombre)===norm(n)&&p.id!==s.id);if(dup)fail(`Ya existe el proveedor ${dup.nombre}.`);
+    const data={nombre:n,tel:String(s.tel||'').trim(),email:String(s.email||'').trim(),contacto:String(s.contacto||'').trim(),cuit:String(s.cuit||'').replace(/[^\d-]/g,''),nota:String(s.nota||'').trim()};
+    let p=s.id&&PV(s.id);
+    if(p){const old=p.nombre;Object.assign(p,data);if(norm(old)!==norm(n)){S.repuestos.forEach(r=>{if(norm(r.prov)===norm(old))r.prov=n;});S.pedidos.forEach(x=>{if(norm(x.prov)===norm(old))x.prov=n;});}}
+    else{p=Object.assign({id:PV(slugProv(n))?slugProv(n)+'-'+Date.now().toString(36):slugProv(n)},data);S.proveedores.push(p);}
+    save();toast('Proveedor guardado.');provVerModal(p.id);},
+  provWa:d=>{const p=PV(d.id);if(!p)return;const n=waNum(p.tel);if(!n){toast('Cargá un celular con código de área para mandarle WhatsApp.','warn');return;}window.open(`https://wa.me/${n}`,'_blank','noopener');},
+  pedCopy:d=>{const s=Mo.st;const items=sugeridos().filter(r=>r.prov===d.p&&s.sel[r.id]&&s.sel[r.id].on&&num(s.sel[r.id].q)>0).map(r=>({n:r.nombre,cod:r.cod,q:Math.floor(num(s.sel[r.id].q))}));
+    const t=pedidoTxt(d.p,items);const n=waNum(provTel(d.p));if(n){window.open(`https://wa.me/${n}?text=${encodeURIComponent(t)}`,'_blank','noopener');toast('Se abrió WhatsApp con el pedido. Después tocá "Marcar como pedido".');}
+    else{copyText(t);toast(`Pedido copiado. Cargá el celular de ${d.p} en Proveedores para mandarlo directo por WhatsApp.`,'warn');}},
+  pedWa:d=>{const p=S.pedidos.find(x=>x.id===d.id);if(!p)return;const t=pedidoTxt(p.prov,p.items);const n=waNum(provTel(p.prov));if(n)window.open(`https://wa.me/${n}?text=${encodeURIComponent(t)}`,'_blank','noopener');else copyText(t);},
+  notifToggle:()=>notifToggle()
+});
+
+/* ================= v10: usuarios con contraseña, pantalla de ingreso y desbloqueo con huella ================= */
+const MODE_LS='rcos-mode',LASTOK_LS='rcos-lastok',UID_LS='rcos-uid',HUELLA_LS='rcos-huella';
+const lsGet=k=>{try{return localStorage.getItem(k);}catch(e){return null;}};
+const lsSet=(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v);}catch(e){}};
+const AUTH={mode:lsGet(MODE_LS)==='users'?'users':'pin',user:null,google:null,admin:false,unlocked:false,hiddenAt:0,gsi:null};
+const ROL_TXT={dueno:'Dueño',mostrador:'Mostrador',tecnico:'Técnico'};
+const ROL_DESC={dueno:'Ve y cambia todo: costos, caja, ganancia, usuarios y copias.',mostrador:'Vende, cobra, abre y cierra la caja, carga clientes y stock. No toca datos fiscales, listas de precios ni usuarios.',tecnico:'Ve y avanza los arreglos y consulta el stock. No ve la caja ni las ventas.'};
+const PW_MIN=10;
+
+/* Borra todo lo del taller guardado en este equipo (al salir, o si entra otra persona) */
+function wipeLocal(){[LS,'rcos-ui-v1','rcos-sync','rcos-pin',NOTIF_SEEN,UID_LS,LASTOK_LS,HUELLA_LS].forEach(k=>lsSet(k,null));
+  try{if('clearAppBadge' in navigator)navigator.clearAppBadge().catch(()=>{});}catch(e){}}
+
+/* --- Pantalla de bloqueo: tapa todo el sistema mientras no haya usuario (o huella) --- */
+function lockShow(kind,msg){document.body.classList.add('locked');AUTH.unlocked=false;let el=document.getElementById('lock');
+  if(!el){el=document.createElement('div');el.id='lock';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');document.body.appendChild(el);}
+  const mark=(document.querySelector('.brand .mark')||{}).outerHTML||'';
+  const err=msg?`<div class="note bad" role="alert">${esc(msg)}</div>`:'';
+  let body='';
+  if(kind==='loading')body='<p class="muted">Abriendo…</p>';
+  else if(kind==='offline')body=`<h2>Sin conexión</h2><p>No se puede comprobar tu usuario porque no hay internet. Cuando vuelva, tocá "Reintentar".</p><button class="btn primary block" data-act="lkRetry">Reintentar</button>`;
+  else if(kind==='pin')body=`<h2>Clave del taller</h2>${err}<p>Ingresá la clave para usar el sistema en este equipo.</p><label class="field"><span>Clave</span><input id="lk-pin" class="in" type="password" autocomplete="current-password" autofocus></label><button class="btn primary block" data-act="lkPin">Entrar</button>`;
+  else if(kind==='huella')body=`<h2>${AUTH.user?'Hola, '+esc(AUTH.user.nombre.split(' ')[0]):'Sistema bloqueado'}</h2>${err}<p>Desbloqueá con la huella o la cara de este equipo.</p><button class="btn primary block" data-act="lkHuella">Desbloquear</button><button class="linkbtn" data-act="lkOtra">Entrar con contraseña</button>`;
+  else if(kind==='recover')body=`<h2>Recuperar la cuenta del dueño</h2>${err}<p>Con la clave para borrar (ADMIN_PIN, la que está en Vercel) podés poner una contraseña nueva a la cuenta del dueño.</p>
+    <label class="field"><span>Correo del dueño</span><input id="lk-re" class="in" type="email" autocomplete="username"></label>
+    <label class="field"><span>Contraseña nueva (${PW_MIN} caracteres o más)</span><input id="lk-rp" class="in" type="password" autocomplete="new-password"></label>
+    <label class="field"><span>Clave para borrar (ADMIN_PIN)</span><input id="lk-ra" class="in" type="password" autocomplete="off"></label>
+    <button class="btn primary block" data-act="lkRecover">Cambiar y entrar</button><button class="linkbtn" data-act="lkLogin">Volver</button>`;
+  else body=`<h2>Entrá con tu usuario</h2>${err}
+    <label class="field"><span>Correo</span><input id="lk-e" class="in" type="email" autocomplete="username" inputmode="email" autofocus></label>
+    <label class="field"><span>Contraseña</span><input id="lk-p" class="in" type="password" autocomplete="current-password"></label>
+    <button class="btn primary block" data-act="lkLogin2">Entrar</button>
+    ${AUTH.google?'<div class="lk-or"><span>o</span></div><div id="gbtn" class="gbtn"></div>':''}
+    <button class="linkbtn" data-act="lkForgot">¿Te olvidaste la contraseña?</button>
+    <div id="lk-forgot" class="note" hidden>Pedile al dueño que te ponga una nueva desde Usuarios. Si sos el dueño, <button class="linkbtn" data-act="lkRecoverShow">recuperá tu cuenta acá</button>.</div>`;
+  el.innerHTML=`<div class="lk-card">${mark}<div class="lk-brand">repuestos<span class="pt">.</span><small>Core OS</small></div>${body}</div>`;
+  el.dataset.kind=kind;
+  if(kind==='login'&&AUTH.google)gsiButton();
+  setTimeout(()=>{const f=el.querySelector('[autofocus]')||el.querySelector('input');f&&f.focus();},40);}
+function lockHide(){document.body.classList.remove('locked');AUTH.unlocked=true;const el=document.getElementById('lock');if(el)el.remove();}
+/* Mientras está bloqueado, el teclado (y el lector de códigos) no llega al sistema */
+document.addEventListener('keydown',e=>{if(!document.body.classList.contains('locked'))return;const inLock=e.target&&e.target.closest&&e.target.closest('#lock');
+  if(!inLock){e.stopImmediatePropagation();return;}
+  if(e.key==='Enter'){const k=(document.getElementById('lock')||{}).dataset.kind;e.preventDefault();e.stopImmediatePropagation();
+    if(k==='login')ACT.lkLogin2();else if(k==='pin')ACT.lkPin();else if(k==='recover')ACT.lkRecover();}},true);
+if(AUTH.mode==='users')lockShow('loading');
+
+/* --- Entrar con Google (opcional: aparece si está configurado GOOGLE_CLIENT_ID en Vercel) --- */
+function gsiLoad(){if(window.google&&google.accounts&&google.accounts.id)return Promise.resolve();if(AUTH.gsi)return AUTH.gsi;
+  AUTH.gsi=new Promise((ok,ko)=>{const sc=document.createElement('script');sc.src='https://accounts.google.com/gsi/client';sc.async=true;sc.onload=ok;sc.onerror=()=>{AUTH.gsi=null;ko(new Error('gsi'));};document.head.appendChild(sc);});return AUTH.gsi;}
+function gsiButton(){gsiLoad().then(()=>{const el=document.getElementById('gbtn');if(!el)return;
+  google.accounts.id.initialize({client_id:AUTH.google,callback:r=>authPost('google',{credential:r.credential}),ux_mode:'popup',auto_select:false});
+  google.accounts.id.renderButton(el,{theme:'filled_black',size:'large',text:'signin_with',shape:'pill',locale:'es',width:Math.min(320,el.clientWidth||320)});}).catch(()=>{const el=document.getElementById('gbtn');if(el)el.innerHTML='<p class="small muted">No se pudo cargar el botón de Google. Entrá con correo y contraseña.</p>';});}
+
+async function authPost(op,body){const lk=document.getElementById('lock');lk&&lk.querySelectorAll('button').forEach(b=>b.disabled=true);
+  let r,j={};try{r=await fetch('/api/sync?op='+op,{method:'POST',headers:{'Content-Type':'application/json','x-rc':'1'},body:JSON.stringify(body),cache:'no-store'});j=await r.json().catch(()=>({}));}
+  catch(e){lk&&lk.querySelectorAll('button').forEach(b=>b.disabled=false);lockShow(lk?lk.dataset.kind:'login','Sin conexión. Probá de nuevo.');return false;}
+  if(!r.ok){lockShow(op==='recover'?'recover':'login',j.error||'No se pudo entrar.');return false;}
+  await afterLogin(j.user);return true;}
+async function afterLogin(u){const prev=lsGet(UID_LS);
+  if(prev&&prev!==u.uid){wipeLocal();metaClear();S=emptyData();localSave();}     /* entró otra persona: no ve lo que había de la anterior */
+  setUser(u);AUTH.mode='users';lsSet(MODE_LS,'users');pinSet('');SYNC.pin='';SYNC.locked=false;lockHide();render();
+  await _syncStart10();offerHuella();}
+function setUser(u){AUTH.user=u;if(!u)return;ui.rol=u.rol;lsSet(UID_LS,u.uid);lsSet(LASTOK_LS,String(Date.now()));}
+
+/* --- Arranque: averigua si el taller usa clave común o usuarios --- */
+const _syncStart10=syncStart;
+syncStart=async function(){
+  if(!/^https?:$/.test(location.protocol))return;
+  let cfg=null;try{const r=await fetch('/api/sync?op=auth',{headers:{'x-rc':'1'},cache:'no-store'});if((r.headers.get('content-type')||'').includes('application/json'))cfg=await r.json();if(r.status===429){lockShow(AUTH.mode==='users'?'login':'pin',cfg&&cfg.error);return;}}catch(e){}
+  if(!cfg||!cfg.mode){                                                   /* sin conexión */
+    if(AUTH.mode==='users'){const ok=Date.now()-Number(lsGet(LASTOK_LS)||0)<12*36e5&&lsGet(UID_LS);
+      if(!ok){lockShow('offline');return;}
+      if(lsGet(HUELLA_LS)){lockShow('huella');AUTH.pendStart=true;return;}
+      lockHide();}
+    return _syncStart10();}
+  AUTH.google=cfg.google;AUTH.admin=cfg.admin;
+  if(cfg.mode!=='users'){if(AUTH.mode==='users'){wipeLocal();metaClear();}AUTH.mode='pin';lsSet(MODE_LS,null);
+    if(lsGet(HUELLA_LS)&&!AUTH.unlocked){lockShow('huella');AUTH.pendStart=true;return;}
+    return _syncStart10();}
+  AUTH.mode='users';lsSet(MODE_LS,'users');pinSet('');SYNC.pin='';
+  let me;try{me=await api('GET','/api/sync?op=me');}catch(e){lockShow('offline');return;}
+  if(!me.ok){SYNC.locked=false;const j=await me.json().catch(()=>({}));lockShow('login',me.status===429?j.error:'');return;}
+  const j=await me.json();const prev=lsGet(UID_LS);if(prev&&j.user&&prev!==j.user.uid){wipeLocal();metaClear();S=emptyData();localSave();}
+  setUser(j.user);
+  if(lsGet(HUELLA_LS)&&!AUTH.unlocked){lockShow('huella');AUTH.pendStart=true;return;}
+  lockHide();render();return _syncStart10();};
+
+/* Sin usuario válido: en vez de una ventana que se puede cerrar, la pantalla de ingreso tapa todo */
+const _pinModal10=pinModal;
+pinModal=function(msg){if(AUTH.mode==='users'){lockShow('login',msg&&!/clave/i.test(msg)?msg:'');return;}lockShow('pin',msg);
+  /* ¿el dueño activó los usuarios mientras tanto? entonces se pide usuario, no la clave vieja */
+  fetch('/api/sync?op=auth',{headers:{'x-rc':'1'},cache:'no-store'}).then(r=>r.json()).then(c=>{if(c&&c.mode==='users'){AUTH.mode='users';AUTH.google=c.google;lsSet(MODE_LS,'users');pinSet('');SYNC.pin='';lockShow('login');}}).catch(()=>{});};
+const _api10=api;api=async function(m,u,b){const r=await _api10(m,u,b);if(r.ok&&AUTH.mode==='users')lsSet(LASTOK_LS,String(Date.now()));return r;};
+
+/* --- Desbloqueo con huella o cara (candado de este equipo; no reemplaza al usuario) --- */
+const b64u=buf=>btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const unb64u=s=>Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')+'==='.slice((s.length+3)%4)),c=>c.charCodeAt(0));
+const huellaSoporte=()=>!!(window.PublicKeyCredential&&navigator.credentials&&window.isSecureContext);
+async function huellaDisponible(){if(!huellaSoporte())return false;try{return await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();}catch(e){return false;}}
+async function huellaActivar(){const u=AUTH.user;const uid=u?u.uid:'taller'+DEV;
+  const cred=await navigator.credentials.create({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),rp:{name:'Repuestos Core OS'},
+    user:{id:new TextEncoder().encode(uid).slice(0,64),name:(u&&u.email)||'taller',displayName:(u&&u.nombre)||'Taller'},
+    pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
+    authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000,attestation:'none'}});
+  if(!cred)throw new Error('cancelado');lsSet(HUELLA_LS,JSON.stringify({id:b64u(cred.rawId),uid}));}
+async function huellaPedir(){let h=null;try{h=JSON.parse(lsGet(HUELLA_LS)||'null');}catch(e){}if(!h)return true;
+  const a=await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:[{type:'public-key',id:unb64u(h.id)}],userVerification:'required',timeout:60000}});return !!a;}
+async function offerHuella(){if(lsGet(HUELLA_LS)||lsGet('rcos-huella-preguntado'))return;if(!await huellaDisponible())return;lsSet('rcos-huella-preguntado','1');
+  setTimeout(()=>openModal({title:'Desbloquear con huella',st:{},body:()=>'<p>¿Querés que este equipo se desbloquee con tu huella o tu cara? Así no escribís la contraseña cada vez, y si alguien agarra el equipo, no ve nada.</p><p class="small muted">Se pide al abrir la app y después de 5 minutos sin usarla. Se cambia cuando quieras desde tu usuario.</p>',
+    foot:()=>'<button class="btn ghost" data-act="mclose">Ahora no</button><button class="btn primary" data-act="huellaOn">Activar</button>'}),700);}
+/* Si la app estuvo 5 minutos en segundo plano, se vuelve a pedir la huella */
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){AUTH.hiddenAt=Date.now();return;}
+  if(lsGet(HUELLA_LS)&&AUTH.unlocked&&AUTH.hiddenAt&&Date.now()-AUTH.hiddenAt>5*60e3)lockShow('huella');});
+
+/* --- Tu usuario, usuarios del taller y cambio de contraseña --- */
+const _userModal10=userModal;
+userModal=function(){
+  if(AUTH.mode==='users'&&AUTH.user){const u=AUTH.user;const hu=!!lsGet(HUELLA_LS);
+    openModal({title:'Tu usuario',st:{},body:()=>`<div class="box"><h4>${esc(u.nombre)}</h4><p>${esc(u.email)} · ${ROL_TXT[u.rol]}</p><p class="small muted">${ROL_DESC[u.rol]}</p></div>
+      <div class="ulist">${u.rol==='dueno'?'<button class="ubtn" data-act="usersAdmin"><b>Usuarios del taller</b><span>Agregar gente, cambiar qué puede hacer cada uno, dar de baja.</span></button>':''}
+      <button class="ubtn" data-act="passModal"><b>Cambiar mi contraseña</b><span>Al cambiarla, se cierra tu sesión en los otros equipos.</span></button>
+      <button class="ubtn" data-act="${hu?'huellaOff':'huellaOn'}"><b>${hu?'Quitar el desbloqueo con huella':'Desbloquear con huella en este equipo'}</b><span>${hu?'Este equipo pide la huella al abrir la app.':'Que este equipo pida tu huella o tu cara al abrir.'}</span></button></div>`,
+      foot:()=>'<button class="btn ghost" data-act="mclose">Cerrar</button><button class="btn danger" data-act="logout">Salir de este equipo</button>'});return;}
+  if(SYNC.on&&AUTH.mode==='pin'){
+    openModal({title:'¿Quién usa el sistema?',st:{},body:()=>`<div class="note warn">Ahora todos entran con la misma clave del taller y cualquiera puede elegir ser "Dueño". Para que cada persona tenga su usuario y el sistema controle qué puede hacer, activá los usuarios.</div>
+      <div class="ulist">${[['dueno','Dueño'],['mostrador','Mostrador'],['tecnico','Técnico']].map(([k,n])=>`<button class="ubtn" data-act="setRol" data-v="${k}" aria-pressed="${ui.rol===k}"><b>${n}</b><span>${ROL_DESC[k]}</span></button>`).join('')}</div>
+      ${dueno()?'<div class="box"><h4>Usuarios con contraseña</h4><p class="small">Creás tu cuenta de dueño y después cargás a tu equipo. Desde ese momento la clave del taller deja de servir.</p><button class="btn primary" data-act="setupOwner">Activar usuarios</button></div>':''}`,
+      foot:()=>'<button class="btn ghost" data-act="syncOut">Salir de este equipo</button><button class="btn primary" data-act="mclose">Listo</button>'});return;}
+  return _userModal10();};
+function setupOwnerModal(){openModal({title:'Activar usuarios',st:{nombre:'',email:'',pw:'',pw2:'',admin:'',google:false},body:s=>`<p>Primero creá tu cuenta de dueño. Para confirmar que sos vos, se pide la clave para borrar (ADMIN_PIN).</p>
+  <div class="fgrid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"><label class="field"><span>Tu nombre</span><input id="so-n" class="in" value="${esc(s.nombre)}" data-m="nombre" autocomplete="name"></label>
+  <label class="field"><span>Tu correo</span><input id="so-e" class="in" type="email" value="${esc(s.email)}" data-m="email" autocomplete="username"></label>
+  <label class="field"><span>Contraseña (${PW_MIN} caracteres o más)</span><input id="so-p" class="in" type="password" value="${esc(s.pw)}" data-m="pw" autocomplete="new-password"></label>
+  <label class="field"><span>Repetila</span><input id="so-p2" class="in" type="password" value="${esc(s.pw2)}" data-m="pw2" autocomplete="new-password"></label>
+  <label class="field"><span>Clave para borrar (ADMIN_PIN)</span><input id="so-a" class="in" type="password" value="${esc(s.admin)}" data-m="admin" autocomplete="off"></label></div>
+  ${AUTH.google?`<label class="check"><input id="so-g" type="checkbox" data-m="google" ${s.google?'checked':''}> También entrar con Google con este correo</label>`:''}
+  <div class="note warn">Cuando lo actives, los demás equipos van a pedir usuario. Cargalos en "Usuarios del taller" antes de avisarles.</div>`,
+  foot:()=>'<button class="btn ghost" data-act="mclose">Cancelar</button><button class="btn primary" data-act="setupOwnerOk">Crear mi cuenta</button>'});}
+async function usersModal(){let j;try{const r=await api('GET','/api/sync?op=users');j=await r.json().catch(()=>({}));if(!r.ok){toast(j.error||'No se pudo abrir Usuarios.','bad');return;}}catch(e){toast('Sin conexión.','bad');return;}
+  const list=j.list||[];AUTH.google=AUTH.google||null;
+  openModal({title:'Usuarios del taller',wide:true,st:{},body:()=>`<p class="small muted">Cada persona entra con su correo y contraseña${AUTH.google?' o con Google':''}. Si alguien deja de trabajar, desactivalo: se le cierra la sesión en todos los equipos.</p>
+    <div class="tw"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Último ingreso</th><th></th></tr></thead><tbody>${list.map(u=>`<tr><td><div class="nm">${esc(u.nombre)}</div></td><td class="small">${esc(u.email)}${u.google?' · Google':''}</td><td>${ROL_TXT[u.rol]||esc(u.rol)}</td><td>${u.activo?'<span class="chip good">Activo</span>':'<span class="chip">Desactivado</span>'}</td><td class="small">${u.ultimo?esc(fdt(u.ultimo)):'Nunca'}</td><td class="r"><button class="btn sm" data-act="userEdit" data-id="${esc(u.uid)}">Editar</button></td></tr>`).join('')}</tbody></table></div>`,
+    foot:()=>'<button class="btn ghost" data-act="mclose">Cerrar</button><button class="btn primary" data-act="userEdit">Agregar persona</button>'});
+  AUTH.users=list;}
+function userEditModal(uid){const u=uid?(AUTH.users||[]).find(x=>x.uid===uid):null;const self=u&&AUTH.user&&u.uid===AUTH.user.uid;
+  openModal({title:u?'Editar usuario':'Agregar persona',st:{uid:u?u.uid:'',nombre:u?u.nombre:'',email:u?u.email:'',rol:u?u.rol:'mostrador',activo:u?u.activo:true,google:u?u.google:false,pw:'',del:false},body:s=>`<div class="fgrid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+    <label class="field"><span>Nombre</span><input id="ue-n" class="in" value="${esc(s.nombre)}" data-m="nombre"></label>
+    <label class="field"><span>Correo</span><input id="ue-e" class="in" type="email" value="${esc(s.email)}" data-m="email" autocomplete="off"></label></div>
+    <div class="ulist">${['mostrador','tecnico','dueno'].map(k=>`<button class="ubtn" data-act="mset" data-k="rol" data-v="${k}" aria-pressed="${s.rol===k}" ${self&&k!=='dueno'?'disabled':''}><b>${ROL_TXT[k]}</b><span>${ROL_DESC[k]}</span></button>`).join('')}</div>
+    <label class="field"><span>${u?'Contraseña nueva (dejala vacía para no cambiarla)':'Contraseña inicial'} · ${PW_MIN} caracteres o más</span><div class="row" style="flex-wrap:nowrap"><input id="ue-p" class="in" type="text" value="${esc(s.pw)}" data-m="pw" autocomplete="new-password" style="flex:1"><button class="btn sm" data-act="userGenPw">Generar</button></div></label>
+    <p class="small muted">Pasale la contraseña en persona. Puede cambiarla después desde "Tu usuario".</p>
+    ${AUTH.google?`<label class="check"><input id="ue-g" type="checkbox" data-m="google" ${s.google?'checked':''}> Puede entrar con su cuenta de Google (este mismo correo)</label>`:''}
+    ${u&&!self?`<label class="check"><input id="ue-a" type="checkbox" data-m="activo" ${s.activo?'checked':''}> Activo (si lo desactivás, se le cierra la sesión en todos los equipos)</label>`:''}`,
+    foot:s=>`${u&&!self?`<button class="btn ghost danger" data-act="userDel">${s.del?'¿Seguro? Tocá de nuevo':'Borrar'}</button>`:''}<button class="btn ghost" data-act="usersAdmin">Volver</button><button class="btn primary" data-act="userSave">Guardar</button>`});}
+function passModal(){openModal({title:'Cambiar mi contraseña',st:{old:'',pw:'',pw2:''},body:s=>`${AUTH.user&&AUTH.user.tienePw===false?'':`<label class="field"><span>Contraseña actual</span><input id="pw-o" class="in" type="password" value="${esc(s.old)}" data-m="old" autocomplete="current-password"></label>`}
+  <label class="field"><span>Contraseña nueva (${PW_MIN} caracteres o más)</span><input id="pw-n" class="in" type="password" value="${esc(s.pw)}" data-m="pw" autocomplete="new-password"></label>
+  <label class="field"><span>Repetila</span><input id="pw-n2" class="in" type="password" value="${esc(s.pw2)}" data-m="pw2" autocomplete="new-password"></label>`,
+  foot:()=>'<button class="btn ghost" data-act="mclose">Cancelar</button><button class="btn primary" data-act="passOk">Cambiar</button>'});}
+const genPw=()=>{const a='abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';const v=crypto.getRandomValues(new Uint32Array(12));return Array.from(v,x=>a[x%a.length]).join('');};
+async function apiJ(m,u,b){const r=await api(m,u,b);const j=await r.json().catch(()=>({}));if(!r.ok)fail(j.error||'No se pudo.');return j;}
+
+const _setRol10=ACT.setRol,_syncOut10=ACT.syncOut;
+Object.assign(ACT,{
+  setRol:d=>{if(AUTH.mode==='users'){toast('Tu rol lo define el dueño en Usuarios.','warn');return;}return _setRol10(d);},
+  syncOut:()=>{pinSet('');wipeLocal();metaClear();location.reload();},
+  logout:async()=>{try{await api('POST','/api/sync?op=logout',{});}catch(e){}wipeLocal();metaClear();location.reload();},
+  lkLogin:()=>lockShow('login'),lkForgot:()=>{const f=document.getElementById('lk-forgot');if(f)f.hidden=false;},lkRecoverShow:()=>lockShow('recover'),
+  lkLogin2:()=>{const e=(document.getElementById('lk-e')||{}).value||'',p=(document.getElementById('lk-p')||{}).value||'';if(!e.trim()||!p){lockShow('login','Escribí tu correo y tu contraseña.');return;}authPost('login',{email:e,password:p});},
+  lkRecover:()=>{const g=id=>(document.getElementById(id)||{}).value||'';authPost('recover',{email:g('lk-re'),password:g('lk-rp'),admin:g('lk-ra')});},
+  lkPin:()=>{const v=String((document.getElementById('lk-pin')||{}).value||'').trim();if(!v){lockShow('pin','Escribí la clave.');return;}SYNC.pin=v;pinSet(v);SYNC.locked=false;lockHide();_syncStart10();},
+  lkRetry:()=>{lockShow('loading');syncStart();},
+  lkOtra:async()=>{if(AUTH.mode==='users'){try{await api('POST','/api/sync?op=logout',{});}catch(e){}wipeLocal();metaClear();location.reload();}else{lsSet(HUELLA_LS,null);lockShow('pin');}},
+  lkHuella:async()=>{try{if(await huellaPedir()){lockHide();render();if(AUTH.pendStart){AUTH.pendStart=false;_syncStart10();}}}catch(e){lockShow('huella','No se pudo comprobar. Probá de nuevo o entrá con contraseña.');}},
+  huellaOn:async()=>{try{await huellaActivar();closeModal();toast('Listo: este equipo se desbloquea con tu huella.');}catch(e){toast(huellaSoporte()?'No se activó la huella.':'Este equipo o navegador no permite huella.','warn');}},
+  huellaOff:()=>{lsSet(HUELLA_LS,null);closeModal();toast('Listo: este equipo ya no pide la huella.');},
+  setupOwner:()=>setupOwnerModal(),
+  setupOwnerOk:async()=>{const s=Mo.st;if(s.pw.length<PW_MIN)fail(`La contraseña tiene que tener al menos ${PW_MIN} caracteres.`);if(s.pw!==s.pw2)fail('Las contraseñas no coinciden.');
+    const r=await fetch('/api/sync?op=setup-owner',{method:'POST',headers:{'Content-Type':'application/json','x-rc':'1'},body:JSON.stringify({nombre:s.nombre,email:s.email,password:s.pw,admin:s.admin,google:!!s.google})});const j=await r.json().catch(()=>({}));
+    if(!r.ok)fail(j.error||'No se pudo activar.');lsSet(UID_LS,j.user.uid);closeModal();await afterLogin(j.user);toast('Listo: ahora cada persona entra con su usuario. Cargá a tu equipo en Tu usuario → Usuarios del taller.');},
+  usersAdmin:()=>usersModal(),
+  userEdit:d=>userEditModal(d&&d.id),
+  userGenPw:()=>{Mo.st.pw=genPw();renderModal();},
+  userSave:async()=>{const s=Mo.st;await apiJ('POST','/api/sync?op=user-save',{uid:s.uid||undefined,nombre:s.nombre,email:s.email,rol:s.rol,activo:!!s.activo,google:!!s.google,password:s.pw||undefined});toast('Usuario guardado.');usersModal();},
+  userDel:async()=>{const s=Mo.st;if(!s.del){s.del=true;renderModal();return;}await apiJ('POST','/api/sync?op=user-del',{uid:s.uid});toast('Usuario borrado.');usersModal();},
+  passModal:()=>passModal(),
+  passOk:async()=>{const s=Mo.st;if(s.pw.length<PW_MIN)fail(`La contraseña tiene que tener al menos ${PW_MIN} caracteres.`);if(s.pw!==s.pw2)fail('Las contraseñas no coinciden.');await apiJ('POST','/api/sync?op=pass',{old:s.old,password:s.pw});closeModal();toast('Contraseña cambiada.');}
+});
+/* El nombre de quien está usando el sistema, arriba */
+const _render10=render;
+render=function(){const r=_render10.apply(this,arguments);try{const c=document.getElementById('userChip');
+  if(c)c.innerHTML=AUTH.user?`<button class="btn sm ghost helpbtn" data-act="userModal" title="Tu usuario"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="7" r="3.2"/><path d="M3.8 17c.8-3.2 3.3-4.8 6.2-4.8s5.4 1.6 6.2 4.8"/></svg><span class="bt">${esc(AUTH.user.nombre.split(' ')[0])}</span></button>`:'';
+  if(AUTH.user){const l=document.getElementById('userLbl');if(l)l.textContent=AUTH.user.nombre;}}catch(e){}return r;};
 
 /* ---------- Eventos ---------- */
 document.addEventListener('click',e=>{
