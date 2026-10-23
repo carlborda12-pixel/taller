@@ -11,6 +11,10 @@
 // POST /api/sync?op=backup        hace una copia ahora.
 // GET  /api/sync?op=backup-get&id=X  baja una copia (para guardarla fuera).
 // POST /api/sync?op=restore       {admin,id} o {admin,file} vuelve a una copia (pide ADMIN_PIN).
+// Usuarios (cuando el dueño los activa, la clave del taller deja de servir):
+// GET  ?op=auth   modo (pin|users) y si se puede entrar con Google      POST ?op=login {email,password}
+// POST ?op=google {credential}   POST ?op=setup-owner {admin,email,nombre,password}   POST ?op=recover {admin,email,password}
+// GET  ?op=me    POST ?op=logout   POST ?op=pass {old,password}   GET ?op=users   POST ?op=user-save   POST ?op=user-del
 //
 // Modelo en Redis (prefijo rc2:):
 //   c:<col>[:<mes>]  hash id -> JSON del registro (colecciones con fecha se parten por mes)
@@ -31,8 +35,8 @@ const URL_ = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
 const TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
 const P = 'rc2:';
 const PCOLS = ['ventas', 'comps', 'movs', 'compras', 'envios', 'cierres', 'log'];
-const NCOLS = ['repuestos', 'clientes', 'ots', 'presus', 'pedidos'];
-const OBJS = ['caja', 'fiscal', 'listas', 'modelos'];
+const NCOLS = ['repuestos', 'clientes', 'ots', 'presus', 'pedidos', 'proveedores'];
+const OBJS = ['caja', 'fiscal', 'listas', 'modelos', 'cfg'];
 const NUMF = { repuestos: 'stock', clientes: 'deuda' };
 const CLAIMF = { comps: 'nro', ots: 'num', presus: 'num', pedidos: 'num', envios: 'num' };
 const NUMT = ['FA', 'FB', 'FC', 'X', 'NCA', 'NCB', 'NCC', 'NCX', 'OT', 'PR', 'PD', 'EN'];
@@ -237,7 +241,7 @@ async function changes(since, ver, floor) {
   return { ver, cols, objs, nums: await counters() };
 }
 
-async function write(body) {
+async function write(body, who) {
   const put = Array.isArray(body.put) ? body.put : [], inc = Array.isArray(body.inc) ? body.inc : [];
   const obj = body.obj && typeof body.obj === 'object' ? body.obj : {};
   if (put.length > MAX_PUT || inc.length > MAX_PUT) return { error: 'Demasiados cambios juntos.', status: 413 };
@@ -268,6 +272,7 @@ async function write(body) {
     for (let i = 0; i < todo.length; i++) {
       const old = cur[i];
       const merged = Object.assign(old ? (parse(old) || {}) : {}, todo[i].x.p);
+      if (who) merged._by = who;            // quién hizo el último cambio (lo pone el servidor, no se puede falsear)
       const s = JSON.stringify(merged);
       if (s.length > MAX_REC) return { error: 'Un registro es demasiado grande.', status: 413 };
       evals.push(['EVAL', L_CAS, '1', todo[i].k, todo[i].x.id, old == null ? '' : old, s]);
@@ -387,6 +392,73 @@ async function dailyBackup(force) {
   finally { await cmd('DEL', BK + 'lock'); }
 }
 
+// ---------- Usuarios, sesiones y permisos ----------
+const U_HASH = X + 'users', U_EMAIL = X + 'uemail', MODE_K = X + 'mode';
+const SES_SECS = 30 * 86400, ACC_FAILS = 20, ACC_SECS = 3600, PW_MIN = 10;
+const ROLES = ['dueno', 'mostrador', 'tecnico'];
+const AUTH_OPS = ['auth', 'login', 'google', 'setup-owner', 'recover'];
+const sha = v => crypto.createHash('sha256').update(String(v)).digest('hex');
+const normEmail = e => String(e || '').trim().toLowerCase();
+const okEmail = e => e.length <= 254 && /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,}$/.test(e);
+const scryptP = (pw, salt) => new Promise((ok, ko) => crypto.scrypt(String(pw || ''), salt, 32, { N: 32768, r: 8, p: 1, maxmem: 64 * 1024 * 1024 }, (e, k) => e ? ko(e) : ok(k)));
+async function hashPw(pw) { const salt = crypto.randomBytes(16); return 's1$' + salt.toString('base64') + '$' + (await scryptP(pw, salt)).toString('base64'); }
+async function checkPw(pw, stored) {
+  const [v, s, h] = String(stored || '').split('$');
+  if (v !== 's1' || !s || !h) { await scryptP(pw, Buffer.alloc(16)); return false; }   // mismo tiempo exista o no el usuario
+  const k = await scryptP(pw, Buffer.from(s, 'base64')), hb = Buffer.from(h, 'base64');
+  return hb.length === k.length && crypto.timingSafeEqual(hb, k);
+}
+const pubUser = u => ({ uid: u.uid, email: u.email, nombre: u.nombre, rol: u.rol, activo: u.activo !== false, google: !!u.google, tienePw: !!u.pw, creado: u.creado || null, ultimo: u.ultimo || null });
+function cookies(h) { const o = {}; String(h || '').split(';').forEach(p => { const i = p.indexOf('='); if (i > 0) { try { o[p.slice(0, i).trim()] = decodeURIComponent(p.slice(i + 1).trim()); } catch (e) {} } }); return o; }
+const SECURE = process.env.COOKIE_INSECURE === '1' ? '' : '; Secure';
+const COOKIE = (v, age) => `rc_s=${v}; Path=/api; HttpOnly; SameSite=Strict; Max-Age=${age}${SECURE}`;
+async function getUser(uid) { return parse(await cmd('HGET', U_HASH, String(uid))); }
+async function userByEmail(e) { const uid = e && await cmd('HGET', U_EMAIL, e); return uid ? getUser(uid) : null; }
+async function saveUser(u) { await pipe([['HSET', U_HASH, u.uid, JSON.stringify(u)], ['HSET', U_EMAIL, u.email, u.uid]]); }
+async function newSession(res, u) {
+  const tok = crypto.randomBytes(32).toString('base64url'), sid = sha(tok);
+  u.ultimo = new Date().toISOString();
+  await pipe([['SET', X + 'ses:' + sid, JSON.stringify({ uid: u.uid, rol: u.rol, nombre: u.nombre, email: u.email }), 'EX', String(SES_SECS)],
+    ['SADD', X + 'uses:' + u.uid, sid], ['EXPIRE', X + 'uses:' + u.uid, String(SES_SECS)], ['HSET', U_HASH, u.uid, JSON.stringify(u)]]);
+  res.setHeader('Set-Cookie', COOKIE(tok, SES_SECS));   // la app no puede leerla (HttpOnly): ni un código inyectado se la lleva
+}
+async function revokeUser(uid, keepSid) {
+  const sids = ((await cmd('SMEMBERS', X + 'uses:' + uid)) || []).filter(x => x !== keepSid);
+  if (sids.length) await pipe([['DEL', ...sids.map(x => X + 'ses:' + x)], ['SREM', X + 'uses:' + uid, ...sids]]);
+}
+// Entrar con Google: se verifica la firma del token con las claves públicas de Google.
+const G_JWKS = process.env.GOOGLE_JWKS_URL || 'https://www.googleapis.com/oauth2/v3/certs';
+let jwks = { t: 0, keys: [] };
+async function googleKeys(force) { if (!force && jwks.keys.length && Date.now() - jwks.t < 3600e3) return jwks.keys; const r = await fetch(G_JWKS); const j = await r.json(); jwks = { t: Date.now(), keys: Array.isArray(j.keys) ? j.keys : [] }; return jwks.keys; }
+async function verifyGoogle(cred) {
+  const cid = process.env.GOOGLE_CLIENT_ID; const parts = String(cred || '').split('.');
+  if (!cid || parts.length !== 3) return null;
+  const hdr = parse(Buffer.from(parts[0], 'base64url').toString()), pl = parse(Buffer.from(parts[1], 'base64url').toString());
+  if (!hdr || !pl || hdr.alg !== 'RS256') return null;
+  let k = (await googleKeys()).find(x => x.kid === hdr.kid); if (!k) k = (await googleKeys(true)).find(x => x.kid === hdr.kid);
+  if (!k) return null;
+  let ok = false; try { ok = crypto.verify('RSA-SHA256', Buffer.from(parts[0] + '.' + parts[1]), crypto.createPublicKey({ key: k, format: 'jwk' }), Buffer.from(parts[2], 'base64url')); } catch (e) { ok = false; }
+  const now = Date.now() / 1000;
+  if (!ok || !['accounts.google.com', 'https://accounts.google.com'].includes(pl.iss) || pl.aud !== cid || !(pl.exp > now) || (pl.iat && pl.iat > now + 300) || !(pl.email_verified === true || pl.email_verified === 'true')) return null;
+  return normEmail(pl.email);
+}
+// Qué puede cambiar y ver cada rol (lo controla el servidor, no la pantalla).
+const W_ROLE = { mostrador: { cols: null, inc: ['repuestos', 'clientes'], objs: ['caja', 'modelos'] }, tecnico: { cols: ['ots', 'clientes'], inc: ['repuestos'], objs: [] } };
+const R_TEC = { cols: ['repuestos', 'clientes', 'ots', 'pedidos', 'proveedores'], objs: ['modelos', 'listas'] };
+function filterRead(o, rol) {
+  if (rol !== 'tecnico' || !o) return o;
+  if (o.cols) Object.keys(o.cols).forEach(c => { if (!R_TEC.cols.includes(c)) delete o.cols[c]; });
+  if (o.objs) Object.keys(o.objs).forEach(k => { if (!R_TEC.objs.includes(k)) delete o.objs[k]; });
+  return o;
+}
+function filterWrite(b, rol) {
+  const w = W_ROLE[rol]; if (!w) return 0; let n = 0;
+  if (Array.isArray(b.put)) b.put = b.put.filter(x => { const ok = !w.cols || (x && w.cols.includes(x.c)); if (!ok) n++; return ok; });
+  if (Array.isArray(b.inc)) b.inc = b.inc.filter(i => { const ok = !!(i && w.inc.includes(i.c)); if (!ok) n++; return ok; });
+  if (b.obj && typeof b.obj === 'object') Object.keys(b.obj).forEach(k => { if (!w.objs.includes(k)) { delete b.obj[k]; n++; } });
+  return n;
+}
+
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -407,28 +479,133 @@ module.exports = async (req, res) => {
     if (n >= MAX_FAILS) { if (n === MAX_FAILS) await pipe([['SET', X + 'lock:' + ip, '1', 'EX', String(LOCK_SECS)], ['EXPIRE', fk, String(LOCK_SECS)]]); return lockedOut(LOCK_SECS); }
     return send(code || 401, { error: msg });
   };
-  // Sin clave, o desde una conexión que este servidor ya sabe bloqueada: se rechaza sin tocar la base.
+  // Sin clave ni sesión, o desde una conexión que este servidor ya sabe bloqueada: se rechaza sin tocar la base.
   if (memLocked(ip)) return lockedOut();
-  if (!req.headers['x-app-pin']) return send(401, { error: 'Falta la clave.' });
+  const tok = cookies(req.headers.cookie).rc_s || '';
+  const hasPin = !!req.headers['x-app-pin'];
+  const isAuth = AUTH_OPS.includes(q.op);
+  if (!isAuth && !hasPin && !tok) return send(401, { error: 'Falta la clave.', need: 'login' });
+  // Con sesión (cookie) se exige además esta cabecera: otra página no la puede mandar (protege de pedidos falsos).
+  if ((tok || isAuth) && req.headers['x-rc'] !== '1') return send(403, { error: 'Pedido no válido.' });
+  let body = req.body;
+  if (typeof body === 'string') body = parse(body);
+  body = body && typeof body === 'object' ? body : {};
+  const admin = process.env.ADMIN_PIN;
+  const needAdmin = async (b) => {
+    if (!admin) return send(403, { error: 'Para borrar o restaurar hace falta configurar la clave ADMIN_PIN en Vercel.' }), false;
+    if (sameSecret(admin, pin)) return send(403, { error: 'La clave para borrar (ADMIN_PIN) tiene que ser distinta de la clave del taller.' }), false;
+    if (!sameSecret(b.admin, admin)) { await badPin('La clave para borrar no es correcta.', 403); return false; }
+    return true;
+  };
   try {
-    // Clave equivocada: solo se cuenta el intento (al décimo queda bloqueada 15 minutos).
-    if (!sameSecret(req.headers['x-app-pin'], pin)) return badPin('Clave incorrecta.');
-    // Clave correcta: igual se revisa el bloqueo primero (bloqueado no entra ni con la clave correcta).
-    // Un solo comando trae también la versión, el piso y la fecha de la última copia.
-    const [locked, verS, floorS, lastBk] = await cmd('MGET', X + 'lock:' + ip, P + 'ver', P + 'floor', BK + 'last');
+    // ---- Entrar: con correo y contraseña, con Google, o crear la cuenta del dueño ----
+    if (isAuth) {
+      const [locked, mode] = await cmd('MGET', X + 'lock:' + ip, MODE_K);
+      if (locked) return lockedOut();
+      if (q.op === 'auth') return send(200, { mode: mode === 'users' ? 'users' : 'pin', google: process.env.GOOGLE_CLIENT_ID || null, admin: !!admin });
+      if (req.method !== 'POST') return send(405, { error: 'Método no permitido.' });
+      const pw = String(body.password || '');
+      if (q.op === 'setup-owner' || q.op === 'recover') {
+        if (q.op === 'setup-owner' && mode === 'users') return send(409, { error: 'Los usuarios ya están activados. Entrá con tu correo.' });
+        if (q.op === 'recover' && mode !== 'users') return send(409, { error: 'Todavía no hay usuarios.' });
+        if (!await needAdmin(body)) return;
+        const email = normEmail(body.email);
+        if (!okEmail(email)) return send(400, { error: 'Revisá el correo.' });
+        if (pw.length < PW_MIN) return send(400, { error: `La contraseña tiene que tener al menos ${PW_MIN} caracteres.` });
+        let u;
+        if (q.op === 'setup-owner') {
+          const nombre = String(body.nombre || '').trim().slice(0, 60); if (!nombre) return send(400, { error: 'Escribí tu nombre.' });
+          u = { uid: 'u' + crypto.randomBytes(6).toString('hex'), email, nombre, rol: 'dueno', activo: true, google: !!body.google, pw: await hashPw(pw), creado: new Date().toISOString() };
+          await saveUser(u); await cmd('SET', MODE_K, 'users');
+        } else {
+          u = await userByEmail(email);
+          if (!u || u.rol !== 'dueno') return send(404, { error: 'Ese correo no es de un dueño.' });
+          u.pw = await hashPw(pw); u.activo = true; await saveUser(u); await revokeUser(u.uid); await cmd('DEL', X + 'afail:' + sha(email));
+        }
+        await newSession(res, u);
+        return send(200, { user: pubUser(u) });
+      }
+      if (mode !== 'users') return send(409, { error: 'Todavía no hay usuarios: se entra con la clave del taller.' });
+      let email = null, u = null, ok = false;
+      if (q.op === 'google') { email = await verifyGoogle(body.credential); if (!email) return badPin('No se pudo comprobar la cuenta de Google.'); }
+      else email = normEmail(body.email);
+      // Límite por cuenta: 20 intentos fallidos por hora, vengan de donde vengan (frena probar claves desde muchas conexiones).
+      const ak = X + 'afail:' + sha(email || '-');
+      if (Number(await cmd('GET', ak) || 0) >= ACC_FAILS) return send(429, { error: 'Demasiados intentos con esta cuenta. Esperá una hora o pedile al dueño que te cambie la contraseña.' });
+      u = await userByEmail(email);
+      if (q.op === 'google') ok = !!(u && u.activo !== false && u.google);
+      else ok = (await checkPw(pw, u && u.activo !== false ? u.pw : null)) && !!u && u.activo !== false;
+      if (!ok) { await pipe([['INCR', ak], ['EXPIRE', ak, String(ACC_SECS)]]); return badPin(q.op === 'google' ? 'Esa cuenta de Google no está autorizada. Pedile al dueño que la agregue.' : 'Correo o contraseña incorrectos.'); }
+      await cmd('DEL', ak); await newSession(res, u);
+      return send(200, { user: pubUser(u) });
+    }
+    // Clave del taller equivocada: solo se cuenta el intento (al décimo, la conexión queda bloqueada 15 minutos).
+    if (hasPin && !tok && !sameSecret(req.headers['x-app-pin'], pin)) return badPin('Clave incorrecta.');
+    // Un solo comando trae el bloqueo, la versión, el piso, la última copia, el modo y la sesión.
+    const [locked, verS, floorS, lastBk, mode, sesS] = await cmd('MGET', X + 'lock:' + ip, P + 'ver', P + 'floor', BK + 'last', MODE_K, X + 'ses:' + (tok ? sha(tok) : '-'));
     if (locked) return lockedOut();
-    const admin = process.env.ADMIN_PIN;
-    const needAdmin = async (b) => {
-      if (!admin) return send(403, { error: 'Para borrar o restaurar hace falta configurar la clave ADMIN_PIN en Vercel.' }), false;
-      if (sameSecret(admin, pin)) return send(403, { error: 'La clave para borrar (ADMIN_PIN) tiene que ser distinta de la clave del taller.' }), false;
-      if (!sameSecret(b.admin, admin)) { await badPin('La clave para borrar no es correcta.', 403); return false; }
-      return true;
-    };
-    let body = req.body;
-    if (typeof body === 'string') body = parse(body);
-    body = body || {};
+    let ctx;
+    if (mode === 'users') {
+      const se = tok ? parse(sesS) : null;
+      if (!se) { if (tok) res.setHeader('Set-Cookie', COOKIE('', 0)); return send(401, { error: 'Entrá con tu usuario.', need: 'login' }); }
+      ctx = { uid: se.uid, rol: ROLES.includes(se.rol) ? se.rol : 'tecnico', nombre: se.nombre, email: se.email };
+    } else {
+      if (!hasPin || !sameSecret(req.headers['x-app-pin'], pin)) return send(401, { error: 'Falta la clave.' });
+      ctx = { uid: null, rol: 'dueno', nombre: '' };
+    }
+    const isDueno = ctx.rol === 'dueno';
+    const deny = () => send(403, { error: 'Tu usuario no tiene permiso para esto.' });
     const since = Number(q.since || 0);
 
+    // ---- Mi usuario, salir, cambiar contraseña y administrar usuarios ----
+    if (q.op === 'me') return send(200, { mode: mode === 'users' ? 'users' : 'pin', user: ctx.uid ? ctx : null });
+    if (q.op === 'logout' && req.method === 'POST') {
+      if (tok && ctx.uid) await pipe([['DEL', X + 'ses:' + sha(tok)], ['SREM', X + 'uses:' + ctx.uid, sha(tok)]]);
+      res.setHeader('Set-Cookie', COOKIE('', 0)); return send(200, { ok: true });
+    }
+    if (q.op === 'pass' && req.method === 'POST') {
+      if (!ctx.uid) return send(400, { error: 'No hay usuario.' });
+      const u = await getUser(ctx.uid); const pw = String(body.password || '');
+      if (!u) return send(404, { error: 'Usuario no encontrado.' });
+      if (u.pw && !await checkPw(body.old, u.pw)) return badPin('La contraseña actual no es correcta.', 403);
+      if (pw.length < PW_MIN) return send(400, { error: `La contraseña nueva tiene que tener al menos ${PW_MIN} caracteres.` });
+      u.pw = await hashPw(pw); await saveUser(u); await revokeUser(u.uid, sha(tok));
+      return send(200, { ok: true });
+    }
+    if (q.op === 'users' || q.op === 'user-save' || q.op === 'user-del') {
+      if (!isDueno || !ctx.uid) return deny();
+      if (q.op === 'users') { const list = Object.values(pairs(await cmd('HGETALL', U_HASH))).map(parse).filter(Boolean).map(pubUser).sort((a, b) => a.nombre.localeCompare(b.nombre)); return send(200, { list, google: !!process.env.GOOGLE_CLIENT_ID }); }
+      if (req.method !== 'POST') return send(405, { error: 'Método no permitido.' });
+      if (q.op === 'user-del') {
+        const uid = String(body.uid || ''); if (uid === ctx.uid) return send(400, { error: 'No podés borrar tu propio usuario.' });
+        const u = await getUser(uid); if (!u) return send(404, { error: 'Usuario no encontrado.' });
+        await pipe([['HDEL', U_HASH, uid], ['HDEL', U_EMAIL, u.email]]); await revokeUser(uid);
+        return send(200, { ok: true });
+      }
+      const email = normEmail(body.email), nombre = String(body.nombre || '').trim().slice(0, 60), rol = String(body.rol || ''), pw = String(body.password || '');
+      if (!okEmail(email)) return send(400, { error: 'Revisá el correo.' });
+      if (!nombre) return send(400, { error: 'Escribí el nombre.' });
+      if (!ROLES.includes(rol)) return send(400, { error: 'Elegí qué puede hacer.' });
+      if (pw && pw.length < PW_MIN) return send(400, { error: `La contraseña tiene que tener al menos ${PW_MIN} caracteres.` });
+      let u = body.uid ? await getUser(String(body.uid)) : null;
+      if (body.uid && !u) return send(404, { error: 'Usuario no encontrado.' });
+      const other = await cmd('HGET', U_EMAIL, email);
+      if (other && (!u || other !== u.uid)) return send(409, { error: 'Ya hay un usuario con ese correo.' });
+      const activo = body.activo !== false;
+      if (u && u.uid === ctx.uid && (rol !== 'dueno' || !activo)) return send(400, { error: 'No podés sacarte el rol de dueño ni desactivar tu propio usuario.' });
+      const changed = !u || u.rol !== rol || (u.activo !== false) !== activo || u.email !== email || !!pw || !!u.google !== !!body.google;
+      if (!u) u = { uid: 'u' + crypto.randomBytes(6).toString('hex'), creado: new Date().toISOString() };
+      const oldEmail = u.email;
+      Object.assign(u, { email, nombre, rol, activo, google: !!body.google });
+      if (pw) u.pw = await hashPw(pw);
+      if (!u.pw && !u.google) return send(400, { error: 'Poné una contraseña o activá "Entrar con Google".' });
+      if (oldEmail && oldEmail !== email) await cmd('HDEL', U_EMAIL, oldEmail);
+      await saveUser(u); if (changed && u.uid !== ctx.uid) await revokeUser(u.uid);
+      return send(200, { user: pubUser(u) });
+    }
+
+    if (['next', 'reserve', 'release'].includes(q.op) && ctx.rol === 'tecnico') return deny();
+    if (['reset', 'backups', 'backup', 'backup-get', 'restore'].includes(q.op) && !isDueno) return deny();
     if (q.op === 'next' && req.method === 'POST') {
       const t = String(q.t || '');
       if (!NUMT.includes(t)) return send(400, { error: 'Tipo inválido.' });
@@ -467,7 +644,7 @@ module.exports = async (req, res) => {
       if (!/^\d{4}-\d{2}$/.test(m)) return send(400, { error: 'Mes inválido.' });
       const r = await pipe(PCOLS.map(c => ['HGETALL', `${P}c:${c}:${m}`]));
       const cols = {}; PCOLS.forEach((c, i) => cols[c] = Object.values(pairs(r[i])).map(parse).filter(Boolean));
-      return send(200, { month: m, cols });
+      return send(200, filterRead({ month: m, cols }, ctx.rol));
     }
     if (q.op === 'reset' && req.method === 'POST') {
       if (body.confirm !== 'BORRAR') return send(400, { error: 'Falta confirmar.' });
@@ -498,16 +675,17 @@ module.exports = async (req, res) => {
     if (req.method === 'GET') {
       const ver = Number(verS || 0);
       if (since && since === ver) return send(204);
-      return send(200, await changes(since, ver, Number(floorS || 0)));
+      return send(200, filterRead(await changes(since, ver, Number(floorS || 0)), ctx.rol));
     }
     if (req.method === 'POST') {
-      const w = await write(body);
+      const denied = filterWrite(body, ctx.rol);   // lo que el rol no puede cambiar, no se guarda
+      const w = await write(body, ctx.nombre);
       if (w.error) return send(w.status, { error: w.error });
       if (lastBk !== hoyAR()) { try { await dailyBackup(false); } catch (e) { console.error('copia diaria', e); } }
-      if (!since) return send(200, { ver: w.ver, renum: w.renum, stale: true });
+      if (!since) return send(200, { ver: w.ver, renum: w.renum, stale: true, denied });
       const ch = await changes(since, w.ver);
-      if (ch.full) return send(200, { ver: w.ver, renum: w.renum, stale: true });
-      return send(200, { ...ch, renum: w.renum });
+      if (ch.full) return send(200, { ver: w.ver, renum: w.renum, stale: true, denied });
+      return send(200, { ...filterRead(ch, ctx.rol), renum: w.renum, denied });
     }
     res.setHeader('Allow', 'GET, POST');
     return send(405, { error: 'Método no permitido.' });
